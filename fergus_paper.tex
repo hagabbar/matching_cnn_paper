@@ -63,10 +63,10 @@
 \title{Matching Matched Filtering with Deep Networks in Gravitational wave Astronomy}% Force line breaks with \\
 
 \author{Hunter Gabbard}%Lines break automatically or can be forced with \\
- \email{Corresponding Author: h.gabbard.1@research.gla.ac.uk}
+ \email{Corresponding author: h.gabbard.1@research.gla.ac.uk}
 \author{Fergus Hayes}
 \author{Michael Williams}%
-\author{Chris Messenger}
+\author{Chris Messenger} 
 \affiliation{%
  SUPA, School of Physics and Astronomy, \\
  University of Glasgow, \\
@@ -113,7 +113,17 @@ In the following sections we will discuss our choice of network archetecture and
 
 For our noise signals we generate a power spectrum density (PSD) that is comparable to aLIGO design sensitivity [\textbf{perhaps cite lal folks}]. That PSD is then converted to an amplitude time series where a random phase shift is given to each spectral component. The inverse real fast fourier transform (IFFT) is then applied and returns a Gaussian time series.
 
-Injections are made using the IMRPhenomD type waveform [\textbf{cite Phenom wf paper}] where the component masses of the waveform range from 5\(M_\odot\) to 100\(M_\odot\) (\textbf{not sure if correct?}). 
+Injections are made using the IMRPhenomD type waveform [\textbf{cite Phenom wf paper}] where the component masses of the waveform range from 5\(M_\odot\) to 100\(M_\odot\), $m_{1} > m_{2}$, and all with zero spin (\textbf{not sure if correct?}). The waveforms are then randomly placed within the time series, where the peak of the waveform is within the last $20$\% of the time series (\textbf{perhaps give reason for why this is done}). Each injection is also given a random sky location. The waveform is normalised using the integrated signal-to-noise ratio (iSNR). 
+
+In our runs we used $1,000$ Gaussian noise signals and $1,000$ unique injections with over $25$ varrying noise realizations resulting in a total of $50,000$ samples. The samples are then arranged in the form of a $1 \times 8192$ pixel sample which is scaled by the GW strain amplitude, $h(t)$, over one color channel (grayscale). (\textbf{give ligo definition of optimal SNR}) $70\%$ of these samples are used for training, $15\%$ for validation, and $15\%$ for testing. 
+
+A detailed description of the neural network archetecture used can be found in Table 1 below.
+
+In order to achieve the optimal network, multiple sets of hyperparameters are tuned. First, we rescaled the data, but with the existing setup, this did not seem to improve upon the performance. We also attempted applying transfer learning where we used networks trained on successively higher SNR values, though performance benefits were minimal. Network depth was adjusted between 2 to 10 convolutional layers. Our initial data set needed at least 4 convolutional layers. Later data sets with various noise realizations needed fewer convolutional layers to perform comparatively well, but adding more layers still seemed to improved performance. The inclusion of dropout was used within the fully-connected layers as a form of regularization.
+
+For updating our weights and bias parameters (in order to minimize our loss function), we settled on the nesterov momentum optimization function. Nesterov momentum was the ideal choice because of its prescient ability to approximate the next position of the weights and bias parameters which gives a rough approximation of their values (\textbf{perhaps this is a bit off topic}). Thus the gradient is calculated not with respect to the current parameters, but with respect to the approximate future positions of those parameters.
+
+\textit{Matched filtering bit} --- The template bank was generated using 8000 randomly sampled mass pairs from the same distribution with no adjustment to assure the parameter space was adequately covered.   
 
 \begin{table*}[]
 \centering
@@ -129,8 +139,6 @@ Drop out            & 0.0     & 0.0     & 0.0     & 0.0     & 0.0     & 0.0     
 Activation Function & Elu     & Elu     & Elu     & Elu     & Elu     & Elu     & Elu     & Elu     & Elu     & Softmax 
 \end{tabular}
 \end{table*}
-
-The samples are then arranged in the form of a $1 \times 8192$ pixel sample which is scaled by the GW strain amplitude, $h(t)$, over one color channel (grayscale). (\textbf{give ligo definition of optimal SNR})
 
 \textit{Results} --- In this case, we cyclically adjust the learning rate to oscialte between $5 \times 10^{-4}$ and $1 \times 10^{-3}$ at a constant frequency. Studies have shown that this policy of learning rate adjustement (\textbf{blah blah blah})
 
