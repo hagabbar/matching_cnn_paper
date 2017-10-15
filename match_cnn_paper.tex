@@ -62,9 +62,9 @@ floatfix,
 
 \preprint{APS/123-QED}
 
-\title{Matching Matched Filtering with Deep Networks in Gravitational wave Astronomy}% Force line breaks with \\
+\title{Matching Matched Filtering with Deep Networks in Gravitational wave Astronomy}
 
-\author{Hunter Gabbard}%Lines break automatically or can be forced with \\
+\author{Hunter Gabbard}
  \email{Corresponding author: h.gabbard.1@research.gla.ac.uk}
 \author{Fergus Hayes}
 \author{Chris Messenger}
@@ -95,15 +95,13 @@ May be entered using the \verb+\pacs{#1}+ command.
 %\tableofcontents
 
 
-% You should probably mention matched filtering in more detail at some point in the introduction ...
-
 \textit{Introduction} --- The field of gravitational wave astronomy has seen an explosion of binary black hole detections over the past several years [\textbf{cite detection papers}]. These detections were made possible by the Advanced Laser Interferometer Gravitational wave Observatory (aLIGO) detectors, as well as the recent joint detection of GW170814 with Advanced Virgo [\textbf{citation needed}]. Over the coming years many more such observations, including other more exotic sources such as binary neutron star (BNS), intermediate black hole (IMBH), and neutron star black hole (NSBH) mergers, are likely to be observed on a more frequent basis. As such, the need for more efficient search methods will be more pertinent as the detectors increase in \textit{volume} $\times$ \textit{time} sensitivity.
 
-The search pipelines used to make these detections [\textbf{cite Usman et al. and gstlal folks}] are computationally expensive to run. Part of the reason being that the methods used by these \textit{search pipelines} are complex, sophisticated processes run over a large parameter space using advanced signal processing techniques. Distinguishing noise from signal in this search pipeline, and others like it, is done using a technique called matched template filtering. Matched template filtering uses a \textit{bank} of template waveforms that spans the astrophysical parameter space [\textbf{provide shit-ton of citations for this}]. We span a large astrophysical parameters space because we do not know \textit{a priori} what the parameters of the gravitational waves in the data are. Because the waveforms of the signals are well modeled, the pipeline uses matched filtering to search for those signals burried in the detector noise. More on how we implement this technique in comparisons with our model will be mentioned later in the methods section of this letter.
+The algorithms used to make these detections [\textbf{cite Usman et al. and gstlal folks}] are computationally expensive to run. Part of the reason being that the methods used by these \textit{search pipelines} are complex, sophisticated processes run over a large parameter space using advanced signal processing techniques. Distinguishing noise from signal in this search pipeline, and others like it, is done using a technique called matched template filtering. Matched template filtering uses a \textit{bank} of template waveforms that spans the astrophysical parameter space [\textbf{provide shit-ton of citations for this}]. We span a large astrophysical parameters space because we do not know \textit{a priori} what the parameters of the gravitational waves in the data are. Because the waveforms of the signals are well modeled, the pipeline uses matched filtering to search for those signals burried in the detector noise. More on how we implement this technique in comparisons with our model will be mentioned later in the methods section of this letter.
 
-We propose that a deep learning algorithm which requires only the raw data time series as input with minimum signal processing would be one alternative search method. This pipeline would be able to be pretrained and then run on real-time detector data with maximum efficiency and in low-latency.
+We propose that a deep learning algorithm which requires only the raw data time series as input with minimum signal processing would be one alternative search method. This pipeline would be able to be pretrained and then run on real-time detector data with maximum efficiency, as well as in low-latency.
 
-Deep learning is a subset of machine learning which has gained in popularity over the past several years [\textbf{cite various successful nn's}]. A deep learning algorithm is composed of arrays of processing units, called neurons, which can be anywhere from one to several layers deep (\textbf{explain more about what a neuron is?}). Deep learning algorithms consists of an input layer, followed by one to several hidden layers and then one neuron that outputs a single value. This value can then either be used to solve classfication, or regression-like problems. 
+Deep learning is a subset of machine learning which has gained in popularity over the past several years [\textbf{cite various successful nn's}]. A deep learning algorithm is composed of arrays of processing units, called neurons, which can be anywhere from one to several layers deep (\textbf{explain more about what a neuron is?}). Deep learning algorithms typically consist of an input layer, followed by one to several hidden layers and then one to $N$ neurons that output a single value each. This value can then either be used to solve classfication, or regression-like problems. In the case of classification, each output neuron corresponds to the probability that a particular sample is of a certain class. 
 
 In our model, we use a variant of a deep learning algorithm called a convolutional neural network (CNN) [\textbf{citation required}]. CNN layers are composed of five primary variants: input, convolutional, activation, pooling, and fully-connected. Where input holds the raw pixel values of the sample image, the convultional layer computes the convolution between the kernel and a local region of the input layer volume, activation applies an elementwise activation function leaving the size of the previous layer's output volume unchanged, pooling performs a downsampling operation along the spatial dimensions, and the fully-connected layer computes the class scores using an error function, cross-entropy, defined as
 
@@ -129,11 +127,11 @@ where $\rho_{opt}$ is the optimal SNR, $\hat{h(f)}$ is the strain amplitude, and
 
 In our runs we used $1,000$ Gaussian noise signals and $1,000$ unique injections with over $25$ varrying noise realizations resulting in a total of $50,000$ samples. The samples are then arranged in the form of a $1 \times 8192$ pixel sample which is scaled by the GW strain amplitude, $h(t)$, over one color channel (grayscale). (\textbf{give ligo definition of optimal SNR}) $70\%$ of these samples are used for training, $15\%$ for validation, and $15\%$ for testing. 
 
-\begin{figure*}
+\begin{figure}
  \includegraphics[width=0.5\textwidth]
  {figures/waveform.eps}
  \caption{\label{fig:waveform} Description here.}
-\end{figure*}
+\end{figure}
 
 In order to achieve the optimal network, multiple sets of hyperparameters are tuned. First, we rescaled the data, but with the existing setup, this did not seem to improve upon the performance. We also attempted applying transfer learning where we used networks trained on successively higher SNR values, though performance benefits were minimal. Network depth was adjusted between 2 to 10 convolutional layers. Our initial data set needed at least 4 convolutional layers. Later data sets with various noise realizations needed fewer convolutional layers to perform comparatively well, but adding more layers still seemed to improved performance. The inclusion of dropout was used within the fully-connected layers as a form of regularization.
 
@@ -146,13 +144,20 @@ v_{t+1} = \mu v_{t} - \epsilon \nabla f(\theta_{t} + \mu v_{t}),
 
 \begin{equation} \label{eq:nesterov2}
 \theta_{t+1} = \theta_{t} + v_{t+1},
-\end{equation}
+\end{equation} \\
 
-where $\epsilon > 0$ is the learning rate, $\mu \in [0,1]$ is the momentum coefficient, and $\nabla f(\theta_{t})$ is the gradient with respect to the weight vector $\theta_{t}$. Nesterov momentum was the ideal choice because of its prescient ability to approximate the next position of the weights and bias parameters which gives a rough approximation of their values (\textbf{perhaps this is a bit off topic}). Thus the gradient is calculated not with respect to the current parameters, but with respect to the approximate future positions of those parameters. A further detailed description of the neural network archetecture used can be found in Table \ref{table:network}.
+where $\epsilon > 0$ is the learning rate, $\mu \in [0,1]$ is the momentum coefficient, and $\nabla f(\theta_{t})$ is the gradient with respect to the weight vector $\theta_{t}$. Nesterov momentum was the ideal choice because of its prescient ability to approximate the next position of the weights and bias parameters which therefore gives a rough approximation of their values (\textbf{perhaps this is a bit off topic}). Thus the gradient is calculated not with respect to the current parameters, but with respect to the approximate future positions of those parameters. A further detailed description of the neural network archetecture used can be found in Table \ref{table:network}.
 
-Largely following matched filtering techniques used on the LIGO Open Science Center optimal matched filter page [\textbf{cit LOSC page}] we compare our results to the standard optimal matched filtering process used by aLIGO [\textbf{cite Allen et. al 2011}]. Considering the example of one candidate GW signal, we iterate over a comprehensive template bank. The template bank was generated using 8000 randomly sampled mass pairs from the same distribution with no adjustment to assure the parameter space was adequately covered. For each template, we compute the Fast Fourier Transform (FFT) of the data and the template, where the template has been zero padded in order to both to be of the same length. Finally, we multiply the fft'd template and data together and divide by the PSD. An inverse FFT is then applied in order to convert back to the time domain. The output is then normalized so that we have an expected value of 1 for pure Gaussian noise.
+\begin{figure}[!h]
+ \includegraphics[width=0.5\textwidth]
+ {figures/loss.png}
+ \caption{\label{fig:loss_curve} The loss, accuracy and learning rate plots (shown above) illustrate how the network's performance is defined as a function of the number of training epochs. The goal is to minimize the loss function, which will in turn maximize the accuracy of the classifier. The first initial epochs see an exponential decrease in the loss function and then a slowly falling monotonic curve to follow. This indicates that the longer our network is trained, a limit with respect to the accuracy is approached. In our case, we cyclically adjust the learning rate to oscialte between $5 \times 10^{-4}$ and $1 \times 10^{-3}$ at a constant frequency. Studies have shown that this policy of learning rate adjustement (\textbf{should replace figure with better run})
+}
+\end{figure}
 
-\begin{table*}[!h]
+Largely following matched filtering techniques used on the LIGO Open Science Center optimal matched filter page [\textbf{cit LOSC page}] we compare our results to the standard optimal matched filtering process used by aLIGO [\textbf{cite Allen et. al 2011}]. Considering the example of one candidate GW signal, we iterate over a comprehensive template bank. The template bank was generated using 8000 randomly sampled mass pairs from the same distribution with no adjustment to assure the parameter space was adequately covered. For each template, we compute the Fast Fourier Transform (FFT) of the data and the template, where the template has been zero padded in order for both to be of the same length. Finally, we multiply the fft'd template and data together and divide by the PSD. An inverse FFT is then applied in order to convert back to the time domain. The output is then normalized so that we have an expected value of 1 for pure Gaussian noise.
+
+\begin{table*}[]
 \centering
 \caption{The optimal network structure (seen below) was determined through multiple tests and tunnings of hyperparameters by means of trial and error. The network consists of 8 convolutional layers, followed by 2 fully-connected layers. Max-pooling is performed on the first, fifth, and eigth layer, whereas dropout is only performed on the two fully-connected layers. Each layer uses an Elu activation function while the last layer uses a Softmax activation function in order to normalize the output values to be between zero and one so as to give a probability value for each class. \\} 
 \label{table:network}
@@ -167,35 +172,37 @@ Activation Function & Elu     & Elu     & Elu     & Elu     & Elu     & Elu     
 \end{tabular}
 \end{table*}
 
-\textit{Results} --- 
+\textit{Results} --- After tunning several hyperparameters and then settling on an ideal network format (Table \ref{table:network}), we present the results of our classifier on a noise vs. injection sample set. We trained our network using a transfer learning approach whereby we initially trained our network on a sample set of 1000 noise and 1000 injection signals (each with 25 different noise realizations) with an integrated SNR value of 12. We then lowered the integrated SNR value by 2 and (using the same weights from our previous network) we trained our classifier again. This approach seemed to only have a marginal benefit on the overall performance of the classifier.  
 
-\begin{figure*}[!h]
- \includegraphics[width=0.4\textwidth]
- {figures/loss.png}
- \caption{\label{fig:loss_curve} The loss, accuracy and learning rate plots (shown above) illustrate how the network's performance is defined as a function of the number of training epochs. The goal is to minimize the loss function, which will in turn maximize the accuracy of the classifier. The first initial epochs see an exponential decrease in the loss function and then a slowly falling monotonic curve to follow. This indicates that the longer our network is trained, a limit with respect to the accuracy is approached. In our case, we cyclically adjust the learning rate to oscialte between $5 \times 10^{-4}$ and $1 \times 10^{-3}$ at a constant frequency. Studies have shown that this policy of learning rate adjustement (\textbf{should replace figure with better run})
-}
-\end{figure*}
+The confusion matrix in figure \ref{fig:confusion} shows $99.86\%$ accuracy with triggers at an integrated SNR of 12, $99.64\%$ accuracy with integrated SNR 10, $97.88\%$ at integrated SNR 8, $88.72\%$ at an integrated SNR of 6, $68.34\%$ at integrated SNR 4, and $50.19\%$ accuracy at integrated SNR 2.
 
-\begin{figure*}[!h]
- \centering
-  \includegraphics[width=0.5\textwidth]
+
+\begin{figure}[]
+ 
+ \includegraphics[width=0.5\textwidth]
  {figures/confusion_matrix.eps}
- \caption{\label{fig:confusion} Say something about confusion matrix here.}
-\end{figure*}
+ \caption{\label{fig:confusion} Confusion matrices for runs from iSNR 2 - iSNR 12. The accuracies for all are listed as follows: $50.19\%$ at iSNR 2, $68.34\%$ at iSNR 4, $88.72\%$ at iSNR 6, $97.88\%$ at iSNR 8, $99.64\%$ at iSNR 10 and $99.86\%$ at iSNR 12. Note that runs with iSNR 2 give results that are equivalent randomized guessing.}
+\end{figure}
 
-\begin{figure*}[!h]
+In figure \ref{fig:ROC_curve} we compare our results to that of matched filtering where we use two alternative match filtering methods. The first, using the nominal template bank described in the \textit{Methods} section, whereas the second uses the optimal template for each injection, whereby optimal is defined as the template used to generate that injection. As seen in figure \ref{fig:ROC_curve} all three methods have equivalent performance proficiency at $\sim \mathrm{iSNR} > 9$, whereas there is a marginal dip in performance in the nominal matched filtering method and our deep learning classifier. It should be noted that our classifier exceeds the performance proficiency of that of the nominal matched filtering method between iSNR 2 and iSNR 4. 
+
+\begin{figure}[]
  \includegraphics[width=0.5\textwidth]
  {figures/accuracy.eps}
- \caption{\label{fig:accuracy} \textbf{Place description here.}}
-\end{figure*}
+ \caption{\label{fig:ROC_curve} \textbf{Place description here.}}
+\end{figure}
 
-\begin{figure*}[!h]
+We compare the results of all three methods at various injection iSNR values in figure \ref{fig:isnr_curves}. It is not surprising to see that the matched filtering method using the optimal template consistantly performs better than both the nominal match filtering method and our deep learning classifier. However, what is considerable is the comparison between the nominal matched filtering and the deep learning classifier detection probability curves. It can clearly be seen that our classifier exceeds the performance of the nominal matched filtering method at iSNR 2, 4 and 6. This is a promising result and certainly merits further investigation.  
+
+\begin{figure}[]
  \includegraphics[width=0.5\textwidth]
  {figures/ROC_curves.eps}
- \caption{\label{fig:ROC_curve} \textbf{Place description here.}}
-\end{figure*}
+ \caption{\label{fig:isnr_curves} \textbf{Place description here.}}
+\end{figure}
 
-\textit{Conclusions} --- 
+\textit{Conclusions} --- In conclusion, we demonstrate that deep learning, when applied to a raw data time series, is able to produce equivalent results to matched template filtering. We employ a deep convolutional neural network with carefully chosen hyperparamters and produce an output that returns the class probability value of any given signal. This output could then further be applied as a ranking statistic in the aLIGO CBC search. Although only BBH mergers were used, this method could also easily be applied to other merger types, such as BNS and NSBH signals. The results shown in both figure \ref{fig:ROC_curve} and figure \ref{fig:isnr_curves} indicate that deep learning approaches even have the unprecedented potential to entirely exceed matched template filtering. 
+
+This work was supported by blah blah blah, something something, important people ... 
 
 
 
