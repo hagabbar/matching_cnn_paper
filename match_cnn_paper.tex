@@ -19,7 +19,6 @@
 %  4)  latex apssamp.tex
 %
 \documentclass[%
- %reprint,
 %superscriptaddress,
 %groupedaddress,
 %unsortedaddress,
@@ -33,6 +32,8 @@
  amsmath,amssymb,
  aps,
  twocolumn,
+ prl,
+ reprint,
 %pra,
 %prb,
 %rmp,
@@ -45,6 +46,7 @@ floatfix,
 \usepackage{dcolumn}% Align table columns on decimal point
 \usepackage{bm}% bold math
 \usepackage{lineno}
+%\addbibresource{references.bib}
 \linenumbers % Commence numbering lines
 %\usepackage{hyperref}% add hypertext capabilities
 %\usepackage[mathlines]{lineno}% Enable numbering of text and display math
@@ -95,9 +97,9 @@ May be entered using the \verb+\pacs{#1}+ command.
 %\tableofcontents
 
 
-\textit{Introduction} --- The field of gravitational wave astronomy has seen an explosion of binary black hole detections over the past several years [\textbf{cite detection papers}]. These detections were made possible by the Advanced Laser Interferometer Gravitational wave Observatory (aLIGO) detectors, as well as the recent joint detection of GW170814 with Advanced Virgo [\textbf{citation needed}]. Over the coming years many more such observations, including other more exotic sources such as binary neutron star (BNS), intermediate black hole (IMBH), and neutron star black hole (NSBH) mergers, are likely to be observed on a more frequent basis. As such, the need for more efficient search methods will be more pertinent as the detectors increase in \textit{volume} $\times$ \textit{time} sensitivity.
+\textit{Introduction} --- The field of gravitational wave astronomy has seen an explosion of binary black hole detections over the past several years \cite{PhysRevLett.116.061102, PhysRevLett.116.241103, PhysRevLett.118.221101}. These detections were made possible by the Advanced Laser Interferometer Gravitational wave Observatory (aLIGO) detectors, as well as the recent joint detection of GW170814 with Advanced Virgo \cite{PhysRevLett.119.141101}. Over the coming years many more such observations, including other more exotic sources such as binary neutron star (BNS), intermediate black hole (IMBH), and neutron star black hole (NSBH) mergers, are likely to be observed on a more frequent basis. As such, the need for more efficient search methods will be more pertinent as the detectors increase in \textit{volume} $\times$ \textit{time} sensitivity.
 
-The algorithms used to make these detections [\textbf{cite Usman et al. and gstlal folks}] are computationally expensive to run. Part of the reason being that the methods used by these \textit{search pipelines} are complex, sophisticated processes run over a large parameter space using advanced signal processing techniques. Distinguishing noise from signal in this search pipeline, and others like it, is done using a technique called matched template filtering. Matched template filtering uses a \textit{bank} of template waveforms that spans the astrophysical parameter space [\textbf{provide shit-ton of citations for this}]. We span a large astrophysical parameters space because we do not know \textit{a priori} what the parameters of the gravitational waves in the data are. Because the waveforms of the signals are well modeled, the pipeline uses matched filtering to search for those signals burried in the detector noise. More on how we implement this technique in comparisons with our model will be mentioned later in the methods section of this letter.
+The algorithms used to make these detections \cite{0264-9381-33-21-215004} [\textbf{cite Usman et al. and gstlal folks}] are computationally expensive to run. Part of the reason being that the methods used by these \textit{search pipelines} are complex, sophisticated processes run over a large parameter space using advanced signal processing techniques. Distinguishing noise from signal in this search pipeline, and others like it, is done using a technique called matched template filtering. Matched template filtering uses a \textit{bank} of template waveforms that spans the astrophysical parameter space [\textbf{provide shit-ton of citations for this}]. We span a large astrophysical parameters space because we do not know \textit{a priori} what the parameters of the gravitational waves in the data are. Because the waveforms of the signals are well modeled, the pipeline uses matched filtering to search for those signals burried in the detector noise. More on how we implement this technique in comparisons with our model will be mentioned later in the methods section of this letter.
 
 We propose that a deep learning algorithm which requires only the raw data time series as input with minimum signal processing would be one alternative search method. This pipeline would be able to be pretrained and then run on real-time detector data with maximum efficiency, as well as in low-latency.
 
@@ -210,9 +212,10 @@ This work was supported by blah blah blah, something something, important people
 % whether or not they are actually referenced in the text. This is appropriate
 % for the sample file to show the different styles of references, but authors
 % most likely will not want to use it.
-\nocite{*}
 
-\bibliography{apssamp}% Produces the bibliography via BibTeX.
+\bibliographystyle{apsrev4-1}
+\bibliography{references}% Produces the bibliography via BibTeX.
+
 
 \end{document}
 %
