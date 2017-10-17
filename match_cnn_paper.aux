@@ -2,32 +2,65 @@
 \citation{PhysRevLett.116.061102,PhysRevLett.116.241103,PhysRevLett.118.221101}
 \citation{PhysRevLett.119.141101}
 \citation{0264-9381-33-21-215004}
+\citation{PhysRevD.44.3819,PhysRevD.49.1707,PhysRevD.53.6749,PhysRevD.60.022002,0264-9381-23-18-002,PhysRevD.80.104014,PhysRevD.86.084017,PhysRevD.89.084041,PhysRevD.87.124003,1307.4158,PhysRevD.89.024003,PhysRevD.93.124007}
+\citation{NIPS2012_4824,1406.2661,1409.1556,1412.7062,1311.2901,1409.4842}
+\citation{726791}
+\citation{tensorflow2015-whitepaper}
 \newlabel{FirstPage}{{}{1}{}{}{}}
 \@writefile{toc}{\contentsline {title}{Matching Matched Filtering with Deep Networks in Gravitational wave Astronomy}{1}{}}
 \@writefile{toc}{\contentsline {abstract}{Abstract}{1}{}}
 \newlabel{eq:loss}{{1}{1}{}{}{}}
-\newlabel{eq:snr}{{2}{2}{}{}{}}
+\citation{PhysRevD.93.044006,PhysRevD.93.044007}
+\citation{Sutskever:2013:IIM:3042817.3043064}
+\citation{1742-6596-610-1-012021}
+\citation{PhysRevD.85.122006}
 \@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces  Description here.}}{2}{}}
 \newlabel{fig:waveform}{{1}{2}{}{}{}}
+\newlabel{eq:snr}{{2}{2}{}{}{}}
 \newlabel{eq:nesterov1}{{3}{2}{}{}{}}
 \newlabel{eq:nesterov2}{{4}{2}{}{}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {I}{\ignorespaces The optimal network structure (seen below) was determined through multiple tests and tunnings of hyperparameters by means of trial and error. The network consists of 8 convolutional layers, followed by 2 fully-connected layers. Max-pooling is performed on the first, fifth, and eigth layer, whereas dropout is only performed on the two fully-connected layers. Each layer uses an Elu activation function while the last layer uses a Softmax activation function in order to normalize the output values to be between zero and one so as to give a probability value for each class. \\}}{3}{}}
+\newlabel{table:network}{{I}{3}{}{}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces  The loss, accuracy and learning rate plots (shown above) illustrate how the network's performance is defined as a function of the number of training epochs. The goal is to minimize the loss function, which will in turn maximize the accuracy of the classifier. The first initial epochs see an exponential decrease in the loss function and then a slowly falling monotonic curve to follow. This indicates that the longer our network is trained, a limit with respect to the accuracy is approached. In our case, we cyclically adjust the learning rate to oscialte between $5 \times 10^{-4}$ and $1 \times 10^{-3}$ at a constant frequency. Studies have shown that this policy of learning rate adjustement (\textbf  {should replace figure with better run}) }}{3}{}}
 \newlabel{fig:loss_curve}{{2}{3}{}{}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces  Confusion matrices for runs from iSNR 2 - iSNR 12. The accuracies for all are listed as follows: $50.19\%$ at iSNR 2, $68.34\%$ at iSNR 4, $88.72\%$ at iSNR 6, $97.88\%$ at iSNR 8, $99.64\%$ at iSNR 10 and $99.86\%$ at iSNR 12. Note that runs with iSNR 2 give results that are equivalent randomized guessing.}}{3}{}}
 \newlabel{fig:confusion}{{3}{3}{}{}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces  \textbf  {Place description here.}}}{3}{}}
-\newlabel{fig:ROC_curve}{{4}{3}{}{}{}}
 \bibdata{match_cnn_paperNotes,references}
 \bibcite{PhysRevLett.116.061102}{{1}{2016{}}{{Abbott\ \emph  {et~al.}}}{{Abbott \emph  {et~al.}}}}
 \bibcite{PhysRevLett.116.241103}{{2}{2016{}}{{Abbott\ \emph  {et~al.}}}{{Abbott \emph  {et~al.}}}}
 \bibcite{PhysRevLett.118.221101}{{3}{2017{}}{{Abbott\ \emph  {et~al.}}}{{Abbott \emph  {et~al.}}}}
 \bibcite{PhysRevLett.119.141101}{{4}{2017{}}{{Abbott\ \emph  {et~al.}}}{{Abbott \emph  {et~al.}}}}
 \bibcite{0264-9381-33-21-215004}{{5}{2016}{{Usman\ \emph  {et~al.}}}{{Usman, Nitz, Harry, Biwer, Brown, Cabero, Capano, Canton, Dent, Fairhurst, Kehl, Keppel, Krishnan, Lenon, Lundgren, Nielsen, Pekowsky, Pfeiffer, Saulson, West,\ and\ Willis}}}
-\bibstyle{apsrev4-1}
-\@writefile{lot}{\contentsline {table}{\numberline {I}{\ignorespaces The optimal network structure (seen below) was determined through multiple tests and tunnings of hyperparameters by means of trial and error. The network consists of 8 convolutional layers, followed by 2 fully-connected layers. Max-pooling is performed on the first, fifth, and eigth layer, whereas dropout is only performed on the two fully-connected layers. Each layer uses an Elu activation function while the last layer uses a Softmax activation function in order to normalize the output values to be between zero and one so as to give a probability value for each class. \\}}{4}{}}
-\newlabel{table:network}{{I}{4}{}{}{}}
+\bibcite{PhysRevD.44.3819}{{6}{1991}{{Sathyaprakash\ and\ Dhurandhar}}{{}}}
+\bibcite{PhysRevD.49.1707}{{7}{1994}{{Dhurandhar\ and\ Sathyaprakash}}{{}}}
+\bibcite{PhysRevD.53.6749}{{8}{1996}{{Owen}}{{}}}
+\bibcite{PhysRevD.60.022002}{{9}{1999}{{Owen\ and\ Sathyaprakash}}{{}}}
+\bibcite{0264-9381-23-18-002}{{10}{2006}{{Babak\ \emph  {et~al.}}}{{Babak, Balasubramanian, Churches, Cokelaer,\ and\ Sathyaprakash}}}
+\bibcite{PhysRevD.80.104014}{{11}{2009}{{Harry\ \emph  {et~al.}}}{{Harry, Allen,\ and\ Sathyaprakash}}}
+\bibcite{PhysRevD.86.084017}{{12}{2012}{{Brown\ \emph  {et~al.}}}{{Brown, Harry, Lundgren,\ and\ Nitz}}}
+\bibcite{PhysRevD.89.084041}{{13}{2014}{{Ajith\ \emph  {et~al.}}}{{Ajith, Fotopoulos, Privitera, Neunzert, Mazumder,\ and\ Weinstein}}}
+\bibcite{PhysRevD.87.124003}{{14}{2013{}}{{Keppel}}{{}}}
+\bibcite{1307.4158}{{15}{2013{}}{{Keppel}}{{}}}
+\bibcite{PhysRevD.89.024003}{{16}{2014}{{Privitera\ \emph  {et~al.}}}{{Privitera, Mohapatra, Ajith, Cannon, Fotopoulos, Frei, Hanna, Weinstein,\ and\ Whelan}}}
+\bibcite{PhysRevD.93.124007}{{17}{2016}{{Capano\ \emph  {et~al.}}}{{Capano, Harry, Privitera,\ and\ Buonanno}}}
+\bibcite{NIPS2012_4824}{{18}{2012}{{Krizhevsky\ \emph  {et~al.}}}{{Krizhevsky, Sutskever,\ and\ Hinton}}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces  \textbf  {Place description here.}}}{4}{}}
+\newlabel{fig:ROC_curve}{{4}{4}{}{}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces  \textbf  {Place description here.}}}{4}{}}
 \newlabel{fig:isnr_curves}{{5}{4}{}{}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {}References}{4}{}}
-\newlabel{LastBibItem}{{5}{4}{}{}{}}
-\newlabel{LastPage}{{}{4}{}{}{}}
+\bibcite{1406.2661}{{19}{2014}{{Goodfellow\ \emph  {et~al.}}}{{Goodfellow, Pouget-Abadie, Mirza, Xu, Warde-Farley, Ozair, Courville,\ and\ Bengio}}}
+\bibcite{1409.1556}{{20}{2014}{{Simonyan\ and\ Zisserman}}{{}}}
+\bibcite{1412.7062}{{21}{2014}{{Chen\ \emph  {et~al.}}}{{Chen, Papandreou, Kokkinos, Murphy,\ and\ Yuille}}}
+\bibcite{1311.2901}{{22}{2013}{{Zeiler\ and\ Fergus}}{{}}}
+\bibcite{1409.4842}{{23}{2014}{{Szegedy\ \emph  {et~al.}}}{{Szegedy, Liu, Jia, Sermanet, Reed, Anguelov, Erhan, Vanhoucke,\ and\ Rabinovich}}}
+\bibcite{726791}{{24}{1998}{{Lecun\ \emph  {et~al.}}}{{Lecun, Bottou, Bengio,\ and\ Haffner}}}
+\bibcite{tensorflow2015-whitepaper}{{25}{2015}{{Abadi\ \emph  {et~al.}}}{{Abadi, Agarwal, Barham, Brevdo, Chen, Citro, Corrado, Davis, Dean, Devin \emph  {et~al.}}}}
+\bibcite{PhysRevD.93.044006}{{26}{2016}{{Husa\ \emph  {et~al.}}}{{Husa, Khan, Hannam, P\"urrer, Ohme, Forteza,\ and\ Boh\'e}}}
+\bibcite{PhysRevD.93.044007}{{27}{2016}{{Khan\ \emph  {et~al.}}}{{Khan, Husa, Hannam, Ohme, P\"urrer, Forteza,\ and\ Boh\'e}}}
+\bibcite{Sutskever:2013:IIM:3042817.3043064}{{28}{2013}{{Sutskever\ \emph  {et~al.}}}{{Sutskever, Martens, Dahl,\ and\ Hinton}}}
+\bibcite{1742-6596-610-1-012021}{{29}{2015}{{Vallisneri\ \emph  {et~al.}}}{{Vallisneri, Kanner, Williams, Weinstein,\ and\ Stephens}}}
+\bibcite{PhysRevD.85.122006}{{30}{2012}{{Allen\ \emph  {et~al.}}}{{Allen, Anderson, Brady, Brown,\ and\ Creighton}}}
+\bibstyle{apsrev4-1}
+\newlabel{LastBibItem}{{30}{5}{}{}{}}
+\newlabel{LastPage}{{}{5}{}{}{}}

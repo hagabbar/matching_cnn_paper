@@ -6,7 +6,7 @@
 %Control: page (0) single
 %Control: year (1) truncated
 %Control: production of eprint (0) enabled
-\begin{thebibliography}{5}%
+\begin{thebibliography}{30}%
 \makeatletter
 \providecommand \@ifxundefined [1]{%
  \@ifx{#1\undefined}
@@ -122,4 +122,310 @@
   {\bibfield  {journal} {\bibinfo  {journal} {Classical and Quantum Gravity}\
   }\textbf {\bibinfo {volume} {33}},\ \bibinfo {pages} {215004} (\bibinfo
   {year} {2016})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Sathyaprakash}\ and\ \citenamefont
+  {Dhurandhar}(1991)}]{PhysRevD.44.3819}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {B.~S.}\ \bibnamefont
+  {Sathyaprakash}}\ and\ \bibinfo {author} {\bibfnamefont {S.~V.}\ \bibnamefont
+  {Dhurandhar}},\ }\href {\doibase 10.1103/PhysRevD.44.3819} {\bibfield
+  {journal} {\bibinfo  {journal} {Phys. Rev. D}\ }\textbf {\bibinfo {volume}
+  {44}},\ \bibinfo {pages} {3819} (\bibinfo {year} {1991})}\BibitemShut
+  {NoStop}%
+\bibitem [{\citenamefont {Dhurandhar}\ and\ \citenamefont
+  {Sathyaprakash}(1994)}]{PhysRevD.49.1707}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.~V.}\ \bibnamefont
+  {Dhurandhar}}\ and\ \bibinfo {author} {\bibfnamefont {B.~S.}\ \bibnamefont
+  {Sathyaprakash}},\ }\href {\doibase 10.1103/PhysRevD.49.1707} {\bibfield
+  {journal} {\bibinfo  {journal} {Phys. Rev. D}\ }\textbf {\bibinfo {volume}
+  {49}},\ \bibinfo {pages} {1707} (\bibinfo {year} {1994})}\BibitemShut
+  {NoStop}%
+\bibitem [{\citenamefont {Owen}(1996)}]{PhysRevD.53.6749}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {B.~J.}\ \bibnamefont
+  {Owen}},\ }\href {\doibase 10.1103/PhysRevD.53.6749} {\bibfield  {journal}
+  {\bibinfo  {journal} {Phys. Rev. D}\ }\textbf {\bibinfo {volume} {53}},\
+  \bibinfo {pages} {6749} (\bibinfo {year} {1996})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Owen}\ and\ \citenamefont
+  {Sathyaprakash}(1999)}]{PhysRevD.60.022002}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {B.~J.}\ \bibnamefont
+  {Owen}}\ and\ \bibinfo {author} {\bibfnamefont {B.~S.}\ \bibnamefont
+  {Sathyaprakash}},\ }\href {\doibase 10.1103/PhysRevD.60.022002} {\bibfield
+  {journal} {\bibinfo  {journal} {Phys. Rev. D}\ }\textbf {\bibinfo {volume}
+  {60}},\ \bibinfo {pages} {022002} (\bibinfo {year} {1999})}\BibitemShut
+  {NoStop}%
+\bibitem [{\citenamefont {Babak}\ \emph {et~al.}(2006)\citenamefont {Babak},
+  \citenamefont {Balasubramanian}, \citenamefont {Churches}, \citenamefont
+  {Cokelaer},\ and\ \citenamefont {Sathyaprakash}}]{0264-9381-23-18-002}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
+  {Babak}}, \bibinfo {author} {\bibfnamefont {R.}~\bibnamefont
+  {Balasubramanian}}, \bibinfo {author} {\bibfnamefont {D.}~\bibnamefont
+  {Churches}}, \bibinfo {author} {\bibfnamefont {T.}~\bibnamefont {Cokelaer}},
+  \ and\ \bibinfo {author} {\bibfnamefont {B.~S.}\ \bibnamefont
+  {Sathyaprakash}},\ }\href {http://stacks.iop.org/0264-9381/23/i=18/a=002}
+  {\bibfield  {journal} {\bibinfo  {journal} {Classical and Quantum Gravity}\
+  }\textbf {\bibinfo {volume} {23}},\ \bibinfo {pages} {5477} (\bibinfo {year}
+  {2006})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Harry}\ \emph {et~al.}(2009)\citenamefont {Harry},
+  \citenamefont {Allen},\ and\ \citenamefont
+  {Sathyaprakash}}]{PhysRevD.80.104014}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {I.~W.}\ \bibnamefont
+  {Harry}}, \bibinfo {author} {\bibfnamefont {B.}~\bibnamefont {Allen}}, \ and\
+  \bibinfo {author} {\bibfnamefont {B.~S.}\ \bibnamefont {Sathyaprakash}},\
+  }\href {\doibase 10.1103/PhysRevD.80.104014} {\bibfield  {journal} {\bibinfo
+  {journal} {Phys. Rev. D}\ }\textbf {\bibinfo {volume} {80}},\ \bibinfo
+  {pages} {104014} (\bibinfo {year} {2009})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Brown}\ \emph {et~al.}(2012)\citenamefont {Brown},
+  \citenamefont {Harry}, \citenamefont {Lundgren},\ and\ \citenamefont
+  {Nitz}}]{PhysRevD.86.084017}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {D.~A.}\ \bibnamefont
+  {Brown}}, \bibinfo {author} {\bibfnamefont {I.}~\bibnamefont {Harry}},
+  \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont {Lundgren}}, \ and\
+  \bibinfo {author} {\bibfnamefont {A.~H.}\ \bibnamefont {Nitz}},\ }\href
+  {\doibase 10.1103/PhysRevD.86.084017} {\bibfield  {journal} {\bibinfo
+  {journal} {Phys. Rev. D}\ }\textbf {\bibinfo {volume} {86}},\ \bibinfo
+  {pages} {084017} (\bibinfo {year} {2012})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Ajith}\ \emph {et~al.}(2014)\citenamefont {Ajith},
+  \citenamefont {Fotopoulos}, \citenamefont {Privitera}, \citenamefont
+  {Neunzert}, \citenamefont {Mazumder},\ and\ \citenamefont
+  {Weinstein}}]{PhysRevD.89.084041}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {P.}~\bibnamefont
+  {Ajith}}, \bibinfo {author} {\bibfnamefont {N.}~\bibnamefont {Fotopoulos}},
+  \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont {Privitera}}, \bibinfo
+  {author} {\bibfnamefont {A.}~\bibnamefont {Neunzert}}, \bibinfo {author}
+  {\bibfnamefont {N.}~\bibnamefont {Mazumder}}, \ and\ \bibinfo {author}
+  {\bibfnamefont {A.~J.}\ \bibnamefont {Weinstein}},\ }\href {\doibase
+  10.1103/PhysRevD.89.084041} {\bibfield  {journal} {\bibinfo  {journal} {Phys.
+  Rev. D}\ }\textbf {\bibinfo {volume} {89}},\ \bibinfo {pages} {084041}
+  (\bibinfo {year} {2014})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Keppel}(2013{\natexlab{a}})}]{PhysRevD.87.124003}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {D.}~\bibnamefont
+  {Keppel}},\ }\href {\doibase 10.1103/PhysRevD.87.124003} {\bibfield
+  {journal} {\bibinfo  {journal} {Phys. Rev. D}\ }\textbf {\bibinfo {volume}
+  {87}},\ \bibinfo {pages} {124003} (\bibinfo {year}
+  {2013}{\natexlab{a}})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Keppel}(2013{\natexlab{b}})}]{1307.4158}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {D.}~\bibnamefont
+  {Keppel}},\ }\href@noop {} {\enquote {\bibinfo {title} {Metrics for
+  multi-detector template placement in searches for short-duration
+  nonprecessing inspiral gravitational-wave signals},}\ } (\bibinfo {year}
+  {2013}{\natexlab{b}}),\ \Eprint {http://arxiv.org/abs/arXiv:1307.4158}
+  {arXiv:1307.4158} \BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Privitera}\ \emph {et~al.}(2014)\citenamefont
+  {Privitera}, \citenamefont {Mohapatra}, \citenamefont {Ajith}, \citenamefont
+  {Cannon}, \citenamefont {Fotopoulos}, \citenamefont {Frei}, \citenamefont
+  {Hanna}, \citenamefont {Weinstein},\ and\ \citenamefont
+  {Whelan}}]{PhysRevD.89.024003}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
+  {Privitera}}, \bibinfo {author} {\bibfnamefont {S.~R.~P.}\ \bibnamefont
+  {Mohapatra}}, \bibinfo {author} {\bibfnamefont {P.}~\bibnamefont {Ajith}},
+  \bibinfo {author} {\bibfnamefont {K.}~\bibnamefont {Cannon}}, \bibinfo
+  {author} {\bibfnamefont {N.}~\bibnamefont {Fotopoulos}}, \bibinfo {author}
+  {\bibfnamefont {M.~A.}\ \bibnamefont {Frei}}, \bibinfo {author}
+  {\bibfnamefont {C.}~\bibnamefont {Hanna}}, \bibinfo {author} {\bibfnamefont
+  {A.~J.}\ \bibnamefont {Weinstein}}, \ and\ \bibinfo {author} {\bibfnamefont
+  {J.~T.}\ \bibnamefont {Whelan}},\ }\href {\doibase
+  10.1103/PhysRevD.89.024003} {\bibfield  {journal} {\bibinfo  {journal} {Phys.
+  Rev. D}\ }\textbf {\bibinfo {volume} {89}},\ \bibinfo {pages} {024003}
+  (\bibinfo {year} {2014})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Capano}\ \emph {et~al.}(2016)\citenamefont {Capano},
+  \citenamefont {Harry}, \citenamefont {Privitera},\ and\ \citenamefont
+  {Buonanno}}]{PhysRevD.93.124007}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {C.}~\bibnamefont
+  {Capano}}, \bibinfo {author} {\bibfnamefont {I.}~\bibnamefont {Harry}},
+  \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont {Privitera}}, \ and\
+  \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont {Buonanno}},\ }\href
+  {\doibase 10.1103/PhysRevD.93.124007} {\bibfield  {journal} {\bibinfo
+  {journal} {Phys. Rev. D}\ }\textbf {\bibinfo {volume} {93}},\ \bibinfo
+  {pages} {124007} (\bibinfo {year} {2016})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Krizhevsky}\ \emph {et~al.}(2012)\citenamefont
+  {Krizhevsky}, \citenamefont {Sutskever},\ and\ \citenamefont
+  {Hinton}}]{NIPS2012_4824}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Krizhevsky}}, \bibinfo {author} {\bibfnamefont {I.}~\bibnamefont
+  {Sutskever}}, \ and\ \bibinfo {author} {\bibfnamefont {G.~E.}\ \bibnamefont
+  {Hinton}},\ }in\ \href
+  {http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf}
+  {\emph {\bibinfo {booktitle} {Advances in Neural Information Processing
+  Systems 25}}},\ \bibinfo {editor} {edited by\ \bibinfo {editor}
+  {\bibfnamefont {F.}~\bibnamefont {Pereira}}, \bibinfo {editor} {\bibfnamefont
+  {C.~J.~C.}\ \bibnamefont {Burges}}, \bibinfo {editor} {\bibfnamefont
+  {L.}~\bibnamefont {Bottou}}, \ and\ \bibinfo {editor} {\bibfnamefont {K.~Q.}\
+  \bibnamefont {Weinberger}}}\ (\bibinfo  {publisher} {Curran Associates,
+  Inc.},\ \bibinfo {year} {2012})\ pp.\ \bibinfo {pages}
+  {1097--1105}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Goodfellow}\ \emph {et~al.}(2014)\citenamefont
+  {Goodfellow}, \citenamefont {Pouget-Abadie}, \citenamefont {Mirza},
+  \citenamefont {Xu}, \citenamefont {Warde-Farley}, \citenamefont {Ozair},
+  \citenamefont {Courville},\ and\ \citenamefont {Bengio}}]{1406.2661}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {I.~J.}\ \bibnamefont
+  {Goodfellow}}, \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont
+  {Pouget-Abadie}}, \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
+  {Mirza}}, \bibinfo {author} {\bibfnamefont {B.}~\bibnamefont {Xu}}, \bibinfo
+  {author} {\bibfnamefont {D.}~\bibnamefont {Warde-Farley}}, \bibinfo {author}
+  {\bibfnamefont {S.}~\bibnamefont {Ozair}}, \bibinfo {author} {\bibfnamefont
+  {A.}~\bibnamefont {Courville}}, \ and\ \bibinfo {author} {\bibfnamefont
+  {Y.}~\bibnamefont {Bengio}},\ }\href@noop {} {\enquote {\bibinfo {title}
+  {Generative adversarial networks},}\ } (\bibinfo {year} {2014}),\ \Eprint
+  {http://arxiv.org/abs/arXiv:1406.2661} {arXiv:1406.2661} \BibitemShut
+  {NoStop}%
+\bibitem [{\citenamefont {Simonyan}\ and\ \citenamefont
+  {Zisserman}(2014)}]{1409.1556}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {K.}~\bibnamefont
+  {Simonyan}}\ and\ \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Zisserman}},\ }\href@noop {} {\enquote {\bibinfo {title} {Very deep
+  convolutional networks for large-scale image recognition},}\ } (\bibinfo
+  {year} {2014}),\ \Eprint {http://arxiv.org/abs/arXiv:1409.1556}
+  {arXiv:1409.1556} \BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Chen}\ \emph {et~al.}(2014)\citenamefont {Chen},
+  \citenamefont {Papandreou}, \citenamefont {Kokkinos}, \citenamefont
+  {Murphy},\ and\ \citenamefont {Yuille}}]{1412.7062}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {L.-C.}\ \bibnamefont
+  {Chen}}, \bibinfo {author} {\bibfnamefont {G.}~\bibnamefont {Papandreou}},
+  \bibinfo {author} {\bibfnamefont {I.}~\bibnamefont {Kokkinos}}, \bibinfo
+  {author} {\bibfnamefont {K.}~\bibnamefont {Murphy}}, \ and\ \bibinfo {author}
+  {\bibfnamefont {A.~L.}\ \bibnamefont {Yuille}},\ }\href@noop {} {\enquote
+  {\bibinfo {title} {Semantic image segmentation with deep convolutional nets
+  and fully connected crfs},}\ } (\bibinfo {year} {2014}),\ \Eprint
+  {http://arxiv.org/abs/arXiv:1412.7062} {arXiv:1412.7062} \BibitemShut
+  {NoStop}%
+\bibitem [{\citenamefont {Zeiler}\ and\ \citenamefont
+  {Fergus}(2013)}]{1311.2901}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {M.~D.}\ \bibnamefont
+  {Zeiler}}\ and\ \bibinfo {author} {\bibfnamefont {R.}~\bibnamefont
+  {Fergus}},\ }\href@noop {} {\enquote {\bibinfo {title} {Visualizing and
+  understanding convolutional networks},}\ } (\bibinfo {year} {2013}),\ \Eprint
+  {http://arxiv.org/abs/arXiv:1311.2901} {arXiv:1311.2901} \BibitemShut
+  {NoStop}%
+\bibitem [{\citenamefont {Szegedy}\ \emph {et~al.}(2014)\citenamefont
+  {Szegedy}, \citenamefont {Liu}, \citenamefont {Jia}, \citenamefont
+  {Sermanet}, \citenamefont {Reed}, \citenamefont {Anguelov}, \citenamefont
+  {Erhan}, \citenamefont {Vanhoucke},\ and\ \citenamefont
+  {Rabinovich}}]{1409.4842}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {C.}~\bibnamefont
+  {Szegedy}}, \bibinfo {author} {\bibfnamefont {W.}~\bibnamefont {Liu}},
+  \bibinfo {author} {\bibfnamefont {Y.}~\bibnamefont {Jia}}, \bibinfo {author}
+  {\bibfnamefont {P.}~\bibnamefont {Sermanet}}, \bibinfo {author}
+  {\bibfnamefont {S.}~\bibnamefont {Reed}}, \bibinfo {author} {\bibfnamefont
+  {D.}~\bibnamefont {Anguelov}}, \bibinfo {author} {\bibfnamefont
+  {D.}~\bibnamefont {Erhan}}, \bibinfo {author} {\bibfnamefont
+  {V.}~\bibnamefont {Vanhoucke}}, \ and\ \bibinfo {author} {\bibfnamefont
+  {A.}~\bibnamefont {Rabinovich}},\ }\href@noop {} {\enquote {\bibinfo {title}
+  {Going deeper with convolutions},}\ } (\bibinfo {year} {2014}),\ \Eprint
+  {http://arxiv.org/abs/arXiv:1409.4842} {arXiv:1409.4842} \BibitemShut
+  {NoStop}%
+\bibitem [{\citenamefont {Lecun}\ \emph {et~al.}(1998)\citenamefont {Lecun},
+  \citenamefont {Bottou}, \citenamefont {Bengio},\ and\ \citenamefont
+  {Haffner}}]{726791}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {Y.}~\bibnamefont
+  {Lecun}}, \bibinfo {author} {\bibfnamefont {L.}~\bibnamefont {Bottou}},
+  \bibinfo {author} {\bibfnamefont {Y.}~\bibnamefont {Bengio}}, \ and\ \bibinfo
+  {author} {\bibfnamefont {P.}~\bibnamefont {Haffner}},\ }\href {\doibase
+  10.1109/5.726791} {\bibfield  {journal} {\bibinfo  {journal} {Proceedings of
+  the IEEE}\ }\textbf {\bibinfo {volume} {86}},\ \bibinfo {pages} {2278}
+  (\bibinfo {year} {1998})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Abadi}\ \emph {et~al.}(2015)\citenamefont {Abadi},
+  \citenamefont {Agarwal}, \citenamefont {Barham}, \citenamefont {Brevdo},
+  \citenamefont {Chen}, \citenamefont {Citro}, \citenamefont {Corrado},
+  \citenamefont {Davis}, \citenamefont {Dean}, \citenamefont {Devin} \emph
+  {et~al.}}]{tensorflow2015-whitepaper}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
+  {Abadi}}, \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont {Agarwal}},
+  \bibinfo {author} {\bibfnamefont {P.}~\bibnamefont {Barham}}, \bibinfo
+  {author} {\bibfnamefont {E.}~\bibnamefont {Brevdo}}, \bibinfo {author}
+  {\bibfnamefont {Z.}~\bibnamefont {Chen}}, \bibinfo {author} {\bibfnamefont
+  {C.}~\bibnamefont {Citro}}, \bibinfo {author} {\bibfnamefont {G.~S.}\
+  \bibnamefont {Corrado}}, \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Davis}}, \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Dean}},
+  \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {Devin}},  \emph
+  {et~al.},\ }\href {https://www.tensorflow.org/} {\enquote {\bibinfo {title}
+  {{TensorFlow}: Large-scale machine learning on heterogeneous systems},}\ }
+  (\bibinfo {year} {2015}),\ \bibinfo {note} {software available from
+  tensorflow.org}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Husa}\ \emph {et~al.}(2016)\citenamefont {Husa},
+  \citenamefont {Khan}, \citenamefont {Hannam}, \citenamefont {P\"urrer},
+  \citenamefont {Ohme}, \citenamefont {Forteza},\ and\ \citenamefont
+  {Boh\'e}}]{PhysRevD.93.044006}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
+  {Husa}}, \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont {Khan}}, \bibinfo
+  {author} {\bibfnamefont {M.}~\bibnamefont {Hannam}}, \bibinfo {author}
+  {\bibfnamefont {M.}~\bibnamefont {P\"urrer}}, \bibinfo {author}
+  {\bibfnamefont {F.}~\bibnamefont {Ohme}}, \bibinfo {author} {\bibfnamefont
+  {X.~J.}\ \bibnamefont {Forteza}}, \ and\ \bibinfo {author} {\bibfnamefont
+  {A.}~\bibnamefont {Boh\'e}},\ }\href {\doibase 10.1103/PhysRevD.93.044006}
+  {\bibfield  {journal} {\bibinfo  {journal} {Phys. Rev. D}\ }\textbf {\bibinfo
+  {volume} {93}},\ \bibinfo {pages} {044006} (\bibinfo {year}
+  {2016})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Khan}\ \emph {et~al.}(2016)\citenamefont {Khan},
+  \citenamefont {Husa}, \citenamefont {Hannam}, \citenamefont {Ohme},
+  \citenamefont {P\"urrer}, \citenamefont {Forteza},\ and\ \citenamefont
+  {Boh\'e}}]{PhysRevD.93.044007}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {S.}~\bibnamefont
+  {Khan}}, \bibinfo {author} {\bibfnamefont {S.}~\bibnamefont {Husa}}, \bibinfo
+  {author} {\bibfnamefont {M.}~\bibnamefont {Hannam}}, \bibinfo {author}
+  {\bibfnamefont {F.}~\bibnamefont {Ohme}}, \bibinfo {author} {\bibfnamefont
+  {M.}~\bibnamefont {P\"urrer}}, \bibinfo {author} {\bibfnamefont {X.~J.}\
+  \bibnamefont {Forteza}}, \ and\ \bibinfo {author} {\bibfnamefont
+  {A.}~\bibnamefont {Boh\'e}},\ }\href {\doibase 10.1103/PhysRevD.93.044007}
+  {\bibfield  {journal} {\bibinfo  {journal} {Phys. Rev. D}\ }\textbf {\bibinfo
+  {volume} {93}},\ \bibinfo {pages} {044007} (\bibinfo {year}
+  {2016})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Sutskever}\ \emph {et~al.}(2013)\citenamefont
+  {Sutskever}, \citenamefont {Martens}, \citenamefont {Dahl},\ and\
+  \citenamefont {Hinton}}]{Sutskever:2013:IIM:3042817.3043064}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {I.}~\bibnamefont
+  {Sutskever}}, \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Martens}},
+  \bibinfo {author} {\bibfnamefont {G.}~\bibnamefont {Dahl}}, \ and\ \bibinfo
+  {author} {\bibfnamefont {G.}~\bibnamefont {Hinton}},\ }in\ \href
+  {http://dl.acm.org/citation.cfm?id=3042817.3043064} {\emph {\bibinfo
+  {booktitle} {Proceedings of the 30th International Conference on
+  International Conference on Machine Learning - Volume 28}}},\ \bibinfo
+  {series and number} {ICML'13}\ (\bibinfo  {publisher} {JMLR.org},\ \bibinfo
+  {year} {2013})\ pp.\ \bibinfo {pages} {III--1139--III--1147}\BibitemShut
+  {NoStop}%
+\bibitem [{\citenamefont {Vallisneri}\ \emph {et~al.}(2015)\citenamefont
+  {Vallisneri}, \citenamefont {Kanner}, \citenamefont {Williams}, \citenamefont
+  {Weinstein},\ and\ \citenamefont {Stephens}}]{1742-6596-610-1-012021}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
+  {Vallisneri}}, \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Kanner}},
+  \bibinfo {author} {\bibfnamefont {R.}~\bibnamefont {Williams}}, \bibinfo
+  {author} {\bibfnamefont {A.}~\bibnamefont {Weinstein}}, \ and\ \bibinfo
+  {author} {\bibfnamefont {B.}~\bibnamefont {Stephens}},\ }\href
+  {http://stacks.iop.org/1742-6596/610/i=1/a=012021} {\bibfield  {journal}
+  {\bibinfo  {journal} {Journal of Physics: Conference Series}\ }\textbf
+  {\bibinfo {volume} {610}},\ \bibinfo {pages} {012021} (\bibinfo {year}
+  {2015})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Allen}\ \emph {et~al.}(2012)\citenamefont {Allen},
+  \citenamefont {Anderson}, \citenamefont {Brady}, \citenamefont {Brown},\ and\
+  \citenamefont {Creighton}}]{PhysRevD.85.122006}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {B.}~\bibnamefont
+  {Allen}}, \bibinfo {author} {\bibfnamefont {W.~G.}\ \bibnamefont {Anderson}},
+  \bibinfo {author} {\bibfnamefont {P.~R.}\ \bibnamefont {Brady}}, \bibinfo
+  {author} {\bibfnamefont {D.~A.}\ \bibnamefont {Brown}}, \ and\ \bibinfo
+  {author} {\bibfnamefont {J.~D.~E.}\ \bibnamefont {Creighton}},\ }\href
+  {\doibase 10.1103/PhysRevD.85.122006} {\bibfield  {journal} {\bibinfo
+  {journal} {Phys. Rev. D}\ }\textbf {\bibinfo {volume} {85}},\ \bibinfo
+  {pages} {122006} (\bibinfo {year} {2012})}\BibitemShut {NoStop}%
 \end{thebibliography}%
