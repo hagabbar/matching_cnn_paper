@@ -6,7 +6,7 @@
 %Control: page (0) single
 %Control: year (1) truncated
 %Control: production of eprint (0) enabled
-\begin{thebibliography}{30}%
+\begin{thebibliography}{32}%
 \makeatletter
 \providecommand \@ifxundefined [1]{%
  \@ifx{#1\undefined}
@@ -329,6 +329,24 @@
   {Going deeper with convolutions},}\ } (\bibinfo {year} {2014}),\ \Eprint
   {http://arxiv.org/abs/arXiv:1409.4842} {arXiv:1409.4842} \BibitemShut
   {NoStop}%
+\bibitem [{\citenamefont {Zhang}\ \emph {et~al.}(2016)\citenamefont {Zhang},
+  \citenamefont {Isola},\ and\ \citenamefont {Efros}}]{1603.08511}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {R.}~\bibnamefont
+  {Zhang}}, \bibinfo {author} {\bibfnamefont {P.}~\bibnamefont {Isola}}, \ and\
+  \bibinfo {author} {\bibfnamefont {A.~A.}\ \bibnamefont {Efros}},\ }\href@noop
+  {} {\enquote {\bibinfo {title} {Colorful image colorization},}\ } (\bibinfo
+  {year} {2016}),\ \Eprint {http://arxiv.org/abs/arXiv:1603.08511}
+  {arXiv:1603.08511} \BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Karpathy}\ and\ \citenamefont
+  {Fei-Fei}(2014)}]{1412.2306}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Karpathy}}\ and\ \bibinfo {author} {\bibfnamefont {L.}~\bibnamefont
+  {Fei-Fei}},\ }\href@noop {} {\enquote {\bibinfo {title} {Deep visual-semantic
+  alignments for generating image descriptions},}\ } (\bibinfo {year} {2014}),\
+  \Eprint {http://arxiv.org/abs/arXiv:1412.2306} {arXiv:1412.2306} \BibitemShut
+  {NoStop}%
 \bibitem [{\citenamefont {Lecun}\ \emph {et~al.}(1998)\citenamefont {Lecun},
   \citenamefont {Bottou}, \citenamefont {Bengio},\ and\ \citenamefont
   {Haffner}}]{726791}%
@@ -340,25 +358,6 @@
   10.1109/5.726791} {\bibfield  {journal} {\bibinfo  {journal} {Proceedings of
   the IEEE}\ }\textbf {\bibinfo {volume} {86}},\ \bibinfo {pages} {2278}
   (\bibinfo {year} {1998})}\BibitemShut {NoStop}%
-\bibitem [{\citenamefont {Abadi}\ \emph {et~al.}(2015)\citenamefont {Abadi},
-  \citenamefont {Agarwal}, \citenamefont {Barham}, \citenamefont {Brevdo},
-  \citenamefont {Chen}, \citenamefont {Citro}, \citenamefont {Corrado},
-  \citenamefont {Davis}, \citenamefont {Dean}, \citenamefont {Devin} \emph
-  {et~al.}}]{tensorflow2015-whitepaper}%
-  \BibitemOpen
-  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
-  {Abadi}}, \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont {Agarwal}},
-  \bibinfo {author} {\bibfnamefont {P.}~\bibnamefont {Barham}}, \bibinfo
-  {author} {\bibfnamefont {E.}~\bibnamefont {Brevdo}}, \bibinfo {author}
-  {\bibfnamefont {Z.}~\bibnamefont {Chen}}, \bibinfo {author} {\bibfnamefont
-  {C.}~\bibnamefont {Citro}}, \bibinfo {author} {\bibfnamefont {G.~S.}\
-  \bibnamefont {Corrado}}, \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
-  {Davis}}, \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Dean}},
-  \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {Devin}},  \emph
-  {et~al.},\ }\href {https://www.tensorflow.org/} {\enquote {\bibinfo {title}
-  {{TensorFlow}: Large-scale machine learning on heterogeneous systems},}\ }
-  (\bibinfo {year} {2015}),\ \bibinfo {note} {software available from
-  tensorflow.org}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Husa}\ \emph {et~al.}(2016)\citenamefont {Husa},
   \citenamefont {Khan}, \citenamefont {Hannam}, \citenamefont {P\"urrer},
   \citenamefont {Ohme}, \citenamefont {Forteza},\ and\ \citenamefont
@@ -389,6 +388,25 @@
   {\bibfield  {journal} {\bibinfo  {journal} {Phys. Rev. D}\ }\textbf {\bibinfo
   {volume} {93}},\ \bibinfo {pages} {044007} (\bibinfo {year}
   {2016})}\BibitemShut {NoStop}%
+\bibitem [{\citenamefont {Abadi}\ \emph {et~al.}(2015)\citenamefont {Abadi},
+  \citenamefont {Agarwal}, \citenamefont {Barham}, \citenamefont {Brevdo},
+  \citenamefont {Chen}, \citenamefont {Citro}, \citenamefont {Corrado},
+  \citenamefont {Davis}, \citenamefont {Dean}, \citenamefont {Devin} \emph
+  {et~al.}}]{tensorflow2015-whitepaper}%
+  \BibitemOpen
+  \bibfield  {author} {\bibinfo {author} {\bibfnamefont {M.}~\bibnamefont
+  {Abadi}}, \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont {Agarwal}},
+  \bibinfo {author} {\bibfnamefont {P.}~\bibnamefont {Barham}}, \bibinfo
+  {author} {\bibfnamefont {E.}~\bibnamefont {Brevdo}}, \bibinfo {author}
+  {\bibfnamefont {Z.}~\bibnamefont {Chen}}, \bibinfo {author} {\bibfnamefont
+  {C.}~\bibnamefont {Citro}}, \bibinfo {author} {\bibfnamefont {G.~S.}\
+  \bibnamefont {Corrado}}, \bibinfo {author} {\bibfnamefont {A.}~\bibnamefont
+  {Davis}}, \bibinfo {author} {\bibfnamefont {J.}~\bibnamefont {Dean}},
+  \bibinfo {author} {\bibfnamefont {M.}~\bibnamefont {Devin}},  \emph
+  {et~al.},\ }\href {https://www.tensorflow.org/} {\enquote {\bibinfo {title}
+  {{TensorFlow}: Large-scale machine learning on heterogeneous systems},}\ }
+  (\bibinfo {year} {2015}),\ \bibinfo {note} {software available from
+  tensorflow.org}\BibitemShut {NoStop}%
 \bibitem [{\citenamefont {Sutskever}\ \emph {et~al.}(2013)\citenamefont
   {Sutskever}, \citenamefont {Martens}, \citenamefont {Dahl},\ and\
   \citenamefont {Hinton}}]{Sutskever:2013:IIM:3042817.3043064}%
