@@ -1,0 +1,7 @@
+__tmp
+tag.tex
+*.blg
+*.log
+*.pdf
+*.bcf
+*.aux
