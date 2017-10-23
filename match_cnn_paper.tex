@@ -126,7 +126,11 @@ Advanced LIGO and find the methods to be comparable.
 
 \acrodef{GW}[GW]{gravitational-wave}
 \acrodef{BBH}[BBH]{binary black hole}
+\acrodef{SNR}[SNR]{signal-to-noise ratio}
 \acrodef{GPU}[GPU]{graphics processing unit}
+\acrodef{PSD}[PSD]{power spectral density}
+\acrodef{BNS}[BNS]{binary neutron star}
+\acrodef{FFT}[FFT]{fast Fourier transform}
 
 %\tableofcontents
 
@@ -244,43 +248,94 @@ technique, and comment on future improvements and applications of this work.
 % for the result takes precedence. You can submit Supplementary Material or,
 % better, an accompanying longer paper.
 %
-\textit{Sample Simulation Methods} --- In this analysis, in order to make the
-problem simple, we only distinguish between BBH merger signals injected in
-whitened Gaussian noise from pure whitened Gaussian noise. For our noise
-signals we generate a power spectrum density (PSD) that is comparable to aLIGO
-design sensitivity using a library of gravitational wave data analysis routines
-called \texttt{LALSuite}. That PSD is then converted to an amplitude time
-series where a random phase shift is given to each spectral component. The
-inverse real fast fourier transform (IFFT) is then applied and returns a
-Gaussian time series.
+\textit{Simulation details} --- 
+%
+% describe the simulations
+%
+In order to make a clean comparison between a deep learning approach and
+matched-filtering, we distinguish between only 2 cases, \ac{BBH} merger signals
+in additive Gaussian noise (signal+noise) and Gaussian noise alone
+(noise-only). We choose to focus on \ac{BBH} signals only rather than including
+\ac{BNS} systems for the reason that \ac{BBH} systems are higher mass systems
+and have shorter duration signals once the inspiralling systems have entered
+the Advanced LIGO frequency band. They typically then merge on the timescale of
+$\mathcal{O}(1)$ sec allowing us to use a relatively small datasets for this
+study. The input datasets consist of simulated gravitational wave timeseries
+data that has been whitened in the frequency domain. This process rescales the
+noise contribution at each frequency to have equal power resulting in "white"
+noise. The signal (if present) has it's constituent frequency components
+reweighted according to the \ac{PSD} used.    
 
-Injections are made using the IMRPhenomD type waveform
-\cite{PhysRevD.93.044006, PhysRevD.93.044007} where the component masses of the
-waveform range from 5\(M_\odot\) to 100\(M_\odot\), $m_{1} > m_{2}$, and all
-with zero spin. Each injection is given a random sky location, polarization,
-phase, and inclination angle. The waveforms are then randomly placed within the
-time series, see figure \ref{fig:waveform}, where the peak of the waveform is
-within the last $20$\% of the time series. The waveform is normalised using the
-signal-to-noise ratio (SNR), where SNR is defined as
+%
+% describe the noise (Gaussian)
+%
+Our noise is generated from a \ac{PSD} equivelent to the projected Advanced
+LIGO design sensitivity. The \ac{PSD} is used to draw random complex Gaussian
+amplitudes to construct frequency series to which we apply an inverse \ac{FFT}
+to obtain time domain realisations representing LIGO detector noise.
 
+%
+% describe the signal generation 
+%
+Signals are simulated using a library of gravitational wave data analysis
+routines called \texttt{LALSuite}. We use the IMRPhenomD type
+waveform~\cite{PhysRevD.93.044006, PhysRevD.93.044007} which models the
+inspiral, merger and ringdown components of \ac{BBH} gravitational wave
+signals. We simulate systems with component black hole masses in the range from
+5\(M_\odot\) to 100\(M_\odot\), $m_{1} > m_{2}$, and all with zero
+spin~\chris{We ned to describe how we draw these masses}. Each
+injection is given a random right ascension and declination assuming an
+isotropic prior on the sky, the polarization angle and phase are drawen from a
+uniform prior on the range $[0,\pi]$, and the inclination angle is drawn such
+that the cosine of inclination is uniform on the range $[-1,1]$. The waveforms
+are then randomly placed within the time series, see figure \ref{fig:waveform},
+such that the peak of the waveform is within the final $20$\% of the time
+series. The waveform amplitude is scaled to achieve a predefined optimnal
+\ac{SNR} defined as
+%
+% the optimal SNR
+%
 \begin{equation} \label{eq:snr}
-\rho_{opt}^{2} = 4 \int_{0}^{\infty} \frac{\lvert \hat{h(f)}\rvert^{2}}{S_{n}(f)} \mathrm{d}f,
+\rho_{\mathrm{opt}}^{2} = 4 \int_{f_{\mathrm{min}}}^{\infty} \frac{\lvert
+\tilde{h(f)}\rvert^{2}}{S_{\mathrm{n}}(f)} \mathrm{d}f,
 \end{equation}
+%
+where $\tilde{h(f)}$ is the frequency domain representation of the
+gravitational wave strain,m $S_{\mathrm{n}}(f)$ is the detector noise \ac{PSD},
+and $f_{\mathrm{min}}$ is the frequency at which we start to accumulate
+\ac{SNR}. The simulated time series were chosen to be 1~sec in duration sampled
+at 8192 Hz and therefore in our case we consider $f_{\mathrm{min}}$ as the
+frequency of the gravitational wave signal at the start of the sample
+timeseries. An example timeseries can be seen in Figure~\ref{fig:waveform}. 
 
-where $\rho_{opt}$ is the optimal SNR, $\hat{h(f)}$ is the strain amplitude,
-and $S_{n}(f)$ is the PSD. The time series for both classes of signals are 1s
-in duration sampled at 8192 Hz. An example of such a time series can be seen in
-figure \ref{fig:waveform}. 
+%
+% How many sampes did we make
+%
+Our datasets contain 50,000 independent timeseries with 50\% containing
+signal+noise and 50\% noise-only. For each simulated gravitational wave signal
+(drawn from the signal parameter space) we generate 25 independent noise
+realisations from which 25 signal+noise samples are produced. This procedure is
+standard within machine learning classification and allows the network to learn
+how to identify individual signals under different noise scenarios. Each
+noise-only sample consists of an independent noise realisation and in total we
+use 1000 unique waveforms in the $m_{1},m_{2}$ mass space. Each data sample
+timeseries is then represented in the form of a $1 \times 8192$ pixel image
+with the grayscale intensity of each pixel proportional to the gravitational
+wave amplitude.
 
-In our runs we used $1,000$ Gaussian noise signals and $1,000$ unique
-injections with over $25$ varrying noise realizations resulting in a total of
-$50,000$ samples. The samples are then arranged in the form of a $1 \times
-8192$ pixel sample which is scaled by the GW strain amplitude, $h(t)$, over one
-color channel (grayscale). $70\%$ of these samples are used for training,
-$15\%$ for validation, and $15\%$ for testing. 
+%
+% How we split training, validation, and testing
+%
+Supervised deep learning approaches to classification problems require
+datasets to be sub-divided into training, validation, and testing sets.
+Training sets are the data samples that the network learns from, the validation
+set allows the developer to verify that the network is learning correctly, and
+the test set is used to quantify the performance of the trained network.  
+Of the datasest generated we use $70\%$ of these samples for training,
+$15\%$ for validation, and $15\%$ for testing.
 
 \begin{figure} 
-\includegraphics[width=0.5\textwidth]{figures/waveform.pdf}
+\includegraphics[width=\columnwidth]{figures/waveform.pdf}
 \caption{\label{fig:waveform} The amplitude time series shown above illustrates
 an injection waveform at SNR (\textbf{need value}) superimposed on a whitened
 Gaussian noise time series with the injection waveform signal injected into the
@@ -289,16 +344,23 @@ pixel image. Those images are then used as our training, validation and testing
 samples.}
 \end{figure}
 
-\textit{Network Structure} --- In our model, we use a variant of a deep
-learning algorithm called a convolutional neural network (CNN) \cite{726791}.
-CNN layers are composed of five primary variants: input, convolutional,
-activation, pooling, and fully-connected. Where input holds the raw pixel
-values of the sample image, the convolutional layer computes the convolution
-between the kernel and a local region of the input layer volume, activation
-applies an elementwise activation function leaving the size of the previous
-layer's output volume unchanged, pooling performs a downsampling operation
-along the spatial dimensions, and the fully-connected layer computes the class
-scores using an error function, cross-entropy, defined as
+%
+% define the CNN structure 
+% 
+\textit{Network Structure} --- 
+%
+%
+%
+In our model, we use a variant of a deep learning algorithm called a
+convolutional neural network (CNN) \cite{726791}.  CNN layers are composed of
+five primary variants: input, convolutional, activation, pooling, and
+fully-connected. Where input holds the raw pixel values of the sample image,
+the convolutional layer computes the convolution between the kernel and a local
+region of the input layer volume, activation applies an elementwise activation
+function leaving the size of the previous layer's output volume unchanged,
+pooling performs a downsampling operation along the spatial dimensions, and the
+fully-connected layer computes the class scores using an error function,
+cross-entropy, defined as
 
 \begin{equation} \label{eq:loss}
 f_{\theta^{'}}(\theta) = -\sum_{i} \theta_{i}^{'} \mathrm{log}(\theta_{i}),
