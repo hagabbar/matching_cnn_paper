@@ -48,6 +48,8 @@ floatfix,
 \usepackage{lineno}
 \usepackage{color}
 \usepackage{acronym}
+\usepackage{multirow}
+\usepackage{tabularx}
 %\addbibresource{references.bib}
 \linenumbers % Commence numbering lines
 %\usepackage{hyperref}% add hypertext capabilities
@@ -66,6 +68,9 @@ floatfix,
 \newcommand{\dcc}{LIGO-PXXXXXXXX}
 
 \newcommand{\chris}[1]{\textbf{\textcolor{green}{CHRIS: #1}}}
+\newcommand{\michael}[1]{\textbf{\textcolor{red}{MICHAEL: #1}}}
+\newcommand{\hunter}[1]{\textbf{\textcolor{blue}{HUNTER: #1}}}
+\newcommand{\fergus}[1]{\textbf{\textcolor{cyan}{FERGUS: #1}}}
 
 %% ----- input git-version tag
 \input{tag.tex}
@@ -131,6 +136,8 @@ Advanced LIGO and find the methods to be comparable.
 \acrodef{PSD}[PSD]{power spectral density}
 \acrodef{BNS}[BNS]{binary neutron star}
 \acrodef{FFT}[FFT]{fast Fourier transform}
+\acrodef{CNN}[CNN]{convolutional neural network}
+\acrodef{ROC}[ROC]{receiver operator characteristic}
 
 %\tableofcontents
 
@@ -282,8 +289,8 @@ routines called \texttt{LALSuite}. We use the IMRPhenomD type
 waveform~\cite{PhysRevD.93.044006, PhysRevD.93.044007} which models the
 inspiral, merger and ringdown components of \ac{BBH} gravitational wave
 signals. We simulate systems with component black hole masses in the range from
-5\(M_\odot\) to 100\(M_\odot\), $m_{1} > m_{2}$, and all with zero
-spin~\chris{We ned to describe how we draw these masses}. Each
+5\(M_\odot\) to 100\(M_\odot\), $m_{1} > m_{2}$, and all with zero spin. The
+specific distribution of masses within these ranges is discussed later on. Each
 injection is given a random right ascension and declination assuming an
 isotropic prior on the sky, the polarization angle and phase are drawen from a
 uniform prior on the range $[0,\pi]$, and the inclination angle is drawn such
@@ -295,10 +302,9 @@ series. The waveform amplitude is scaled to achieve a predefined optimnal
 %
 % the optimal SNR
 %
-\begin{equation} \label{eq:snr}
-\rho_{\mathrm{opt}}^{2} = 4 \int_{f_{\mathrm{min}}}^{\infty} \frac{\lvert
-\tilde{h(f)}\rvert^{2}}{S_{\mathrm{n}}(f)} \mathrm{d}f,
-\end{equation}
+\begin{equation} \label{eq:snr} \rho_{\mathrm{opt}}^{2} = 4
+\int_{f_{\mathrm{min}}}^{\infty} \frac{\lvert
+\tilde{h(f)}\rvert^{2}}{S_{\mathrm{n}}(f)} \mathrm{d}f, \end{equation}
 %
 where $\tilde{h(f)}$ is the frequency domain representation of the
 gravitational wave strain,m $S_{\mathrm{n}}(f)$ is the detector noise \ac{PSD},
@@ -309,9 +315,20 @@ frequency of the gravitational wave signal at the start of the sample
 timeseries. An example timeseries can be seen in Figure~\ref{fig:waveform}. 
 
 %
+% How we split training, validation, and testing
+%
+Supervised deep learning approaches to classification problems require
+datasets to be sub-divided into training, validation, and testing sets.
+Training sets are the data samples that the network learns from, the validation
+set allows the developer to verify that the network is learning correctly, and
+the test set is used to quantify the performance of the trained network.
+Of the datasest generated we use $70\%$ of these samples for training,
+$15\%$ for validation, and $15\%$ for testing.
+
+%
 % How many sampes did we make
 %
-Our datasets contain 50,000 independent timeseries with 50\% containing
+Our training datasets contain 50,000 independent timeseries with 50\% containing
 signal+noise and 50\% noise-only. For each simulated gravitational wave signal
 (drawn from the signal parameter space) we generate 25 independent noise
 realisations from which 25 signal+noise samples are produced. This procedure is
@@ -324,66 +341,109 @@ with the grayscale intensity of each pixel proportional to the gravitational
 wave amplitude.
 
 %
-% How we split training, validation, and testing
+% explain the distinction on how the masses are distributed 
 %
-Supervised deep learning approaches to classification problems require
-datasets to be sub-divided into training, validation, and testing sets.
-Training sets are the data samples that the network learns from, the validation
-set allows the developer to verify that the network is learning correctly, and
-the test set is used to quantify the performance of the trained network.  
-Of the datasest generated we use $70\%$ of these samples for training,
-$15\%$ for validation, and $15\%$ for testing.
+We will only use the training set to teach the deep neural network about the
+signals that we wish to classify. For this reason we have chosen to distribute
+the masses of the training set according to the density of templates one would
+use in a matched filtering approach. It is logical to place waveforms closer in
+regions where the waveforms change rapidly and hence we distribute the masses
+according to the total mass $M\sim M^{10/3}$ and the symmetric mass ratio
+$\eta\sim \eta^{-3}$ where $M=m_{1}+m_{2}$ and $\eta=m_{1}m_{2}/M^{2}$. The
+validation, and crucially the testing set must be drawn from distributions that
+one would expect to see in nature and we therefore draw those masses from
+astrophysically motivated distributions where we assume $m_{1,2}\sim
+\log{m_{1,2}}$.   
+
 
 \begin{figure} 
 \includegraphics[width=\columnwidth]{figures/waveform.pdf}
-\caption{\label{fig:waveform} The amplitude time series shown above illustrates
-an injection waveform at SNR (\textbf{need value}) superimposed on a whitened
-Gaussian noise time series with the injection waveform signal injected into the
-noise. Sample time series such as this are then converted to a 1 $\times$ 8192
-pixel image. Those images are then used as our training, validation and testing
-samples.}
+\caption{\label{fig:waveform} A whitened noise-free time series of a \ac{BBH}
+signal (cyan) with component masses $m_{1}=?M_{\odot}$ and $m_{2}=?M_{\odot}$
+with optimal \ac{SNR} (\textbf{need value}). The dark blue timeseries shows the
+same gravitational wave signal with additive whitened Gaussian noise of unit
+variance. This latter timeseries is representative of the datasets we use to
+train, validate, and test our deep neural network.} 
 \end{figure}
 
 %
 % define the CNN structure 
 % 
-\textit{Network Structure} --- 
+\textit{The Deep Network approach} --- 
 %
-%
+% introduce convolutional neural networks
 %
 In our model, we use a variant of a deep learning algorithm called a
-convolutional neural network (CNN) \cite{726791}.  CNN layers are composed of
-five primary variants: input, convolutional, activation, pooling, and
-fully-connected. Where input holds the raw pixel values of the sample image,
-the convolutional layer computes the convolution between the kernel and a local
-region of the input layer volume, activation applies an elementwise activation
-function leaving the size of the previous layer's output volume unchanged,
-pooling performs a downsampling operation along the spatial dimensions, and the
-fully-connected layer computes the class scores using an error function,
-cross-entropy, defined as
-
+\ac{CNN}~\cite{726791}. The layers of such a network are composed of five
+primary variants: input, convolutional, activation, pooling, and
+fully-connected~\chris{Aren't all of our layers fully connected, don't your
+mean hidden layer?}. The input layer holds the raw pixel values of the sample
+image which in our case is a 1-dimensional timeseries vector.  Each neuron in
+the convolutional layer computes the convolution between an as yet undefined
+kernel or vector of pixel values and the outputs from the layer above it.
+Activation layers apply an elementwise non-linear activation function rescaling
+their inputs onto the range $[-1,1]$ and leaving the size of the previous
+layer's output unchanged. Pooling layers perform a downsampling operation along
+the spatial dimensions of their input essentially acting as a data reduction
+process speeding up the training of the network for minimal loss of
+information. Finally we have the fully-connected~\chris{hidden} layer that
+computes the class scores using an error function, cross-entropy, defined as
+~\chris{I'd like to get some more input on this final point since I don't
+understand it.}
+%
+% define the loss function
+%
 \begin{equation} \label{eq:loss}
 f_{\theta^{'}}(\theta) = -\sum_{i} \theta_{i}^{'} \mathrm{log}(\theta_{i}),
 \end{equation}
-
+%
 where $\theta_{i}$ is the predicted probability distribution of class $i$ and
 $\theta_{i}$ is the true probability for that class
-\cite{tensorflow2015-whitepaper}. 
+\cite{tensorflow2015-whitepaper}.~\chris{Some confusion here about notation,
+which one's primed and which one's not. Maybe need to try to explain what
+$\theta$ actually means?} 
 
-In order to achieve the optimal network, multiple sets of hyperparameters are
-tuned. First, we rescaled the data, but with the existing setup, this did not
-seem to improve upon the performance. We also attempted applying transfer
-learning where we used networks trained on successively higher SNR values,
-though performance benefits were minimal. Network depth was adjusted between 2
-to 10 convolutional layers. Our initial data set needed at least 4
+%
+% describe the network choices that we have
+%
+In order to optimise our network, multiple sets of hyper-parameters are
+tuned. We define hyper-parameters as those parameters that we are free to
+choose. Such parameters include the choice of the number and type of network
+layers, the number and size of neurons within each layer, the max-pooling
+parameters, the type of activation functions, preprocessing of input data, and
+the application (or otherwise) of specific deep learning techniques. We begin
+the entire process with the simplest network that provides a discernable level
+of effective classification. In most cases this consists of an input,
+convolutional, hidden, and logistic output layer.
+
+%
+% go into more detail about what we tried in network design
+%
+Within our optimisation process we experimented with rescaling the input data
+which we found to have minimal effect on the network performance. The reason
+for this is that our input data is whitened and our signals are buried beneath
+the noise. Therefore our data is essentially prescaled on a range
+$\pm\mathcal{O}(1)$ due to the natural variation of Gaussian noise. We also
+attempted applying transfer learning~\chris{can you add a reference for this?}
+where we used networks pre-trained on high \ac{SNR} datasets as starting points
+for application to successively lower \ac{SNR} datasets. We found that there
+were no performance benefits using this approach.  Network depth was adjusted
+between 2 and 10 convolutional layers.  Our initial data set needed at least 4
 convolutional layers. Later data sets with various noise realizations needed
 fewer convolutional layers to perform comparatively well, but adding more
-layers still seemed to improved performance. The inclusion of dropout was used
-within the fully-connected layers as a form of regularization.
+layers still seemed to improved performance.~\chris{The reader doesn't
+need/want to know about our previous data incarnations, just what we report
+here. Can you clarify the statement on optimisation on network layer?} The
+inclusion of dropout was used within the fully-connected layers as a form of
+regularization.
 
-For updating our weights and bias parameters (in order to minimize our loss
-function, $f(\theta)$, \eqref{eq:loss}) we settled on the nesterov momentum
-optimization function
+%
+% describe how the training itself works to optimise the weights and biases
+%
+For updating our weights and bias parameters~\chris{weights and biases have not
+been introduced yet, either describe them now or describe them earlier} (in
+order to minimize our loss function, $f(\theta)$, \eqref{eq:loss}) we settled
+on the Nesterov momentum optimization function
 
 \begin{equation} \label{eq:nesterov1}
 v_{i+1} = \mu v_{i} - \epsilon \nabla f(\theta_{i} + \mu v_{i}),
@@ -393,64 +453,121 @@ v_{i+1} = \mu v_{i} - \epsilon \nabla f(\theta_{i} + \mu v_{i}),
 \theta_{i+1} = \theta_{i} + v_{i+1},
 \end{equation} \\
 
-where $\epsilon > 0$ is the learning rate, $\mu \in [0,1]$ is the momentum
-coefficient, and $\nabla f(\theta_{i})$ is the gradient with respect to the
-weight vector $\theta_{i}$. Nesterov momentum was the ideal choice because of
-its prescient ability to approximate the next position of the weights and bias
-parameters which therefore gives a rough approximation of their values. Thus
-the gradient is calculated not with respect to the current parameters, but with
-respect to the approximate future positions of those parameters
-\cite{Sutskever:2013:IIM:3042817.3043064}. A further detailed description of
-the neural network architecture used can be found in Table \ref{table:network}.
+\chris{probably don't need these equations} where $\epsilon > 0$ is the
+learning rate, $\mu \in [0,1]$ is the momentum coefficient, and $\nabla
+f(\theta_{i})$ is the gradient with respect to the weight vector $\theta_{i}$.
+Nesterov momentum was the ideal choice because of its prescient ability to
+approximate the next position of the weights and bias parameters which
+therefore gives a rough approximation of their values. Thus the gradient is
+calculated not with respect to the current parameters, but with respect to the
+approximate future positions of those parameters
+\cite{Sutskever:2013:IIM:3042817.3043064}. Further detailed description of the
+neural network architecture used can be found in
+Table~\ref{table:network}.~\chris{I feel like the last paragraph needs to
+address the entire issue of what the training actually does. At the moment we
+introduce weights and biases without describing them and then spend all of the
+time talking about Nesterov momentum. Can we slim down the Nesterov stuff and
+mention some key concepts like gradient descent and back propagation and make
+sure to define weights and biases. We have to end up saying that the ranking
+statistic that we extract from the CNN analysis is the probability value in
+addition to the classification.}
 
-\begin{figure}[!h] 
-\includegraphics[width=0.5\textwidth]{figures/loss.pdf}
-\caption{\label{fig:loss_curve} The loss, accuracy and learning rate plots
-(shown above) illustrate how the network's performance is defined as a function
-of the number of training epochs. The goal is to minimize the loss function,
-which will in turn maximize the accuracy of the classifier. The first initial
-epochs see an exponential decrease in the loss function and then a slowly
-falling monotonic curve to follow. This indicates that the longer our network
-is trained, a limit with respect to the accuracy is approached. In our case, we
-cyclically adjust the learning rate to oscialte between $5 \times 10^{-4}$ and
-$1 \times 10^{-3}$ at a constant frequency. Studies have shown that this policy
-of learning rate adjustement (\textbf{should replace figure with better run})}
+\begin{figure} 
+\includegraphics[width=\columnwidth]{figures/loss.pdf}
+\caption{\label{fig:loss_curve} \chris{This figure isn't referred to anywhere
+in this paper. Do we need it if you're not referring the reader to it?} The
+loss, accuracy and learning rate~\chris{in the main text none of these
+quantities seem to be defined. This is a problem!} plots (shown above)
+illustrate how the network's performance is defined as a function of the number
+of training epochs~\chris{epochs are not defined in the main text}. The goal is
+to minimize the loss function, which will in turn maximize the accuracy of the
+classifier. The first initial epochs see an exponential decrease in the loss
+function and then a slowly falling monotonic curve to follow. This indicates
+that the longer our network is trained, a limit with respect to the accuracy is
+approached. In our case, we cyclically adjust the learning rate to oscilate
+between $5 \times 10^{-4}$ and $1 \times 10^{-3}$ at a constant frequency.
+Studies have shown that this policy of learning rate adjustement~\chris{finish
+this thought?} (\textbf{should replace figure with better run})~\chris{Also
+define exactly what run this was run on, what accuracy and loss were achieved
+and make sure that you show the typical number of epochs used in the analysis.
+Maybe use log-scale on the y-axis of the loss plot.}} 
 \end{figure}
 
-Largely following matched filtering techniques used on the LIGO Open Science
-Center optimal matched filter page \cite{1742-6596-610-1-012021} we compare our
-results to the standard optimal matched filtering process used by aLIGO
-\cite{PhysRevD.85.122006}. Considering the example of one candidate GW signal,
-we iterate over a comprehensive template bank. The template bank was generated
-using 8000 randomly sampled mass pairs from the same distribution with no
-adjustment to assure the parameter space was adequately covered. For each
-template, we compute the Fast Fourier Transform (FFT) of the data and the
-template, where the template has been zero padded in order for both to be of
-the same length. Finally, we multiply the fft'd template and data together and
-divide by the PSD. An inverse FFT is then applied in order to convert back to
-the time domain. The output is then normalized so that we have an expected
-value of 1 for pure Gaussian noise.
-
-\begin{table*}[]
-\centering
-\caption{The optimal network structure (seen below) was determined through
+\begin{table}[]
+\begin{tabular}{lcccccccccc}
+\hline
+\hline
+Parameter & \multicolumn{10}{c}{Layer}\\
+\cline{2-11}
+(Option) & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
+\hline
+Type & C & C & C & C & C & C & C & C & H & O \\
+No. Neurons  & 8  & 16  & 16 & 32 & 64 & 64 & 128 & 128 & 64  & 2  \\
+Filter Size  & 32 & 16  & 16 & 16 & 8  & 8  & 4   & 4   & n/a & n/a \\
+MaxPool Size & yes & no & no & no & yes & no & no & yes & no & no \\
+Drop out  & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0.5 & 0.5 \\
+Act. Func. & Elu & Elu & Elu & Elu & Elu & Elu & Elu & Elu & Elu & SMax \\
+\hline
+\end{tabular}
+\caption{The optimal network structure was determined through
 multiple tests and tunnings of hyperparameters by means of trial and error. The
 network consists of 8 convolutional layers, followed by 2 fully-connected
 layers. Max-pooling is performed on the first, fifth, and eigth layer, whereas
 dropout is only performed on the two fully-connected layers. Each layer uses an
 Elu activation function while the last layer uses a Softmax activation function
 in order to normalize the output values to be between zero and one so as to
-give a probability value for each class.} \label{table:network}
-\begin{tabular}{lllllllllll}
-                    & layer 1 & layer 2 & layer 3 & layer 4 & layer 5 & layer 6 & layer 7 & layer 8 & layer 9 & layer 10 \\
-Number of Kernals   & 8       & 16      & 16      & 32      & 64      & 64      & 128     & 128     & 64      & 2        \\
-Filter Size         & 32      & 16      & 16      & 16      & 8       & 8       & 4       & 4       & n/a     & n/a      \\
-Max Pooling         & yes       & no       & no       & no       & yes       & no       & no       & yes       & no     & no      \\
-Fully Connected     & no     & no     & no     & no     & no     & no     & no     & no     & yes     & yes      \\
-Drop out            & 0.0     & 0.0     & 0.0     & 0.0     & 0.0     & 0.0     & 0.0     & 0.0     & 0.5     & 0.5      \\
-Activation Function & Elu     & Elu     & Elu     & Elu     & Elu     & Elu     & Elu     & Elu     & Elu     & Softmax 
-\end{tabular}
-\end{table*}
+give a probability value for each class.\label{table:network}}
+\end{table}
+
+%
+% define the matched filter analysis
+%
+\textit{Applying matched-filtering} ---
+%
+% introduce matched filtering
+%
+In order to establish the power of the deep learning approach we must compare
+our results to the standard matched filtering process used in the detection of
+compact binary coalescence
+signals~\cite{PhysRevD.85.122006,2013PhRvD..87b4033B}. The ranking statistic
+used in this case is the matched-filter \ac{SNR} analytically maximised over
+arrival time, phase and distance. By first defining the noise weighted inner
+product as a function of a time shift $\Delta t$ between the arrival time of
+the signal and the template,
+%
+% define the matched-filter SNR
+%
+\begin{equation}
+(a\mid b)[\Delta t] =
+4\int_{f_{\mathrm{min}}}^{\infty}\frac{\tilde{a}(f)\tilde{b}^{*}(f)}{S_{\mathrm{n}}(f)}e^{2\pi i
+f\Delta t}\,df,
+\end{equation}
+%
+we can construct the matched-filter \ac{SNR} as 
+%
+\begin{equation}
+\rho^{2}[\Delta t]=\frac{(s\mid h)^{2}[\Delta t] + i(s\mid h)^{2}[\Delta t]}{(h\mid h)}
+\end{equation}
+%
+where $s$ is the data containing noise and a potential signal and $h$ is the
+noise-free gravitational wave template. For a given template this quantity is
+efficiently computed and $\Delta t$ maximised over using \acp{FFT}.  All that
+remains is to further numerically maximise this quantity over a template of
+component mass combinations. In this analysis a comprehensive template bank is
+generated in the $m_{1},m_{2}$ mass space covering our predefined range of
+masses and with a mismatch of $?\%$ using the PyCBC tools~\chris{need a
+reference}. The template bank in this case contains $?$ individual templates. 
+
+%
+% describe the process of what we apply this to
+%
+For the practical computation of the matched-filter analysis we take each of
+the data samples from the testing dataset and compute the time, phase and
+amplitude maximised ranking statistic $\rho$ for each template in the bank. We
+then record the value of $\rho$ maximised over each template. With values of
+statistics now assigned to each test data sample from both the
+matched-filtering and \ac{CNN} approaches, and having knowledge of the
+true class associated with that sample, we may now contruct \ac{ROC} curves.  
 
 \textit{Results} --- After tunning several hyperparameters and then settling on
 an ideal network format (Table \ref{table:network}), we present the results of
