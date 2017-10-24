@@ -309,7 +309,7 @@ uniform prior on the range $[0,\pi]$, and the inclination angle is drawn such
 that the cosine of inclination is uniform on the range $[-1,1]$. The waveforms
 are then randomly placed within the time series, see figure \ref{fig:waveform},
 such that the peak of the waveform is within the final $20$\% of the time
-series. The waveform amplitude is scaled to achieve a predefined optimnal
+series~\fergus{``The peak of each waveform is then randomly placed within the final $ 20\% $ of the time series"}. The waveform amplitude is scaled to achieve a predefined optimnal
 \ac{SNR} defined as
 %
 % the optimal SNR
@@ -350,7 +350,7 @@ noise-only sample consists of an independent noise realisation and in total we
 use 1000 unique waveforms in the $m_{1},m_{2}$ mass space. Each data sample
 timeseries is then represented in the form of a $1 \times 8192$ pixel image
 with the grayscale intensity of each pixel proportional to the gravitational
-wave amplitude.
+wave amplitude~\fergus{In either this paragraph or the previous, the 6 seperate datasets of fixed SNR (2, 4, 6, 8, 10, 12) should be mentioned}.
 
 %
 % explain the distinction on how the masses are distributed 
@@ -605,7 +605,7 @@ incorrectly identified samples to the total number of samples) of
 an ideal network format (Table \ref{table:network}), we present the results of
 our classifier on a noise vs. signal+noise sample set. We trained our network
 using a transfer learning approach whereby we initially trained our network on
-a sample set of 1000 noise and 1000 injection signals (each with 25 different
+a sample set of 1,000 noise and 1,000 injection signals (each with 25 different
 noise realizations) with an integrated SNR value of 12. We then lowered the
 integrated SNR value by 2 and (using the same weights from our previous
 network) we trained our classifier again. This approach seemed to only have a
@@ -750,7 +750,7 @@ than deep network. Finally change the colours?}\label{fig:efficiency_curve}}
 %
 % summary of what we did
 %
-In conclusion, we have demonstrated that deep learning, when applied to a raw
+We have demonstrated that deep learning, when applied to a raw
 gravitational-wave timeseries data, is able to reproduce the results of a
 matched-filtering analysis in Gaussian noise. We employ a deep convolutional
 neural network with carefully chosen hyperparameters and produce an output that
