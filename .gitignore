@@ -1,7 +1,9 @@
 __tmp
 tag.tex
+match_cnn_paperNotes.bib
 *.blg
 *.log
 *.pdf
 *.bcf
 *.aux
+*.bbl
