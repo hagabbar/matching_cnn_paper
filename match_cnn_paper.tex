@@ -114,14 +114,14 @@ floatfix,
 %
 We report on the construction of a deep convoloutional neural network that can
 reproduce the sensitivity of a matched-filter search for binary black hole
-gravitational wav signals. We report a new method for classifying
+gravitational wave signals. We report a new method for classifying
 gravitational-wave (GW) signals from binary black hole (BBH) mergers using a
 deep convolutional neural network. Using only the raw time series as an input,
 we are able to distinguish GW signals injected in Gaussian noise amongst
 instances of purely Gaussian noise time series with (\textbf{need figure of
 merit here}) percent accuracy.  We compare our results with the standard method
 of matched filtering used in Advanced LIGO and find the methods to be
-comparable.~\chris{I will edit the abstract when we have final results}
+comparable.~\chris{I will edit the abstract when we have final results}~\fergus{We need to mention the superior analysing speed in the abstract}
 \begin{description} \item[PACS numbers] May be entered using the
 \verb+\pacs{#1}+ command.  
 \end{description} 
@@ -176,7 +176,9 @@ detection of GW170814 with Advanced Virgo \cite{PhysRevLett.119.141101}. Over
 the coming years many more such observations, including \ac{BBH} and binary
 neutron stars but also other more exotic sources such as intermediate black
 holes (IMBH), and neutron star black hole (NSBH) mergers, are likely to be
-observed on a more frequent basis. As such, the need for more efficient search
+observed on a more frequent basis~\fergus{Maybe shorten to: ``Over
+	the coming years many more such observations are likely to be made on a more frequent basis, alongside signals from more exotic sources such as intermediate black
+	holes (IMBH), and neutron star black hole (NSBH) mergers."}. As such, the need for more efficient search
 methods will be more pertinent as the detectors increase in sensitivity.
 
 %
@@ -203,10 +205,10 @@ references for template banks here. What about waveform references?}. A
 template bank will span a large astrophysical parameter space since we do not
 know \textit{a priori} what the true parameters of the gravitational waves will
 be. The waveforms of the signals are well modeled by post-Newtonian
-theiry~\cite{PhysRevD.84.049901,PhysRevD.80.084043,Blanchet2014,PhysRevD.93.084054},
+theory~\cite{PhysRevD.84.049901,PhysRevD.80.084043,Blanchet2014,PhysRevD.93.084054},
 and analysis pipelines use matched filtering to search for those signals buried
 in the detector noise. More on how we implement this technique and further
-comparisons with our model will be described later in this letter.
+comparisons with our model will be described later in this letter~\fergus{You say this at the end of the intro also, so maybe remove this sentence}.
 
 %
 % introduce deep learning
@@ -232,13 +234,13 @@ comparable classification methods.
 % more detail on deep learning
 %
 A deep learning algorithm is composed of arrays of processing units, called
-neurons, which can be anywhere from one to several layers deep. A neuron acts
+neurons, which can be anywhere from one to several layers deep~\fergus{`Deepness' is not really explained here. So maybe worth saying ``... composed of stacked arrays ..." or something}. A neuron acts
 as a filter, whereby it is passed a vector of inputs, performs a transformation
 on them and then outputs a single scalar value. Deep learning algorithms
 typically consist of an input layer, followed by one to several hidden layers
 and then one to $N$~\chris{what is $N$? Don't introduce something without
 defining it or that we won't use again.} fully-connected neurons. This value
-can then either be used to solve classfication, or regression-like problems. In
+can then either be used to solve classfication, or regression-like problems~\fergus{Regression is the technique applied for both classification and parameter estimation}. In
 the case of classification, each output neuron corresponds to the probability
 that a particular input sample is of a certain class.
 
