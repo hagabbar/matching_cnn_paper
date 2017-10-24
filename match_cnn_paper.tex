@@ -66,11 +66,17 @@ floatfix,
 
 %% ----- some handy shortcuts
 \newcommand{\dcc}{LIGO-PXXXXXXXX}
+\newcommand{\optsnr}{\rho_{\mathrm{opt}}}
+\newcommand{\fmin}{f_{\mathrm{min}}}
 
+%% ----- comment commands for each of us
 \newcommand{\chris}[1]{\textbf{\textcolor{green}{CHRIS: #1}}}
 \newcommand{\michael}[1]{\textbf{\textcolor{red}{MICHAEL: #1}}}
 \newcommand{\hunter}[1]{\textbf{\textcolor{blue}{HUNTER: #1}}}
 \newcommand{\fergus}[1]{\textbf{\textcolor{cyan}{FERGUS: #1}}}
+
+%% ----- result macros - where we store all key results
+\newcommand{\cnnsnreight}{97.88}
 
 %% ----- input git-version tag
 \input{tag.tex}
@@ -106,17 +112,18 @@ floatfix,
 %
 \begin{abstract} 
 %
-We reprt on the construction of a deep convoloutional neural network that can
-achieve the same  
-We report a new method for classifying gravitational-wave (GW)
-signals from binary black hole (BBH) mergers using a deep convolutional neural
-network. Using only the raw time series as an input, we are able to distinguish
-GW signals injected in Gaussian noise amongst instances of purely Gaussian
-noise time series with (\textbf{need figure of merit here}) percent accuracy.
-We compare our results with the standard method of matched filtering used in
-Advanced LIGO and find the methods to be comparable.  
-\begin{description}
-\item[PACS numbers] May be entered using the \verb+\pacs{#1}+ command.
+We report on the construction of a deep convoloutional neural network that can
+reproduce the sensitivity of a matched-filter search for binary black hole
+gravitational wav signals. We report a new method for classifying
+gravitational-wave (GW) signals from binary black hole (BBH) mergers using a
+deep convolutional neural network. Using only the raw time series as an input,
+we are able to distinguish GW signals injected in Gaussian noise amongst
+instances of purely Gaussian noise time series with (\textbf{need figure of
+merit here}) percent accuracy.  We compare our results with the standard method
+of matched filtering used in Advanced LIGO and find the methods to be
+comparable.~\chris{I will edit the abstract when we have final results}
+\begin{description} \item[PACS numbers] May be entered using the
+\verb+\pacs{#1}+ command.  
 \end{description} 
 %
 \end{abstract}
@@ -212,11 +219,14 @@ and white images \cite{1603.08511}, automatic image caption generation
 \cite{1412.2306}, object classification and detection in photographs
 \cite{NIPS2012_4824}, along with many other exciting applications~\chris{this
 is a bit photograph heavy, can we find some scientific applications, e.g.,
-medical, bio-science, etc.. }. One advantage of deep learning is its ability to
-perform analyses very rapidly since the method's computationally intensive
-stage is pre-computed during the training step prior to the analysis of actual
-data. This results in low-latency searches that are several orders of magnitude
-faster~\cite{726791} than other comparable classification methods. 
+medical, bio-science, etc.. }.~\chris{Can you add a sentence or 2
+listing the existing machine learning and CNN approaches already published in
+GWs, e.g. the George \& Huerta papers and the gravity spy paper at least.} One
+advantage of deep learning is its ability to perform analyses very rapidly
+since the method's computationally intensive stage is pre-computed during the
+training step prior to the analysis of actual data. This results in low-latency
+searches that are several orders of magnitude faster~\cite{726791} than other
+comparable classification methods. 
 
 %
 % more detail on deep learning
@@ -501,7 +511,7 @@ Parameter & \multicolumn{10}{c}{Layer}\\
 \cline{2-11}
 (Option) & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
 \hline
-Type & C & C & C & C & C & C & C & C & H & O \\
+Type & C & C & C & C & C & C & C & C & H & H \\
 No. Neurons  & 8  & 16  & 16 & 32 & 64 & 64 & 128 & 128 & 64  & 2  \\
 Filter Size  & 32 & 16  & 16 & 16 & 8  & 8  & 4   & 4   & n/a & n/a \\
 MaxPool Size & yes & no & no & no & yes & no & no & yes & no & no \\
@@ -509,14 +519,15 @@ Drop out  & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0.5 & 0.5 \\
 Act. Func. & Elu & Elu & Elu & Elu & Elu & Elu & Elu & Elu & Elu & SMax \\
 \hline
 \end{tabular}
-\caption{The optimal network structure was determined through
-multiple tests and tunnings of hyperparameters by means of trial and error. The
-network consists of 8 convolutional layers, followed by 2 fully-connected
-layers. Max-pooling is performed on the first, fifth, and eigth layer, whereas
-dropout is only performed on the two fully-connected layers. Each layer uses an
-Elu activation function while the last layer uses a Softmax activation function
-in order to normalize the output values to be between zero and one so as to
-give a probability value for each class.\label{table:network}}
+\caption{The optimal network structure was determined through multiple tests
+and tunnings of hyperparameters by means of trial and error. The network
+consists of 8 convolutional layers (C), followed by 2 hidden layers (H).
+Max-pooling is performed on the first, fifth, and eighth layer~\chris{can you
+replace the yes/no entrieds for max-pooling with the pool sizes please?},
+whereas dropout is only performed on the two fully-connected layers. Each layer
+uses an Elu activation function while the last layer uses a Softmax activation
+function in order to normalize the output values to be between zero and one so
+as to give a probability value for each class.\label{table:network}}
 \end{table}
 
 %
@@ -569,71 +580,163 @@ statistics now assigned to each test data sample from both the
 matched-filtering and \ac{CNN} approaches, and having knowledge of the
 true class associated with that sample, we may now contruct \ac{ROC} curves.  
 
-\textit{Results} --- After tunning several hyperparameters and then settling on
+%
+% Describe the main results of the study
+%
+\textit{Results} --- 
+%
+% introduce the confusion matrix results
+%
+A standard method for displaying the accuracy of a classifier is through a
+confusion matrix in which the number of samples of each true class identified
+as every possible class are listed in a square matrix. A fully diagonal matrix
+would imply no incorrectly classified samples and a uniform matrix would imply
+no classification power. In Figure~\ref{fig:confusion} we show results for the
+\ac{CNN} approach from which we highlight the overall accuracy (the ratio of
+incorrectly identified samples to the total number of samples) of
+\cnnsnreight\% at $\rho_{\mathrm{opt}}=8$.
+
+%
+% a description of the transfer learning approach (do we need this?)
+%
+\chris{remove this paragraph?} After tunning several hyperparameters and then settling on
 an ideal network format (Table \ref{table:network}), we present the results of
-our classifier on a noise vs. injection sample set. We trained our network
+our classifier on a noise vs. signal+noise sample set. We trained our network
 using a transfer learning approach whereby we initially trained our network on
 a sample set of 1000 noise and 1000 injection signals (each with 25 different
 noise realizations) with an integrated SNR value of 12. We then lowered the
 integrated SNR value by 2 and (using the same weights from our previous
 network) we trained our classifier again. This approach seemed to only have a
-marginal benefit on the overall performance of the classifier.  
+marginal benefit on the overall performance of the classifier~\chris{Do we
+actually do this? Does it make the results better OR does it simply speed the
+process up? Earlier on in the paper we say that we don't use it. If it doesn't
+actually change our results then we shoud remove most of this paragraph.}  
 
-The confusion matrix in figure \ref{fig:confusion} shows $99.86\%$ accuracy
-with triggers at an integrated SNR of 12, $99.64\%$ accuracy with integrated
-SNR 10, $97.88\%$ at integrated SNR 8, $88.72\%$ at an integrated SNR of 6,
-$68.34\%$ at integrated SNR 4, and $50.19\%$ accuracy at integrated SNR 2.
-
-
+%
+% confusion matrix plot
+%
 \begin{figure}[]
-\includegraphics[width=0.5\textwidth] {figures/confusion_matrix.pdf}
-\caption{\label{fig:confusion} Confusion matrices for runs from SNR 2 - SNR 12.
-Numbers superimposed on bins represent the number of samples corresponding to
-samples that are either true positive, true negative, false negative, or false
-positive. The accuracy percentages for all injection SNR values are listed as
-follows: $50.19\%$ at SNR 2, $68.34\%$ at SNR 4, $88.72\%$ at SNR 6, $97.88\%$
-at SNR 8, $99.64\%$ at SNR 10 and $99.86\%$ at SNR 12.}
+\includegraphics[width=\columnwidth] {figures/confusion_matrix.pdf}
+\caption{Confusion matrices for testing datasets containing signals with
+optimal SNR $\rho_{\mathrm{opt}}=2,4,6,8,10,12$.  Numbers superimposed within
+matrix elements are the number of samples corresponding to samples that were of
+true class indicated by the y-axis label but identified as the corresponding
+x-axis label. For our 2 class system these are equivelent to the numbers of
+true positive, true negative, false negative, or false positive. The accuracy
+percentages for all injection SNR values are listed as follows: $50.19\%$ at
+$\optsnr=2$, $68.34\%$ at $\optsnr=4$, $88.72\%$ at $\optsnr=6$, $97.88\%$ at
+$\optsnr=8$, $99.64\%$ at $\optsnr=10$ and $99.86\%$ at
+$\optsnr=12$.\chris{maybe plot 2x3 rather than 3x2 if we have the space. Also
+we habve to anser the question of why the SNR=2 case mostly predicts an signal,
+why are there not equal numbers in each element as you would
+expect?}\label{fig:confusion}}
 \end{figure}
 
-In figure \ref{fig:ROC_curve} we compare our results to that of matched
-filtering where we use two alternative match filtering methods. The first,
-using the nominal template bank described in the \textit{Sample Simulation
-Methods} section, whereas the second uses the optimal template for each
-injection, whereby optimal is defined as the template used to generate that
-injection. As seen in figure \ref{fig:ROC_curve} all three methods have
-equivalent performance proficiency at $\sim \mathrm{iSNR} > 9$, whereas there
-is a marginal dip in performance in the nominal matched filtering method and
-our deep learning classifier. It should be noted that our classifier exceeds
-the performance proficiency of that of the nominal matched filtering method
-between iSNR 2 and iSNR 4. 
+%
+% describe ROC curves
+%
+In Figure~\ref{fig:ROC_curves} we compare our \ac{CNN} results to that of
+matched filtering. Given the ranking statistic from a particular analysis and
+defining a parametric threshold value on that statsistic we are able to plot
+the fraction of noise samples incorrectly identified (false alarm or false
+positive probability) as signals versus the fraction of signal samples
+correctly identified (true alarm or true positive probability). These curves
+are defined as \ac{ROC} curves and a ranking statistic is deemed superior to
+another if at a given false alarm probability it acheives a higher detection
+probability. Our results show that within our uncertainties the \ac{CNN}
+approach matches the sensitivity of matched filtering for all test datasets
+across the full range of false alarm probabilities explored in this
+analysis\footnote{We are limited to a minimal false alarm probability of $\sim
+10^{-4}$ due to the limited number of testing samples used.}. We also plot as a
+reference, the \ac{ROC} curve corresponding to a matched filter analysis for
+which the true masses and arrival time of the signal is known. In this case
+there is only a single template and the sensitivity is consequently improved.  
 
-\begin{figure}[] 
-\includegraphics[width=0.5\textwidth] {figures/accuracy.pdf}
-\caption{\label{fig:ROC_curve} Using a predetermined false alarm probability
-value of $0.01$ we compute the receiver operating curve (ROC) plot the
-detection probability as a function of the SNR. As can be seen in the plot, our
-classifier performs marginally poorer than standard matched filtering at SNR
-$>$ 6 and exceeds standard matched filtering at SNR $<$ 6. The matched
-filtering curve using the optimal template for each injection exceeds the
-performance of both the standard matched filtering and deep learning
-classification methods.} 
+%
+% Alternative ROC/efficiency results
+%
+\chris{I advise removing this paragraph} In Figure~\ref{fig:ROC_curve} we
+compare our results to that of matched filtering where we use two alternative
+match filtering methods.  The first, using the nominal template bank described
+in the \textit{Sample Simulation Methods} section, whereas the second uses the
+optimal template for each injection, whereby optimal is defined as the template
+used to generate that injection. As seen in figure \ref{fig:ROC_curve} all
+three methods have equivalent performance proficiency at $\sim \mathrm{iSNR} >
+9$, whereas there is a marginal dip in performance in the nominal matched
+filtering method and our deep learning classifier. It should be noted that our
+classifier exceeds the performance proficiency of that of the nominal matched
+filtering method between iSNR 2 and iSNR 4.\chris{I rewrote this paragrpah
+above. I thought that there was too much emphasis on the single template
+approach and no descriptiuon of he ROC curve. There is also a statement about
+us beating matched filtering as low SNR. This is tentative at the moment and
+also, if true, annoyingly at low SNR.  Let's wait and see the final results
+before we say things contraversial. Also you were describing the efficiency
+curves and not the ROC curve which should come first sine the efficiency is
+derived from the ROC.} 
+
+%
+% show ROC curves
+%
+\begin{figure}[]
+\includegraphics[width=\columnwidth] {figures/ROC_curves.pdf}
+\caption{The \ac{ROC} curves for test datasets containing signals with optimal
+SNR $\rho_{\mathrm{opt}}=2,4,6,8,10,12$.  In each panel we plot the detection
+probability as a function of the false alarm probability estimated from the
+output of the \ac{CNN} (blue) and matched-filtering (red) approaches. We also
+plot the \ac{ROC} ciurves corresponding to a single template matched-filter
+analysis (dashed green).~\chris{OK, first can we make these plots 2x3 rather
+than 3x2 so that they are easier to see. Please put the SNR labels inside the
+plots rather than on top of them. No need to have dashed curves here so make
+the CNN and matched-filter curves solid. Ditch the legend and make the y-axes
+log -scale. That should be enough to get on with.\label{fig:ROC_curves}}}
 \end{figure}
 
-We compare the results of all three methods at various injection iSNR values in
-figure \ref{fig:isnr_curves}. It is not surprising to see that the matched
-filtering method using the optimal template consistantly performs better than
-both the nominal match filtering method and our deep learning classifier.
-However, what is considerable is the comparison between the nominal matched
-filtering and the deep learning classifier detection probability curves. It can
-clearly be seen that our classifier exceeds the performance of the nominal
-matched filtering method at iSNR 2, 4 and 6. This is a promising result and
-certainly merits further investigation.  
+%
+% finally discuss the efficiency plot
+%
+We can make an additional direct comparison between approaches by fixing a
+false alarm probability and plotting the corresponding detection probability
+versus the optimal SNR of the signals in each test dataset. We show these
+efficiency curves in Figure~\ref{fig:efficiency_curves} at 3 different false alarm
+probabilities $10^{-1},10^{-2},10^{-3}$ for both the \ac{CNN} and
+matched-filtering approaches. Since these efficiency curves are derived from
+the data used to generate the \ac{ROC} curves shown in
+Figure~\ref{fig:ROC_curves} it is not surprising that the \ac{CNN} and
+matched-filtering approaches produce indistinguishable results (within our
+uncertainties) at all choices of false alarm probability.
 
-\begin{figure}[] 
-\includegraphics[width=0.5\textwidth] {figures/ROC_curves.pdf}
-\caption{\label{fig:isnr_curves} Shown above are receiver operating curves for
-runs using injections at SNR 2, 4, 6, 8, 10, and 12. Each figure is plots
-detection probability as a function of the false detection probability rate.}
+\chris{Same here, I suggest removing this paragraph} We compare the results of
+all three methods at various injection iSNR values in figure
+\ref{fig:isnr_curves}. It is not surprising to see that the matched filtering
+method using the optimal template consistantly performs better than both the
+nominal match filtering method and our deep learning classifier.  However, what
+is considerable is the comparison between the nominal matched filtering and the
+deep learning classifier detection probability curves. It can clearly be seen
+that our classifier exceeds the performance of the nominal matched filtering
+method at iSNR 2, 4 and 6. This is a promising result and certainly merits
+further investigation.~\chris{I've kind of rewritten this paragraph above for
+the same reasons as used for the ROC curves. We just want to stick to the
+process of describing what we're plotting and dispassionately pointing out the
+key result. No need to again highlight the single-filter result which is only
+there for reference.}  
+
+%
+% show efficiency curve
+%
+\begin{figure}[]
+\includegraphics[width=\columnwidth] {figures/efficiency.pdf}
+\caption{Efficiency curves comparing the performance of the \ac{CNN} and
+matched-filter approaches for a selection of false alarm probabilities. The
+detection probability is plotted as a function of the optimal \ac{SNR} for the 
+\ac{CNN} (blue) and the matched-filtering (red) analyses. Each collection of
+curves is labelled with the corresponding false alarm probability and in each
+case for reference we also plot curves for the single template matched-filter
+case (green dashed).~\chris{So can we change the x-axis ranges to span exactly 2-12
+and the y-axis to span exactly 0-1. Can we label the x-axis as $\optsnr$. Can
+we produce 3 sets of results for false alarm probabilities 0.001,0.01,0.1 and
+see what the plot looks like with 9 curves (each group of 3 labelled with the
+corresponding false alarm probability? Also change legend to say CNN rather
+than deep network. Finally change the colours?}\label{fig:efficiency_curve}}
 \end{figure}
 
 %
@@ -641,18 +744,48 @@ detection probability as a function of the false detection probability rate.}
 % a main numerical result, quote it here. Then go back and make sure the
 % abstract contains the most important results. Say what’s next
 %
-\textit{Conclusions} --- In conclusion, we demonstrate that deep learning, when
-applied to a raw data time series, is able to produce equivalent results to
-matched template filtering. We employ a deep convolutional neural network with
-carefully chosen hyperparamters and produce an output that returns the class
-probability value of any given signal. This output could then further be
-applied as a ranking statistic in the aLIGO CBC search. Although only BBH
-mergers were used, this method could also easily be applied to other merger
-types, such as BNS and NSBH signals. The results shown in both figure
-\ref{fig:ROC_curve} and figure \ref{fig:isnr_curves} indicate that deep
-learning approaches even have the unprecedented potential to entirely exceed
-matched template filtering. 
+\textit{Conclusions} --- 
+%
+% summary of what we did
+%
+In conclusion, we have demonstrated that deep learning, when applied to a raw
+gravitational-wave timeseries data, is able to reproduce the results of a
+matched-filtering analysis in Gaussian noise. We employ a deep convolutional
+neural network with carefully chosen hyperparameters and produce an output that
+returns a ranking statistic equivelent to the probability that data contains a
+signal. Matched filter analyses are often described as the optimal approach for
+signal detection in Gaussian noise. By building a neural network that is
+capable of reproducing this optimality we answer a fundamental question
+regarding the applicability of neural networks for gravitational wave data
+analysis. 
 
+%
+% Non Gaussian noise
+%
+In practice, searches for transient signals in gravitational wave data are
+strongly affected by non-Gaussian noise artefacts. To account for this,
+standard matched filtering approaches are modified to include carefully chosen
+changes to the ranking statistic together with the excision of poor quality
+data~\chris{we should cite a detchar paper or Toms new-snr paper}. Our analysis
+represents a starting point from which a deep network can be trained on
+realistic non-Gaussian data with the potential aim of exceeding the sensitivity
+of existing matched filter approaches.
+
+%
+% Other sources and final statement
+%
+In this work we have presented results for \ac{BBH} mergers, however, this
+method could be applied to other merger types, such as \ac{BNS} and neutron
+star-black hole signals. This supervised learning approach can also be extended
+to other well modelled gravitational wave targets such as the continuous
+emission from rapidly rotating non-axisymmetric neutron stars~\chris{cite the
+LIGO O1 or O2 einstein at home paper}. Whereas unsupervised approaches have the
+potential to be powerful detection tools in searches for unmodelled burst-like
+gravitational-wave signals. 
+
+%
+% acknowledge peopkle and funding agencies
+%
 \emph{Acknowledgements}---We would like to acknowledge valuable input from the
 LIGO-Virgo Collaboration specifically the machine-learning working group. The
 authors also gratefully acknowledge the Science and Technology Facilities

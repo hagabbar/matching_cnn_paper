@@ -3,7 +3,7 @@ DOCS = match_cnn_paper.pdf
 FIGS = ./figures/waveform.pdf \
     ./figures/loss.pdf \
     ./figures/confusion_matrix.pdf \
-    ./figures/accuracy.pdf \
+    ./figures/efficiency.pdf \
     ./figures/ROC_curves.pdf
 
 TABLES = 
