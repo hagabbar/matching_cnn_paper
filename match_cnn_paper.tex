@@ -25,7 +25,8 @@
 %runinaddress,
 %frontmatterverbose, 
 %preprint,
-%showpacs,preprintnumbers,
+showpacs,
+%preprintnumbers,
 %nofootinbib,
 %nobibnotes,
 %bibnotes,
@@ -50,11 +51,18 @@ floatfix,
 \usepackage{acronym}
 \usepackage{multirow}
 \usepackage{tabularx}
+\usepackage{hyperref}
 %\addbibresource{references.bib}
 \linenumbers % Commence numbering lines
 %\usepackage{hyperref}% add hypertext capabilities
 %\usepackage[mathlines]{lineno}% Enable numbering of text and display math
 %\linenumbers\relax % Commence numbering lines
+\hypersetup{
+%--- fill inside borders ---
+  colorlinks=true,        % false: boxed links; true: colored links
+  linkcolor=black,         % color of internal links
+  citecolor=cyan,         % color of links to bibliography
+}
 
 %\usepackage[showframe,%Uncomment any one of the following lines to test 
 %%scale=0.7, marginratio={1:1, 2:3}, ignoreall,% default settings
@@ -88,7 +96,7 @@ floatfix,
 %
 % Be clear and specific. Do not claim too much or too little.
 %
-\title{Matching Matched Filtering with Deep Networks in Gravitational wave Astronomy}
+\title{Matching Matched-Filtering with Deep Networks for Gravitational wave Astronomy}
 
 \author{Hunter Gabbard}
  \email{Corresponding author: h.gabbard.1@research.gla.ac.uk}
@@ -112,23 +120,26 @@ floatfix,
 %
 \begin{abstract} 
 %
-We report on the construction of a deep convoloutional neural network that can
+We report on the construction of a deep convolutional neural network that can
 reproduce the sensitivity of a matched-filter search for binary black hole
-gravitational wave signals. We report a new method for classifying
-gravitational-wave (GW) signals from binary black hole (BBH) mergers using a
-deep convolutional neural network. Using only the raw time series as an input,
-we are able to distinguish GW signals injected in Gaussian noise amongst
-instances of purely Gaussian noise time series with (\textbf{need figure of
-merit here}) percent accuracy.  We compare our results with the standard method
-of matched filtering used in Advanced LIGO and find the methods to be
-comparable.
-\begin{description} \item[PACS numbers] May be entered using the
-\verb+\pacs{#1}+ command.  
-\end{description} 
+gravitational wave signals. The standard method for the detection of well
+modelled transient gravitational wave signals is matched filtering. However,
+the computational cost of such searches in low latency will grow dramatically
+as the low frequency sensitivity of gravitational wave detectors improves.
+Convolutional neural networks provide a highly computationally efficient method
+for signal identification in which the majority of calculations are performed
+prior to data taking during a training process. We use only the gravitational
+wave time-series as an input and train and test on simulated binary black hole
+signals in Advanced detector Gaussian noise. We show that our results match
+those of matched-filtering applied to the same datasets and find the methods
+to be comparable in sensitivity as defined by Reciever-Operator
+characteristics. 
 %
 \end{abstract}
 
-\pacs{Valid PACS appear here}% PACS, the Physics and Astronomy
+\pacs{04.30.-w, 04.80.Nn}% PACS, the Physics and Astronomy
+
+
                              % Classification Scheme.
 %\keywords{Suggested keywords}%Use showkeys class option if keyword
                               %display desired
@@ -222,10 +233,7 @@ comparable classification methods.
 % more detail on deep learning
 %
 A deep learning algorithm is composed of stacked arrays of processing units, called
-neurons, which can be anywhere from one to several layers deep. A neuron acts
-as a filter, whereby it is passed an array of inputs, performs a transformation
-on them and then outputs scalar values. Deep learning algorithms
-typically consist of an input layer, followed by one to several hidden layers
+neurons, which can be anywhere from one to several layers deep. A neuron acts as a filter, whereby it is passed an array of inputs, performs a transformation on them and then outputs scalar values. This transformation is a linear operation between the input array and weight and bias parameters assosicated to the neuron. Deep learning algorithms typically consist of an input layer, followed by one to several hidden layers
 and then one to multiple output neurons. The scalars produced from the output neurons can be used to solve classification problems, where each output neuron corresponds to the probability
 that a particular input sample is of a certain class.
 
@@ -266,8 +274,8 @@ the Advanced LIGO frequency band. They typically then merge on the timescale of
 $\mathcal{O}(1)$ sec allowing us to use a relatively small datasets for this
 study. The input datasets consist of simulated gravitational wave timeseries
 data that has been whitened in the frequency domain. This process rescales the
-noise contribution at each frequency to have equal power resulting in white
-noise. The signal (if present) has it's constituent frequency components
+noise contribution at each frequency to have equal power resulting in "white"
+noise. Signal+noise data has it's constituent frequency components
 reweighted according to the \ac{PSD} used.    
 
 %
@@ -303,19 +311,18 @@ such that the peak of each waveform is then randomly placed within the final $ 2
 \tilde{h(f)}\rvert^{2}}{S_{\mathrm{n}}(f)} \mathrm{d}f, \end{equation}
 %
 where $\tilde{h(f)}$ is the frequency domain representation of the
-gravitational wave strain,m $S_{\mathrm{n}}(f)$ is the detector noise \ac{PSD},
+gravitational wave strain, $S_{\mathrm{n}}(f)$ is the detector noise \ac{PSD},
 and $f_{\mathrm{min}}$ is the frequency at which we start to accumulate
 \ac{SNR}. The simulated time series were chosen to be 1~sec in duration sampled
-at 8192 Hz and therefore in our case we consider $f_{\mathrm{min}}$ as the
+at 8192 Hz. Therefore we consider $f_{\mathrm{min}}$ as the
 frequency of the gravitational wave signal at the start of the sample
 timeseries. An example timeseries can be seen in Figure~\ref{fig:waveform}. 
 
 %
 % How we split training, validation, and testing
 %
-Supervised deep learning approaches to classification problems require
-datasets to be sub-divided into training, validation, and testing sets.
-Training sets are the data samples that the network learns from, the validation
+Supervised deep learning requires
+datasets to be sub-divided into training, validation, and testing sets. Training sets are the data samples that the network learns from, the validation
 set allows the developer to verify that the network is learning correctly, and
 the test set is used to quantify the performance of the trained network.
 Of the datasest generated we use $60\%$ of these samples for training,
@@ -354,12 +361,12 @@ astrophysically motivated distributions where we assume $m_{1,2}\sim
 
 \begin{figure} 
 \includegraphics[width=\columnwidth]{figures/waveform.pdf}
-\caption{\label{fig:waveform} A whitened noise-free time series of a \ac{BBH}
-signal (cyan) with component masses $m_{1}=41.86\mathrm{M}_{\odot}$ and $m_{2}=6.65\mathrm{M}_{\odot}$
-with optimal \ac{SNR} 8. The dark blue timeseries shows the
-same gravitational wave signal with additive whitened Gaussian noise of unit
-variance. This latter timeseries is representative of the datasets we use to
-train, validate, and test our deep neural network.} 
+\caption{A whitened noise-free time series of a \ac{BBH}
+signal (cyan) with component masses $m_{1}=41.86\mathrm{M}_{\odot}$ and
+$m_{2}=6.65\mathrm{M}_{\odot}$ with optimal \ac{SNR} $\optsnr=8$. The dark blue
+timeseries shows the same gravitational wave signal with additive whitened
+Gaussian noise of unit variance. This latter timeseries is representative of
+the datasets we use to train, validate, and test our deep neural network.\label{fig:waveform}}
 \end{figure}
 
 %
@@ -373,17 +380,14 @@ In our model, we use a variant of a deep learning algorithm called a
 \ac{CNN}~\cite{726791}. The layers of such a network are composed of five
 primary variants: input, convolutional, activation, pooling, and
 hidden. The input layer holds the raw pixel values of the sample
-image which in our case is a 1-dimensional timeseries vector.  Each neuron in
-the convolutional layer computes the convolution between an as yet undefined
-kernel or vector of pixel values and the outputs from the layer above it. A neuron has
-its own characteristic set of weights and bias vectors (being the same dimension as that of the input vector). The input vector is multiplied element-wise with the neuron's weight vector and then summed together with the neuron's bias vector. Neuron weight vectors are updated through an optimisation algorithm called back-propogation \cite{LeCun1998}. 
+image which in our case is a 1-dimensional timeseries vector. As the data is 1-dimensional, the weight and bias parameters of the network are also in vector form. Each neuron in the convolutional layer computes the convolution between the neuron's weight vector and the outputs from the layer above it, and then the result is summed with the bias vector. Neuron weight vectors are updated through an optimisation algorithm called back-propogation \cite{LeCun1998}. 
 Activation layers apply an element-wise non-linear activation function rescaling
 their inputs onto the range $[-1,1]$ and leaving the size of the previous
 layer's output unchanged. The activation function can be shifted to better fit network predictions by adjusting the bias vector. 
 Pooling layers perform a downsampling operation along
-the spatial dimensions of their input essentially acting as a data reduction
+the spatial dimensions of their input, essentially acting as a data reduction
 process speeding up the training of the network for minimal loss of
-information. Finally we have a hidden layer which connects to a final output layer that
+information. Finally we have a hidden layer that is connected to a final output layer which
 computes the class scores using an error function, cross-entropy, defined as
 %
 % define the loss function
@@ -403,7 +407,7 @@ the network predictions with respect to the true value.
 In order to optimise our network, multiple sets of hyper-parameters are
 tuned. We define hyper-parameters as those parameters that we are free to
 choose. Such parameters include the choice of the number and type of network
-layers, the number and size of neurons within each layer, the max-pooling
+layers, the number of neurons within each layer, the size of the neuron weight vectors, the max-pooling
 parameters, the type of activation functions, preprocessing of input data,
  learning rate, and the application (or otherwise) of specific deep learning techniques. We begin
 the entire process with the simplest network that provides a discernable level
@@ -454,6 +458,9 @@ Table~\ref{table:network}.
 The ranking statistic that we extract from the CNN analysis is taken from the final output layer,
 composed of 2 neurons, where each neuron will output a probability value bewteen zero and 1. One neuron gives the probability that a signal is noise and the second gives the probability that the signal is astrophysical. This output is then used to classify our signals.
 
+% 
+% I am commenting this figure out for now
+%
 %\begin{figure} 
 %\includegraphics[width=\columnwidth]{figures/loss.pdf}
 %\caption{\label{fig:loss_curve} \hunter{Not sure if we stil need this figure? I'd still like to keep it though} The
@@ -490,11 +497,11 @@ Act. Func. & Elu & Elu & Elu & Elu & Elu & Elu & Elu & Elu & Elu & SMax \\
 \hline
 \end{tabular}
 \caption{The optimal network structure was determined through multiple tests
-and tunnings of hyperparameters by means of trial and error. The network
+and tunings of hyperparameters by means of trial and error. The network
 consists of 8 convolutional layers (C), followed by 2 hidden layers (H).
 Max-pooling is performed on the first, fifth, and eighth layer,
-whereas dropout is only performed on the two fully-connected layers. Each layer
-uses an Elu activation function while the last layer uses a Softmax activation
+whereas dropout is only performed on the two hidden layers. Each layer
+uses an Elu activation function while the last layer uses a Softmax (SMax) activation
 function in order to normalize the output values to be between zero and one so
 as to give a probability value for each class.\label{table:network}}
 \end{table}
@@ -618,9 +625,9 @@ there is only a single template and the sensitivity is consequently improved.
 %
 % Alternative ROC/efficiency results
 %
-In Figure~\ref{fig:ROC_curves} we
-compare our results to that of matched filtering where we use two alternative
-match filtering methods.  The first, using the nominal template bank described
+In Figure~\ref{fig:ROC_curve} we
+compare our results to that of matched filtering, where we use two alternative
+match filtering methods.  The first is produced by using the nominal template bank described
 in the \textit{Sample Simulation Methods} section, whereas the second uses the
 optimal template for each injection, whereby optimal is defined as the template
 used to generate that injection. As seen in figure \ref{fig:ROC_curves} all
@@ -638,9 +645,14 @@ filtering method between iSNR 2 and iSNR 4.
 \caption{The \ac{ROC} curves for test datasets containing signals with optimal
 SNR $\rho_{\mathrm{opt}}=2,4,6,8,10,12$.  In each panel we plot the detection
 probability as a function of the false alarm probability estimated from the
-output of the \ac{CNN} (blue) and matched-filtering (red) approaches. We also
-plot the \ac{ROC} curves corresponding to a single template matched-filter
-analysis (dashed green).
+output of the \ac{CNN} (purple) and matched-filtering (cyan) approaches. We also
+plot the \ac{ROC} ciurves corresponding to a single template matched-filter
+analysis (orange) maximised over phase, amplitude and time shift.
+%\chris{OK, first can we make these plots 2x3 rather
+%than 3x2 so that they are easier to see. Please put the SNR labels inside the
+%plots rather than on top of them. No need to have dashed curves here so make
+%the CNN and matched-filter curves solid. Ditch the legend and make the y-axes
+%log -scale. That should be enough to get on with.}
 \label{fig:ROC_curves}}
 \end{figure}
 
@@ -677,10 +689,17 @@ further investigation.
 \caption{Efficiency curves comparing the performance of the \ac{CNN} and
 matched-filter approaches for a selection of false alarm probabilities. The
 detection probability is plotted as a function of the optimal \ac{SNR} for the 
-\ac{CNN} (blue) and the matched-filtering (red) analyses. Each collection of
+\ac{CNN} (purple) and the matched-filtering (cyan) analyses. Each collection of
 curves is labelled with the corresponding false alarm probability and in each
 case for reference we also plot curves for the single template matched-filter
-case (green dashed).\label{fig:efficiency_curve}}
+case (orange).
+%\chris{So can we change the x-axis ranges to span exactly 2-12
+%and the y-axis to span exactly 0-1. Can we label the x-axis as $\optsnr$. Can
+%we produce 3 sets of results for false alarm probabilities 0.001,0.01,0.1 and
+%see what the plot looks like with 9 curves (each group of 3 labelled with the
+%corresponding false alarm probability? Also change legend to say CNN rather
+%than deep network. Finally change the colours?}
+\label{fig:efficiency_curve}}
 \end{figure}
 
 %
