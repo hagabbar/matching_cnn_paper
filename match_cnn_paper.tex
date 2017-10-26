@@ -50,11 +50,18 @@ floatfix,
 \usepackage{acronym}
 \usepackage{multirow}
 \usepackage{tabularx}
+\usepackage{hyperref}
 %\addbibresource{references.bib}
 \linenumbers % Commence numbering lines
 %\usepackage{hyperref}% add hypertext capabilities
 %\usepackage[mathlines]{lineno}% Enable numbering of text and display math
 %\linenumbers\relax % Commence numbering lines
+\hypersetup{
+%--- fill inside borders ---
+  colorlinks=true,        % false: boxed links; true: colored links
+  linkcolor=black,         % color of internal links
+  citecolor=cyan,         % color of links to bibliography
+}
 
 %\usepackage[showframe,%Uncomment any one of the following lines to test 
 %%scale=0.7, marginratio={1:1, 2:3}, ignoreall,% default settings
@@ -359,12 +366,12 @@ astrophysically motivated distributions where we assume $m_{1,2}\sim
 
 \begin{figure} 
 \includegraphics[width=\columnwidth]{figures/waveform.pdf}
-\caption{\label{fig:waveform} A whitened noise-free time series of a \ac{BBH}
-signal (cyan) with component masses $m_{1}=41.86\mathrm{M}_{\odot}$ and $m_{2}=6.65\mathrm{M}_{\odot}$
-with optimal \ac{SNR} 8. The dark blue timeseries shows the
-same gravitational wave signal with additive whitened Gaussian noise of unit
-variance. This latter timeseries is representative of the datasets we use to
-train, validate, and test our deep neural network.} 
+\caption{A whitened noise-free time series of a \ac{BBH}
+signal (cyan) with component masses $m_{1}=41.86\mathrm{M}_{\odot}$ and
+$m_{2}=6.65\mathrm{M}_{\odot}$ with optimal \ac{SNR} $\optsnr=8$. The dark blue
+timeseries shows the same gravitational wave signal with additive whitened
+Gaussian noise of unit variance. This latter timeseries is representative of
+the datasets we use to train, validate, and test our deep neural network.\label{fig:waveform}}
 \end{figure}
 
 %
@@ -459,24 +466,27 @@ Table~\ref{table:network}.
 The ranking statistic that we extract from the CNN analysis is taken from the final output layer,
 composed of 2 neurons, where each neuron will output a probability value bewteen zero and 1. One neuron gives the probability that a signal is noise and the second gives the probability that the signal is astrophysical. This output is then used to classify our signals.
 
-\begin{figure} 
-\includegraphics[width=\columnwidth]{figures/loss.pdf}
-\caption{\label{fig:loss_curve} \hunter{Not sure if we stil need this figure? I'd still like to keep it though} The
-loss, accuracy and learning rate~\chris{in the main text none of these
-quantities seem to be defined. This is a problem!} plots (shown above)
-illustrate how the network's performance is defined as a function of the number
-of training epochs. The goal is
-to minimize the loss function, which will in turn maximize the accuracy of the
-classifier. The first initial epochs see an exponential decrease in the loss
-function and then a slowly falling monotonic curve to follow. This indicates
-that the longer our network is trained, a limit with respect to the accuracy is
-approached. In our case, we cyclically adjust the learning rate to oscilate
-between $5 \times 10^{-4}$ and $1 \times 10^{-3}$ at a constant frequency.
-Studies have shown that this policy of learning rate adjustement.~\chris{Also
-define exactly what run this was run on, what accuracy and loss were achieved
-and make sure that you show the typical number of epochs used in the analysis.
-Maybe use log-scale on the y-axis of the loss plot.}} 
-\end{figure}
+% 
+% I am commenting this figure out for now
+%
+%\begin{figure} 
+%\includegraphics[width=\columnwidth]{figures/loss.pdf}
+%\caption{\label{fig:loss_curve} \hunter{Not sure if we stil need this figure? I'd still like to keep it though} The
+%loss, accuracy and learning rate~\chris{in the main text none of these
+%quantities seem to be defined. This is a problem!} plots (shown above)
+%illustrate how the network's performance is defined as a function of the number
+%of training epochs. The goal is
+%to minimize the loss function, which will in turn maximize the accuracy of the
+%classifier. The first initial epochs see an exponential decrease in the loss
+%function and then a slowly falling monotonic curve to follow. This indicates
+%that the longer our network is trained, a limit with respect to the accuracy is
+%approached. In our case, we cyclically adjust the learning rate to oscilate
+%between $5 \times 10^{-4}$ and $1 \times 10^{-3}$ at a constant frequency.
+%Studies have shown that this policy of learning rate adjustement.~\chris{Also
+%define exactly what run this was run on, what accuracy and loss were achieved
+%and make sure that you show the typical number of epochs used in the analysis.
+%Maybe use log-scale on the y-axis of the loss plot.}} 
+%\end{figure}
 
 \begin{table}[]
 \begin{tabular}{lcccccccccc}
@@ -495,11 +505,11 @@ Act. Func. & Elu & Elu & Elu & Elu & Elu & Elu & Elu & Elu & Elu & SMax \\
 \hline
 \end{tabular}
 \caption{The optimal network structure was determined through multiple tests
-and tunnings of hyperparameters by means of trial and error. The network
+and tunings of hyperparameters by means of trial and error. The network
 consists of 8 convolutional layers (C), followed by 2 hidden layers (H).
 Max-pooling is performed on the first, fifth, and eighth layer,
-whereas dropout is only performed on the two fully-connected layers. Each layer
-uses an Elu activation function while the last layer uses a Softmax activation
+whereas dropout is only performed on the two hidden layers. Each layer
+uses an Elu activation function while the last layer uses a Softmax (SMax) activation
 function in order to normalize the output values to be between zero and one so
 as to give a probability value for each class.\label{table:network}}
 \end{table}
