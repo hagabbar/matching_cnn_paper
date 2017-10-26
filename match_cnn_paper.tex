@@ -88,7 +88,7 @@ floatfix,
 %
 % Be clear and specific. Do not claim too much or too little.
 %
-\title{Matching Matched Filtering with Deep Networks in Gravitational wave Astronomy}
+\title{Matching Matched-Filtering with Deep Networks for Gravitational wave Astronomy}
 
 \author{Hunter Gabbard}
  \email{Corresponding author: h.gabbard.1@research.gla.ac.uk}
@@ -112,17 +112,22 @@ floatfix,
 %
 \begin{abstract} 
 %
-We report on the construction of a deep convoloutional neural network that can
+We report on the construction of a deep convolutional neural network that can
 reproduce the sensitivity of a matched-filter search for binary black hole
-gravitational wave signals. We report a new method for classifying
-gravitational-wave (GW) signals from binary black hole (BBH) mergers using a
-deep convolutional neural network. Using only the raw time series as an input,
-we are able to distinguish GW signals injected in Gaussian noise amongst
-instances of purely Gaussian noise time series with (\textbf{need figure of
-merit here}) percent accuracy.  We compare our results with the standard method
-of matched filtering used in Advanced LIGO and find the methods to be
-comparable.~\chris{I will edit the abstract when we have final results}~\fergus{We need to mention the superior analysing speed in the abstract}
-\begin{description} \item[PACS numbers] May be entered using the
+gravitational wave signals. The standard method for the detection of well
+modelled transient gravitational wave signals is matched filtering. However,
+the computational cost of such searches in low latency will grow dramatically
+as the low frequency sensitivity of gravitational wave detectors improves.
+Convolutional neural networks provide a highly computationally efficient method
+for signal identification in which the majority of calculations are performed
+prior to data taking during a training process. We use only the gravitational
+wave time-series as an input and train and test on simulated binary black hole
+signals in Advanced detector Gaussian noise. We show that our results match
+those of matched-filtering applied to the same datasets and find the methods
+to be comparable in sensitivity as defined by Reciever-Operator
+characteristics. 
+\begin{description} 
+\item[PACS numbers] May be entered using the
 \verb+\pacs{#1}+ command.  
 \end{description} 
 %
