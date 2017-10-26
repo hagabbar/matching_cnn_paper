@@ -129,7 +129,7 @@ comparable.~\chris{I will edit the abstract when we have final results}~\fergus{
 %
 \end{abstract}
 
-\pacs{04.30.-w}% PACS, the Physics and Astronomy
+\pacs{04.30.-w, 04.80.Nn}% PACS, the Physics and Astronomy
 
 
                              % Classification Scheme.
@@ -225,10 +225,7 @@ comparable classification methods.
 % more detail on deep learning
 %
 A deep learning algorithm is composed of stacked arrays of processing units, called
-neurons, which can be anywhere from one to several layers deep. A neuron acts
-as a filter, whereby it is passed an array of inputs, performs a transformation
-on them and then outputs scalar values. Deep learning algorithms
-typically consist of an input layer, followed by one to several hidden layers
+neurons, which can be anywhere from one to several layers deep. A neuron acts as a filter, whereby it is passed an array of inputs, performs a transformation on them and then outputs scalar values. This transformation is a linear operation between the input array and weight and bias parameters assosicated to the neuron. Deep learning algorithms typically consist of an input layer, followed by one to several hidden layers
 and then one to multiple output neurons. The scalars produced from the output neurons can be used to solve classification problems, where each output neuron corresponds to the probability
 that a particular input sample is of a certain class.
 
@@ -375,10 +372,7 @@ In our model, we use a variant of a deep learning algorithm called a
 \ac{CNN}~\cite{726791}. The layers of such a network are composed of five
 primary variants: input, convolutional, activation, pooling, and
 hidden. The input layer holds the raw pixel values of the sample
-image which in our case is a 1-dimensional timeseries vector.  Each neuron in
-the convolutional layer computes the convolution between an as yet undefined
-kernel or vector of pixel values and the outputs from the layer above it. A neuron has
-its own characteristic set of weights and bias vectors (being the same dimension as that of the input vector). The input vector is multiplied element-wise with the neuron's weight vector and then summed together with the neuron's bias vector. Neuron weight vectors are updated through an optimisation algorithm called back-propogation \cite{LeCun1998}. 
+image which in our case is a 1-dimensional timeseries vector. As the data is 1-dimensional, the weight and bias parameters of the network are also in vector form. Each neuron in the convolutional layer computes the convolution between the neuron's weight vector and the outputs from the layer above it, and then the result is summed with the bias vector. Neuron weight vectors are updated through an optimisation algorithm called back-propogation \cite{LeCun1998}. 
 Activation layers apply an element-wise non-linear activation function rescaling
 their inputs onto the range $[-1,1]$ and leaving the size of the previous
 layer's output unchanged. The activation function can be shifted to better fit network predictions by adjusting the bias vector. 
