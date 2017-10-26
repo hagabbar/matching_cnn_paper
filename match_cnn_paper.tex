@@ -610,10 +610,12 @@ true positive, true negative, false negative, or false positive. The accuracy
 percentages for all injection SNR values are listed as follows: $50.19\%$ at
 $\optsnr=2$, $68.34\%$ at $\optsnr=4$, $88.72\%$ at $\optsnr=6$, $97.88\%$ at
 $\optsnr=8$, $99.64\%$ at $\optsnr=10$ and $99.86\%$ at
-$\optsnr=12$.\chris{maybe plot 2x3 rather than 3x2 if we have the space. Also
-we habve to anser the question of why the SNR=2 case mostly predicts an signal,
-why are there not equal numbers in each element as you would
-expect?}\label{fig:confusion}}
+$\optsnr=12$.
+%\chris{maybe plot 2x3 rather than 3x2 if we have the space. Also
+%we have to anser the question of why the SNR=2 case mostly predicts an signal,
+%why are there not equal numbers in each element as you would
+%expect?}
+\label{fig:confusion}}
 \end{figure}
 
 %
@@ -666,13 +668,15 @@ derived from the ROC.}
 \caption{The \ac{ROC} curves for test datasets containing signals with optimal
 SNR $\rho_{\mathrm{opt}}=2,4,6,8,10,12$.  In each panel we plot the detection
 probability as a function of the false alarm probability estimated from the
-output of the \ac{CNN} (blue) and matched-filtering (red) approaches. We also
+output of the \ac{CNN} (purple) and matched-filtering (cyan) approaches. We also
 plot the \ac{ROC} ciurves corresponding to a single template matched-filter
-analysis (dashed green).~\chris{OK, first can we make these plots 2x3 rather
-than 3x2 so that they are easier to see. Please put the SNR labels inside the
-plots rather than on top of them. No need to have dashed curves here so make
-the CNN and matched-filter curves solid. Ditch the legend and make the y-axes
-log -scale. That should be enough to get on with.\label{fig:ROC_curves}}}
+analysis (orange) maximised over phase, amplitude and time shift.
+%\chris{OK, first can we make these plots 2x3 rather
+%than 3x2 so that they are easier to see. Please put the SNR labels inside the
+%plots rather than on top of them. No need to have dashed curves here so make
+%the CNN and matched-filter curves solid. Ditch the legend and make the y-axes
+%log -scale. That should be enough to get on with.}
+\label{fig:ROC_curves}}
 \end{figure}
 
 %
@@ -712,15 +716,17 @@ there for reference.}
 \caption{Efficiency curves comparing the performance of the \ac{CNN} and
 matched-filter approaches for a selection of false alarm probabilities. The
 detection probability is plotted as a function of the optimal \ac{SNR} for the 
-\ac{CNN} (blue) and the matched-filtering (red) analyses. Each collection of
+\ac{CNN} (purple) and the matched-filtering (cyan) analyses. Each collection of
 curves is labelled with the corresponding false alarm probability and in each
 case for reference we also plot curves for the single template matched-filter
-case (green dashed).~\chris{So can we change the x-axis ranges to span exactly 2-12
-and the y-axis to span exactly 0-1. Can we label the x-axis as $\optsnr$. Can
-we produce 3 sets of results for false alarm probabilities 0.001,0.01,0.1 and
-see what the plot looks like with 9 curves (each group of 3 labelled with the
-corresponding false alarm probability? Also change legend to say CNN rather
-than deep network. Finally change the colours?}\label{fig:efficiency_curve}}
+case (orange).
+%\chris{So can we change the x-axis ranges to span exactly 2-12
+%and the y-axis to span exactly 0-1. Can we label the x-axis as $\optsnr$. Can
+%we produce 3 sets of results for false alarm probabilities 0.001,0.01,0.1 and
+%see what the plot looks like with 9 curves (each group of 3 labelled with the
+%corresponding false alarm probability? Also change legend to say CNN rather
+%than deep network. Finally change the colours?}
+\label{fig:efficiency_curve}}
 \end{figure}
 
 %
