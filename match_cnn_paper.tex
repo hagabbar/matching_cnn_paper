@@ -25,7 +25,8 @@
 %runinaddress,
 %frontmatterverbose, 
 %preprint,
-%showpacs,preprintnumbers,
+showpacs,
+%preprintnumbers,
 %nofootinbib,
 %nobibnotes,
 %bibnotes,
@@ -122,13 +123,15 @@ instances of purely Gaussian noise time series with (\textbf{need figure of
 merit here}) percent accuracy.  We compare our results with the standard method
 of matched filtering used in Advanced LIGO and find the methods to be
 comparable.~\chris{I will edit the abstract when we have final results}~\fergus{We need to mention the superior analysing speed in the abstract}
-\begin{description} \item[PACS numbers] May be entered using the
-\verb+\pacs{#1}+ command.  
-\end{description} 
+%\begin{description} \item[PACS numbers] May be entered using the
+%\verb+\pacs{#1}+ command.  
+%\end{description} 
 %
 \end{abstract}
 
-\pacs{Valid PACS appear here}% PACS, the Physics and Astronomy
+\pacs{04.30.-w}% PACS, the Physics and Astronomy
+
+
                              % Classification Scheme.
 %\keywords{Suggested keywords}%Use showkeys class option if keyword
                               %display desired
@@ -267,7 +270,7 @@ $\mathcal{O}(1)$ sec allowing us to use a relatively small datasets for this
 study. The input datasets consist of simulated gravitational wave timeseries
 data that has been whitened in the frequency domain. This process rescales the
 noise contribution at each frequency to have equal power resulting in "white"
-noise. The signal (if present) has it's constituent frequency components
+noise. Signal+noise data has it's constituent frequency components
 reweighted according to the \ac{PSD} used.    
 
 %
@@ -303,19 +306,18 @@ such that the peak of each waveform is then randomly placed within the final $ 2
 \tilde{h(f)}\rvert^{2}}{S_{\mathrm{n}}(f)} \mathrm{d}f, \end{equation}
 %
 where $\tilde{h(f)}$ is the frequency domain representation of the
-gravitational wave strain,m $S_{\mathrm{n}}(f)$ is the detector noise \ac{PSD},
+gravitational wave strain, $S_{\mathrm{n}}(f)$ is the detector noise \ac{PSD},
 and $f_{\mathrm{min}}$ is the frequency at which we start to accumulate
 \ac{SNR}. The simulated time series were chosen to be 1~sec in duration sampled
-at 8192 Hz and therefore in our case we consider $f_{\mathrm{min}}$ as the
+at 8192 Hz. Therefore we consider $f_{\mathrm{min}}$ as the
 frequency of the gravitational wave signal at the start of the sample
 timeseries. An example timeseries can be seen in Figure~\ref{fig:waveform}. 
 
 %
 % How we split training, validation, and testing
 %
-Supervised deep learning approaches to classification problems require
-datasets to be sub-divided into training, validation, and testing sets.
-Training sets are the data samples that the network learns from, the validation
+Supervised deep learning requires
+datasets to be sub-divided into training, validation, and testing sets. Training sets are the data samples that the network learns from, the validation
 set allows the developer to verify that the network is learning correctly, and
 the test set is used to quantify the performance of the trained network.
 Of the datasest generated we use $60\%$ of these samples for training,
