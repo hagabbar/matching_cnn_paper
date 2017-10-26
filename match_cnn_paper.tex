@@ -377,9 +377,9 @@ Activation layers apply an element-wise non-linear activation function rescaling
 their inputs onto the range $[-1,1]$ and leaving the size of the previous
 layer's output unchanged. The activation function can be shifted to better fit network predictions by adjusting the bias vector. 
 Pooling layers perform a downsampling operation along
-the spatial dimensions of their input essentially acting as a data reduction
+the spatial dimensions of their input, essentially acting as a data reduction
 process speeding up the training of the network for minimal loss of
-information. Finally we have a hidden layer which connects to a final output layer that
+information. Finally we have a hidden layer that is connected to a final output layer which
 computes the class scores using an error function, cross-entropy, defined as
 %
 % define the loss function
@@ -399,7 +399,7 @@ the network predictions with respect to the true value.
 In order to optimise our network, multiple sets of hyper-parameters are
 tuned. We define hyper-parameters as those parameters that we are free to
 choose. Such parameters include the choice of the number and type of network
-layers, the number and size of neurons within each layer, the max-pooling
+layers, the number of neurons within each layer, the size of the neuron weight vectors, the max-pooling
 parameters, the type of activation functions, preprocessing of input data,
  learning rate, and the application (or otherwise) of specific deep learning techniques. We begin
 the entire process with the simplest network that provides a discernable level
@@ -621,8 +621,8 @@ there is only a single template and the sensitivity is consequently improved.
 % Alternative ROC/efficiency results
 %
 \chris{I advise removing this paragraph} In Figure~\ref{fig:ROC_curve} we
-compare our results to that of matched filtering where we use two alternative
-match filtering methods.  The first, using the nominal template bank described
+compare our results to that of matched filtering, where we use two alternative
+match filtering methods.  The first is produced by using the nominal template bank described
 in the \textit{Sample Simulation Methods} section, whereas the second uses the
 optimal template for each injection, whereby optimal is defined as the template
 used to generate that injection. As seen in figure \ref{fig:ROC_curve} all
