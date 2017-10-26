@@ -320,8 +320,8 @@ datasets to be sub-divided into training, validation, and testing sets.
 Training sets are the data samples that the network learns from, the validation
 set allows the developer to verify that the network is learning correctly, and
 the test set is used to quantify the performance of the trained network.
-Of the datasest generated we use $70\%$ of these samples for training,
-$15\%$ for validation, and $15\%$ for testing.
+Of the datasest generated we use $60\%$ of these samples for training,
+$20\%$ for validation, and $20\%$ for testing.
 
 %
 % How many sampes did we make
@@ -336,7 +336,7 @@ noise-only sample consists of an independent noise realisation and in total we
 use 1000 unique waveforms in the $m_{1},m_{2}$ mass space. Each data sample
 timeseries is then represented in the form of a $1 \times 8192$ pixel image
 with the grayscale intensity of each pixel proportional to the gravitational
-wave amplitude~\fergus{In either this paragraph or the previous, the 6 seperate datasets of fixed SNR (2, 4, 6, 8, 10, 12) should be mentioned}.
+wave amplitude.
 
 %
 % explain the distinction on how the masses are distributed 
@@ -357,8 +357,8 @@ astrophysically motivated distributions where we assume $m_{1,2}\sim
 \begin{figure} 
 \includegraphics[width=\columnwidth]{figures/waveform.pdf}
 \caption{\label{fig:waveform} A whitened noise-free time series of a \ac{BBH}
-signal (cyan) with component masses $m_{1}=?M_{\odot}$ and $m_{2}=?M_{\odot}$
-with optimal \ac{SNR} (\textbf{need value}). The dark blue timeseries shows the
+signal (cyan) with component masses $m_{1}=41.86\mathrm{M}_{\odot}$ and $m_{2}=6.65\mathrm{M}_{\odot}$
+with optimal \ac{SNR} 8. The dark blue timeseries shows the
 same gravitational wave signal with additive whitened Gaussian noise of unit
 variance. This latter timeseries is representative of the datasets we use to
 train, validate, and test our deep neural network.} 
@@ -374,20 +374,19 @@ train, validate, and test our deep neural network.}
 In our model, we use a variant of a deep learning algorithm called a
 \ac{CNN}~\cite{726791}. The layers of such a network are composed of five
 primary variants: input, convolutional, activation, pooling, and
-fully-connected~\chris{Aren't all of our layers fully connected, don't your
-mean hidden layer?}. The input layer holds the raw pixel values of the sample
+hidden. The input layer holds the raw pixel values of the sample
 image which in our case is a 1-dimensional timeseries vector.  Each neuron in
 the convolutional layer computes the convolution between an as yet undefined
-kernel or vector of pixel values and the outputs from the layer above it.
-Activation layers apply an elementwise non-linear activation function rescaling
+kernel or vector of pixel values and the outputs from the layer above it. A neuron has
+its own characteristic set of weights and bias vectors (being the same dimension as that of the input vector). The input vector is multiplied element-wise with the neuron's weight vector and then summed together with the neuron's bias vector. Neuron weight vectors are updated through an optimisation algorithm called back-propogation \cite{LeCun1998}. 
+Activation layers apply an element-wise non-linear activation function rescaling
 their inputs onto the range $[-1,1]$ and leaving the size of the previous
-layer's output unchanged. Pooling layers perform a downsampling operation along
+layer's output unchanged. The activation function can be shifted to better fit network predictions by adjusting the bias vector. 
+Pooling layers perform a downsampling operation along
 the spatial dimensions of their input essentially acting as a data reduction
 process speeding up the training of the network for minimal loss of
-information. Finally we have the fully-connected~\chris{hidden} layer that
+information. Finally we have a hidden layer which connects to a final output layer that
 computes the class scores using an error function, cross-entropy, defined as
-~\chris{I'd like to get some more input on this final point since I don't
-understand it.}
 %
 % define the loss function
 %
@@ -396,10 +395,9 @@ f_{\theta^{'}}(\theta) = -\sum_{i} \theta_{i}^{'} \mathrm{log}(\theta_{i}),
 \end{equation}
 %
 where $\theta_{i}$ is the predicted probability distribution of class $i$ and
-$\theta_{i}$ is the true probability for that class
-\cite{tensorflow2015-whitepaper}.~\chris{Some confusion here about notation,
-which one's primed and which one's not. Maybe need to try to explain what
-$\theta$ actually means?} 
+$\theta_{i}^{'}$ is the true probability for that class
+\cite{tensorflow2015-whitepaper}. The error function computes the inefficiency of
+the network predictions with respect to the true value. 
 
 %
 % describe the network choices that we have
@@ -408,8 +406,8 @@ In order to optimise our network, multiple sets of hyper-parameters are
 tuned. We define hyper-parameters as those parameters that we are free to
 choose. Such parameters include the choice of the number and type of network
 layers, the number and size of neurons within each layer, the max-pooling
-parameters, the type of activation functions, preprocessing of input data, and
-the application (or otherwise) of specific deep learning techniques. We begin
+parameters, the type of activation functions, preprocessing of input data,
+ learning rate, and the application (or otherwise) of specific deep learning techniques. We begin
 the entire process with the simplest network that provides a discernable level
 of effective classification. In most cases this consists of an input,
 convolutional, hidden, and logistic output layer.
@@ -422,70 +420,56 @@ which we found to have minimal effect on the network performance. The reason
 for this is that our input data is whitened and our signals are buried beneath
 the noise. Therefore our data is essentially prescaled on a range
 $\pm\mathcal{O}(1)$ due to the natural variation of Gaussian noise. We also
-attempted applying transfer learning~\chris{can you add a reference for this?}
+attempted applying transfer learning \cite{5288526}
 where we used networks pre-trained on high \ac{SNR} datasets as starting points
 for application to successively lower \ac{SNR} datasets. We found that there
 were no performance benefits using this approach.  Network depth was adjusted
-between 2 and 10 convolutional layers.  Our initial data set needed at least 4
-convolutional layers. Later data sets with various noise realizations needed
-fewer convolutional layers to perform comparatively well, but adding more
-layers still seemed to improved performance.~\chris{The reader doesn't
-need/want to know about our previous data incarnations, just what we report
-here. Can you clarify the statement on optimisation on network layer?} The
+between 2 and 10 convolutional layers. The
 inclusion of dropout was used within the fully-connected layers as a form of
 regularization.
 
 %
 % describe how the training itself works to optimise the weights and biases
 %
-For updating our weights and bias parameters~\chris{weights and biases have not
-been introduced yet, either describe them now or describe them earlier} (in
+For updating our weights and bias parameters (in
 order to minimize our loss function, $f(\theta)$, \eqref{eq:loss}) we settled
-on the Nesterov momentum optimization function
+on the Nesterov momentum optimization function. The optimisation function (back-propogation) works by
+computing the gradient of the loss function, then attempting to minimise 
+that loss function. The errors are then propogated back through the network while at the same time 
+updating the weight and bias terms accordingly.  Back propogation is done over multiple iterations called \textit{epochs}. 
 
-\begin{equation} \label{eq:nesterov1}
-v_{i+1} = \mu v_{i} - \epsilon \nabla f(\theta_{i} + \mu v_{i}),
-\end{equation}
+%\begin{equation} \label{eq:nesterov1}
+%v_{i+1} = \mu v_{i} - \epsilon \nabla f(\theta_{i} + \mu v_{i}),
+%\end{equation}
 
-\begin{equation} \label{eq:nesterov2}
-\theta_{i+1} = \theta_{i} + v_{i+1},
-\end{equation} \\
+%\begin{equation} \label{eq:nesterov2}
+%\theta_{i+1} = \theta_{i} + v_{i+1},
+%\end{equation} \\
 
-\chris{probably don't need these equations} where $\epsilon > 0$ is the
-learning rate, $\mu \in [0,1]$ is the momentum coefficient, and $\nabla
-f(\theta_{i})$ is the gradient with respect to the weight vector $\theta_{i}$.
 Nesterov momentum was the ideal choice because of its prescient ability to
 approximate the next position of the weights and bias parameters which
-therefore gives a rough approximation of their values. Thus the gradient is
-calculated not with respect to the current parameters, but with respect to the
-approximate future positions of those parameters
+therefore gives a rough approximation of their future values
 \cite{Sutskever:2013:IIM:3042817.3043064}. Further detailed description of the
 neural network architecture used can be found in
-Table~\ref{table:network}.~\chris{I feel like the last paragraph needs to
-address the entire issue of what the training actually does. At the moment we
-introduce weights and biases without describing them and then spend all of the
-time talking about Nesterov momentum. Can we slim down the Nesterov stuff and
-mention some key concepts like gradient descent and back propagation and make
-sure to define weights and biases. We have to end up saying that the ranking
-statistic that we extract from the CNN analysis is the probability value in
-addition to the classification.}
+Table~\ref{table:network}. 
+
+The ranking statistic that we extract from the CNN analysis is taken from the final output layer,
+composed of 2 neurons, where each neuron will output a probability value bewteen zero and 1. One neuron gives the probability that a signal is noise and the second gives the probability that the signal is astrophysical. This output is then used to classify our signals.
 
 \begin{figure} 
 \includegraphics[width=\columnwidth]{figures/loss.pdf}
-\caption{\label{fig:loss_curve} \chris{This figure isn't referred to anywhere
-in this paper. Do we need it if you're not referring the reader to it?} The
+\caption{\label{fig:loss_curve} \hunter{Not sure if we stil need this figure? I'd still like to keep it though} The
 loss, accuracy and learning rate~\chris{in the main text none of these
 quantities seem to be defined. This is a problem!} plots (shown above)
 illustrate how the network's performance is defined as a function of the number
-of training epochs~\chris{epochs are not defined in the main text}. The goal is
+of training epochs. The goal is
 to minimize the loss function, which will in turn maximize the accuracy of the
 classifier. The first initial epochs see an exponential decrease in the loss
 function and then a slowly falling monotonic curve to follow. This indicates
 that the longer our network is trained, a limit with respect to the accuracy is
 approached. In our case, we cyclically adjust the learning rate to oscilate
 between $5 \times 10^{-4}$ and $1 \times 10^{-3}$ at a constant frequency.
-Studies have shown that this policy of learning rate adjustement~\chris{finish
-this thought?} (\textbf{should replace figure with better run})~\chris{Also
+Studies have shown that this policy of learning rate adjustement.~\chris{Also
 define exactly what run this was run on, what accuracy and loss were achieved
 and make sure that you show the typical number of epochs used in the analysis.
 Maybe use log-scale on the y-axis of the loss plot.}} 
@@ -503,7 +487,7 @@ Type & C & C & C & C & C & C & C & C & H & H \\
 No. Neurons  & 8  & 16  & 16 & 32 & 64 & 64 & 128 & 128 & 64  & 2  \\
 Filter Size  & 32 & 16  & 16 & 16 & 8  & 8  & 4   & 4   & n/a & n/a \\
 MaxPool Size & yes & no & no & no & yes & no & no & yes & no & no \\
-Drop out  & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0.5 & 0.5 \\
+Drop out  & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0.5 \\
 Act. Func. & Elu & Elu & Elu & Elu & Elu & Elu & Elu & Elu & Elu & SMax \\
 \hline
 \end{tabular}
