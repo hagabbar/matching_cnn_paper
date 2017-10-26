@@ -486,7 +486,7 @@ Parameter & \multicolumn{10}{c}{Layer}\\
 Type & C & C & C & C & C & C & C & C & H & H \\
 No. Neurons  & 8  & 16  & 16 & 32 & 64 & 64 & 128 & 128 & 64  & 2  \\
 Filter Size  & 32 & 16  & 16 & 16 & 8  & 8  & 4   & 4   & n/a & n/a \\
-MaxPool Size & yes & no & no & no & yes & no & no & yes & no & no \\
+MaxPool Size & 8 & n/a & n/a & n/a & 6 & n/a & n/a & 4 & n/a & n/a \\
 Drop out  & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0.5 \\
 Act. Func. & Elu & Elu & Elu & Elu & Elu & Elu & Elu & Elu & Elu & SMax \\
 \hline
@@ -494,8 +494,7 @@ Act. Func. & Elu & Elu & Elu & Elu & Elu & Elu & Elu & Elu & Elu & SMax \\
 \caption{The optimal network structure was determined through multiple tests
 and tunnings of hyperparameters by means of trial and error. The network
 consists of 8 convolutional layers (C), followed by 2 hidden layers (H).
-Max-pooling is performed on the first, fifth, and eighth layer~\chris{can you
-replace the yes/no entrieds for max-pooling with the pool sizes please?},
+Max-pooling is performed on the first, fifth, and eighth layer,
 whereas dropout is only performed on the two fully-connected layers. Each layer
 uses an Elu activation function while the last layer uses a Softmax activation
 function in order to normalize the output values to be between zero and one so
