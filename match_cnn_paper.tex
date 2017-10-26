@@ -51,11 +51,18 @@ floatfix,
 \usepackage{acronym}
 \usepackage{multirow}
 \usepackage{tabularx}
+\usepackage{hyperref}
 %\addbibresource{references.bib}
 \linenumbers % Commence numbering lines
 %\usepackage{hyperref}% add hypertext capabilities
 %\usepackage[mathlines]{lineno}% Enable numbering of text and display math
 %\linenumbers\relax % Commence numbering lines
+\hypersetup{
+%--- fill inside borders ---
+  colorlinks=true,        % false: boxed links; true: colored links
+  linkcolor=black,         % color of internal links
+  citecolor=cyan,         % color of links to bibliography
+}
 
 %\usepackage[showframe,%Uncomment any one of the following lines to test 
 %%scale=0.7, marginratio={1:1, 2:3}, ignoreall,% default settings
@@ -89,7 +96,7 @@ floatfix,
 %
 % Be clear and specific. Do not claim too much or too little.
 %
-\title{Matching Matched Filtering with Deep Networks in Gravitational wave Astronomy}
+\title{Matching Matched-Filtering with Deep Networks for Gravitational wave Astronomy}
 
 \author{Hunter Gabbard}
  \email{Corresponding author: h.gabbard.1@research.gla.ac.uk}
@@ -113,19 +120,21 @@ floatfix,
 %
 \begin{abstract} 
 %
-We report on the construction of a deep convoloutional neural network that can
+We report on the construction of a deep convolutional neural network that can
 reproduce the sensitivity of a matched-filter search for binary black hole
-gravitational wave signals. We report a new method for classifying
-gravitational-wave (GW) signals from binary black hole (BBH) mergers using a
-deep convolutional neural network. Using only the raw time series as an input,
-we are able to distinguish GW signals injected in Gaussian noise amongst
-instances of purely Gaussian noise time series with (\textbf{need figure of
-merit here}) percent accuracy.  We compare our results with the standard method
-of matched filtering used in Advanced LIGO and find the methods to be
-comparable.~\chris{I will edit the abstract when we have final results}~\fergus{We need to mention the superior analysing speed in the abstract}
-%\begin{description} \item[PACS numbers] May be entered using the
-%\verb+\pacs{#1}+ command.  
-%\end{description} 
+
+gravitational wave signals. The standard method for the detection of well
+modelled transient gravitational wave signals is matched filtering. However,
+the computational cost of such searches in low latency will grow dramatically
+as the low frequency sensitivity of gravitational wave detectors improves.
+Convolutional neural networks provide a highly computationally efficient method
+for signal identification in which the majority of calculations are performed
+prior to data taking during a training process. We use only the gravitational
+wave time-series as an input and train and test on simulated binary black hole
+signals in Advanced detector Gaussian noise. We show that our results match
+those of matched-filtering applied to the same datasets and find the methods
+to be comparable in sensitivity as defined by Reciever-Operator
+characteristics. 
 %
 \end{abstract}
 
@@ -353,12 +362,12 @@ astrophysically motivated distributions where we assume $m_{1,2}\sim
 
 \begin{figure} 
 \includegraphics[width=\columnwidth]{figures/waveform.pdf}
-\caption{\label{fig:waveform} A whitened noise-free time series of a \ac{BBH}
-signal (cyan) with component masses $m_{1}=41.86\mathrm{M}_{\odot}$ and $m_{2}=6.65\mathrm{M}_{\odot}$
-with optimal \ac{SNR} 8. The dark blue timeseries shows the
-same gravitational wave signal with additive whitened Gaussian noise of unit
-variance. This latter timeseries is representative of the datasets we use to
-train, validate, and test our deep neural network.} 
+\caption{A whitened noise-free time series of a \ac{BBH}
+signal (cyan) with component masses $m_{1}=41.86\mathrm{M}_{\odot}$ and
+$m_{2}=6.65\mathrm{M}_{\odot}$ with optimal \ac{SNR} $\optsnr=8$. The dark blue
+timeseries shows the same gravitational wave signal with additive whitened
+Gaussian noise of unit variance. This latter timeseries is representative of
+the datasets we use to train, validate, and test our deep neural network.\label{fig:waveform}}
 \end{figure}
 
 %
@@ -450,24 +459,27 @@ Table~\ref{table:network}.
 The ranking statistic that we extract from the CNN analysis is taken from the final output layer,
 composed of 2 neurons, where each neuron will output a probability value bewteen zero and 1. One neuron gives the probability that a signal is noise and the second gives the probability that the signal is astrophysical. This output is then used to classify our signals.
 
-\begin{figure} 
-\includegraphics[width=\columnwidth]{figures/loss.pdf}
-\caption{\label{fig:loss_curve} \hunter{Not sure if we stil need this figure? I'd still like to keep it though} The
-loss, accuracy and learning rate~\chris{in the main text none of these
-quantities seem to be defined. This is a problem!} plots (shown above)
-illustrate how the network's performance is defined as a function of the number
-of training epochs. The goal is
-to minimize the loss function, which will in turn maximize the accuracy of the
-classifier. The first initial epochs see an exponential decrease in the loss
-function and then a slowly falling monotonic curve to follow. This indicates
-that the longer our network is trained, a limit with respect to the accuracy is
-approached. In our case, we cyclically adjust the learning rate to oscilate
-between $5 \times 10^{-4}$ and $1 \times 10^{-3}$ at a constant frequency.
-Studies have shown that this policy of learning rate adjustement.~\chris{Also
-define exactly what run this was run on, what accuracy and loss were achieved
-and make sure that you show the typical number of epochs used in the analysis.
-Maybe use log-scale on the y-axis of the loss plot.}} 
-\end{figure}
+% 
+% I am commenting this figure out for now
+%
+%\begin{figure} 
+%\includegraphics[width=\columnwidth]{figures/loss.pdf}
+%\caption{\label{fig:loss_curve} \hunter{Not sure if we stil need this figure? I'd still like to keep it though} The
+%loss, accuracy and learning rate~\chris{in the main text none of these
+%quantities seem to be defined. This is a problem!} plots (shown above)
+%illustrate how the network's performance is defined as a function of the number
+%of training epochs. The goal is
+%to minimize the loss function, which will in turn maximize the accuracy of the
+%classifier. The first initial epochs see an exponential decrease in the loss
+%function and then a slowly falling monotonic curve to follow. This indicates
+%that the longer our network is trained, a limit with respect to the accuracy is
+%approached. In our case, we cyclically adjust the learning rate to oscilate
+%between $5 \times 10^{-4}$ and $1 \times 10^{-3}$ at a constant frequency.
+%Studies have shown that this policy of learning rate adjustement.~\chris{Also
+%define exactly what run this was run on, what accuracy and loss were achieved
+%and make sure that you show the typical number of epochs used in the analysis.
+%Maybe use log-scale on the y-axis of the loss plot.}} 
+%\end{figure}
 
 \begin{table}[]
 \begin{tabular}{lcccccccccc}
@@ -486,11 +498,11 @@ Act. Func. & Elu & Elu & Elu & Elu & Elu & Elu & Elu & Elu & Elu & SMax \\
 \hline
 \end{tabular}
 \caption{The optimal network structure was determined through multiple tests
-and tunnings of hyperparameters by means of trial and error. The network
+and tunings of hyperparameters by means of trial and error. The network
 consists of 8 convolutional layers (C), followed by 2 hidden layers (H).
 Max-pooling is performed on the first, fifth, and eighth layer,
-whereas dropout is only performed on the two fully-connected layers. Each layer
-uses an Elu activation function while the last layer uses a Softmax activation
+whereas dropout is only performed on the two hidden layers. Each layer
+uses an Elu activation function while the last layer uses a Softmax (SMax) activation
 function in order to normalize the output values to be between zero and one so
 as to give a probability value for each class.\label{table:network}}
 \end{table}
@@ -591,10 +603,12 @@ true positive, true negative, false negative, or false positive. The accuracy
 percentages for all injection SNR values are listed as follows: $50.19\%$ at
 $\optsnr=2$, $68.34\%$ at $\optsnr=4$, $88.72\%$ at $\optsnr=6$, $97.88\%$ at
 $\optsnr=8$, $99.64\%$ at $\optsnr=10$ and $99.86\%$ at
-$\optsnr=12$.\chris{maybe plot 2x3 rather than 3x2 if we have the space. Also
-we habve to anser the question of why the SNR=2 case mostly predicts an signal,
-why are there not equal numbers in each element as you would
-expect?}\label{fig:confusion}}
+$\optsnr=12$.
+%\chris{maybe plot 2x3 rather than 3x2 if we have the space. Also
+%we have to anser the question of why the SNR=2 case mostly predicts an signal,
+%why are there not equal numbers in each element as you would
+%expect?}
+\label{fig:confusion}}
 \end{figure}
 
 %
@@ -647,13 +661,15 @@ derived from the ROC.}
 \caption{The \ac{ROC} curves for test datasets containing signals with optimal
 SNR $\rho_{\mathrm{opt}}=2,4,6,8,10,12$.  In each panel we plot the detection
 probability as a function of the false alarm probability estimated from the
-output of the \ac{CNN} (blue) and matched-filtering (red) approaches. We also
+output of the \ac{CNN} (purple) and matched-filtering (cyan) approaches. We also
 plot the \ac{ROC} ciurves corresponding to a single template matched-filter
-analysis (dashed green).~\chris{OK, first can we make these plots 2x3 rather
-than 3x2 so that they are easier to see. Please put the SNR labels inside the
-plots rather than on top of them. No need to have dashed curves here so make
-the CNN and matched-filter curves solid. Ditch the legend and make the y-axes
-log -scale. That should be enough to get on with.\label{fig:ROC_curves}}}
+analysis (orange) maximised over phase, amplitude and time shift.
+%\chris{OK, first can we make these plots 2x3 rather
+%than 3x2 so that they are easier to see. Please put the SNR labels inside the
+%plots rather than on top of them. No need to have dashed curves here so make
+%the CNN and matched-filter curves solid. Ditch the legend and make the y-axes
+%log -scale. That should be enough to get on with.}
+\label{fig:ROC_curves}}
 \end{figure}
 
 %
@@ -693,15 +709,17 @@ there for reference.}
 \caption{Efficiency curves comparing the performance of the \ac{CNN} and
 matched-filter approaches for a selection of false alarm probabilities. The
 detection probability is plotted as a function of the optimal \ac{SNR} for the 
-\ac{CNN} (blue) and the matched-filtering (red) analyses. Each collection of
+\ac{CNN} (purple) and the matched-filtering (cyan) analyses. Each collection of
 curves is labelled with the corresponding false alarm probability and in each
 case for reference we also plot curves for the single template matched-filter
-case (green dashed).~\chris{So can we change the x-axis ranges to span exactly 2-12
-and the y-axis to span exactly 0-1. Can we label the x-axis as $\optsnr$. Can
-we produce 3 sets of results for false alarm probabilities 0.001,0.01,0.1 and
-see what the plot looks like with 9 curves (each group of 3 labelled with the
-corresponding false alarm probability? Also change legend to say CNN rather
-than deep network. Finally change the colours?}\label{fig:efficiency_curve}}
+case (orange).
+%\chris{So can we change the x-axis ranges to span exactly 2-12
+%and the y-axis to span exactly 0-1. Can we label the x-axis as $\optsnr$. Can
+%we produce 3 sets of results for false alarm probabilities 0.001,0.01,0.1 and
+%see what the plot looks like with 9 curves (each group of 3 labelled with the
+%corresponding false alarm probability? Also change legend to say CNN rather
+%than deep network. Finally change the colours?}
+\label{fig:efficiency_curve}}
 \end{figure}
 
 %

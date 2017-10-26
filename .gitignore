@@ -7,3 +7,4 @@ match_cnn_paperNotes.bib
 *.bcf
 *.aux
 *.bbl
+*.out
