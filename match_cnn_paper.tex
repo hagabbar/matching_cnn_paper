@@ -187,25 +187,20 @@ Part of the reason being that the methods used by these \textit{search
 pipelines} are complex, sophisticated processes run over a large parameter
 space using advanced signal processing techniques. Distinguishing noise from
 signal in this search pipeline, and others like it, is done using a technique
-called matched template filtering~\chris{not template based matched
-filtering?}. 
+called template based matched filtering. 
 
 %
 % introduce matched filtering
 %
 Matched template filtering uses a \textit{bank} of template waveforms that span
 the astrophysical parameter space \cite{PhysRevD.44.3819, PhysRevD.49.1707,
-PhysRevD.53.6749, PhysRevD.60.022002, 0264-9381-23-18-002, PhysRevD.80.104014,
-PhysRevD.86.084017, PhysRevD.89.084041, PhysRevD.87.124003, 1307.4158,
-PhysRevD.89.024003, PhysRevD.93.124007}~\chris{might be a few too many
-references for template banks here. What about waveform references?}. A
-template bank will span a large astrophysical parameter space since we do not
+PhysRevD.53.6749, PhysRevD.60.022002, 0264-9381-23-18-002, PhysRevD.80.104014, Blanchet2014, PhysRevD.89.061502}. A template bank will span a large astrophysical parameter space since we do not
 know \textit{a priori} what the true parameters of the gravitational waves will
 be. The waveforms of the signals are well modeled by post-Newtonian
 theory~\cite{PhysRevD.84.049901,PhysRevD.80.084043,Blanchet2014,PhysRevD.93.084054},
 and analysis pipelines use matched filtering to search for those signals buried
 in the detector noise. More on how we implement this technique and further
-comparisons with our model will be described later in this letter~\fergus{You say this at the end of the intro also, so maybe remove this sentence}.
+comparisons with our model will be described later in this letter.
 
 %
 % introduce deep learning
@@ -216,11 +211,7 @@ recent years~\cite{NIPS2012_4824, 1406.2661, 1409.1556, 1412.7062, 1311.2901,
 implementations of deep learning have been used in the colorization of black
 and white images \cite{1603.08511}, automatic image caption generation
 \cite{1412.2306}, object classification and detection in photographs
-\cite{NIPS2012_4824}, along with many other exciting applications~\chris{this
-is a bit photograph heavy, can we find some scientific applications, e.g.,
-medical, bio-science, etc.. }.~\chris{Can you add a sentence or 2
-listing the existing machine learning and CNN approaches already published in
-GWs, e.g. the George \& Huerta papers and the gravity spy paper at least.} One
+\cite{NIPS2012_4824}, machine learning for medical diagnosis \cite{KONONENKO200189}, and microarray gene expression classification \cite{Pirooznia2008}. There has also been some recent success in the field of gravitational wave astronomy in the form of glitch classification \cite{0264-9381-34-6-064003,1706.07446} and signal identification \cite{1701.00008}. One
 advantage of deep learning is its ability to perform analyses very rapidly
 since the method's computationally intensive stage is pre-computed during the
 training step prior to the analysis of actual data. This results in low-latency
@@ -230,14 +221,13 @@ comparable classification methods.
 %
 % more detail on deep learning
 %
-A deep learning algorithm is composed of arrays of processing units, called
-neurons, which can be anywhere from one to several layers deep~\fergus{`Deepness' is not really explained here. So maybe worth saying ``... composed of stacked arrays ..." or something}. A neuron acts
+A deep learning algorithm is composed of stacked arrays of processing units, called
+neurons, which can be anywhere from one to several layers deep. A neuron acts
 as a filter, whereby it is passed a vector of inputs, performs a transformation
 on them and then outputs a single scalar value. Deep learning algorithms
 typically consist of an input layer, followed by one to several hidden layers
-and then one to $N$~\chris{what is $N$? Don't introduce something without
-defining it or that we won't use again.} fully-connected neurons. This value
-can then either be used to solve classfication, or regression-like problems~\fergus{Regression is the technique applied for both classification and parameter estimation}. In
+and then one to multiple fully-connected neurons. This value
+can then either be used to solve classfication, or regression-like problems~\hunter{@fergus, not sure what you're asking here? Insert your statement as new sentence?}~\fergus{Regression is the technique applied for both classification and parameter estimation}. In
 the case of classification, each output neuron corresponds to the probability
 that a particular input sample is of a certain class.
 
@@ -305,8 +295,7 @@ isotropic prior on the sky, the polarization angle and phase are drawen from a
 uniform prior on the range $[0,\pi]$, and the inclination angle is drawn such
 that the cosine of inclination is uniform on the range $[-1,1]$. The waveforms
 are then randomly placed within the time series, see figure \ref{fig:waveform},
-such that the peak of the waveform is within the final $20$\% of the time
-series~\fergus{``The peak of each waveform is then randomly placed within the final $ 20\% $ of the time series"}. The waveform amplitude is scaled to achieve a predefined optimnal
+such that the peak of each waveform is then randomly placed within the final $ 20\% $ of the time series. The waveform amplitude is scaled to achieve a predefined optimnal
 \ac{SNR} defined as
 %
 % the optimal SNR
