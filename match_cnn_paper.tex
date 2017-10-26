@@ -223,12 +223,10 @@ comparable classification methods.
 %
 A deep learning algorithm is composed of stacked arrays of processing units, called
 neurons, which can be anywhere from one to several layers deep. A neuron acts
-as a filter, whereby it is passed a vector of inputs, performs a transformation
-on them and then outputs a single scalar value. Deep learning algorithms
+as a filter, whereby it is passed an array of inputs, performs a transformation
+on them and then outputs scalar values. Deep learning algorithms
 typically consist of an input layer, followed by one to several hidden layers
-and then one to multiple fully-connected neurons. This value
-can then either be used to solve classfication, or regression-like problems~\hunter{@fergus, not sure what you're asking here? Insert your statement as new sentence?}~\fergus{Regression is the technique applied for both classification and parameter estimation}. In
-the case of classification, each output neuron corresponds to the probability
+and then one to multiple output neurons. The scalars produced from the output neurons can be used to solve classification problems, where each output neuron corresponds to the probability
 that a particular input sample is of a certain class.
 
 %
