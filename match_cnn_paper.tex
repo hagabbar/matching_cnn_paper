@@ -121,24 +121,29 @@ floatfix,
 \begin{abstract} 
 %
 We report on the construction of a deep convolutional neural network that can
-reproduce the sensitivity of a matched-filter search for binary black hole
-
-gravitational wave signals. The standard method for the detection of well
+reproduce the sensitivity of a matched-filter search for binary black hole gravitational wave signals. The standard method for the detection of well
 modelled transient gravitational wave signals is matched filtering. However,
 the computational cost of such searches in low latency will grow dramatically
 as the low frequency sensitivity of gravitational wave detectors improves.
 Convolutional neural networks provide a highly computationally efficient method
 for signal identification in which the majority of calculations are performed
 prior to data taking during a training process. We use only the gravitational
-wave time-series as an input and train and test on simulated binary black hole
-signals in Advanced detector Gaussian noise. We show that our results match
+wave time-series~\fergus{Toms suggestion: a whitened time
+series of measured GW strain} as an input and train and test on simulated binary black hole
+signals in Advanced detector Gaussian noise~\fergus{Toms suggestion: synthetic
+Gaussian noise representative of [final] Advanced LIGO [design]
+sensitivity}. We show that our network can classify signal from non-signal with a performance
+comparable to that of match-filtering applied to the same datasets when considering the sensitivity 
+defined by Reciever-Operator characteristics.
+
+match
 those of matched-filtering applied to the same datasets and find the methods
 to be comparable in sensitivity as defined by Reciever-Operator
 characteristics. 
 %
 \end{abstract}
 
-\pacs{04.30.-w, 04.80.Nn}% PACS, the Physics and Astronomy
+%\pacs{04.30.-w, 04.80.Nn}% PACS, the Physics and Astronomy
 
 
                              % Classification Scheme.
@@ -194,10 +199,10 @@ methods will be more pertinent as the detectors increase in sensitivity.
 %
 % describe the existing algorithms
 %
-The algorithms used to make these detections \cite{0264-9381-33-21-215004, 0004-637X-748-2-136} are computationally expensive to run.
+The algorithms used to make these detections \cite{0264-9381-33-21-215004, 0004-637X-748-2-136, PhysRevD.90.082004} are computationally expensive to run.
 Part of the reason being that the methods used by these \textit{search
 pipelines} are complex, sophisticated processes run over a large parameter
-space using advanced signal processing techniques. Distinguishing noise from
+space using advanced signal processing techniques~\fergus{Tom suggests remove this}. Distinguishing noise from
 signal in this search pipeline, and others like it, is done using a technique
 called template based matched filtering. 
 
@@ -206,7 +211,7 @@ called template based matched filtering.
 %
 Matched template filtering uses a \textit{bank} of template waveforms that span
 the astrophysical parameter space \cite{PhysRevD.44.3819, PhysRevD.49.1707,
-PhysRevD.53.6749, PhysRevD.60.022002, 0264-9381-23-18-002, PhysRevD.80.104014, Blanchet2014, PhysRevD.89.061502}. A template bank will span a large astrophysical parameter space since we do not
+PhysRevD.53.6749, PhysRevD.60.022002, 0264-9381-23-18-002, PhysRevD.80.104014, Blanchet2014, PhysRevD.89.061502, PhysRevD.46.5236, PhysRevD.47.2198, PhysRevD.85.122006}. A template bank will span a large astrophysical parameter space since we do not
 know \textit{a priori} what the true parameters of the gravitational waves will
 be. The waveforms of the signals are well modeled by post-Newtonian
 theory~\cite{PhysRevD.84.049901,PhysRevD.80.084043,Blanchet2014,PhysRevD.93.084054},
@@ -234,7 +239,7 @@ comparable classification methods.
 % more detail on deep learning
 %
 A deep learning algorithm is composed of stacked arrays of processing units, called
-neurons, which can be anywhere from one to several layers deep. A neuron acts as a filter, whereby it is passed an array of inputs, performs a transformation on them and then outputs scalar values. This transformation is a linear operation between the input array and weight and bias parameters assosicated to the neuron. Deep learning algorithms typically consist of an input layer, followed by one to several hidden layers
+neurons, which can be anywhere from one to several layers deep. A neuron acts as a filter, whereby it is passed an array of inputs, performs a transformation on them and then outputs scalar values. This transformation is a linear operation between the input array and the weight and bias parameters assosicated to the neuron. Deep learning algorithms typically consist of an input layer, followed by one to several hidden layers
 and then one to multiple output neurons. The scalars produced from the output neurons can be used to solve classification problems, where each output neuron corresponds to the probability
 that a particular input sample is of a certain class.
 
@@ -252,7 +257,7 @@ to acheive the same sensitivity as established matched filtering techniques.
 % the structure of the paper
 % 
 In the following sections we will discuss our choice of network architecture
-and tuning of it's hyperparameters, compare the results of our network with the
+and tuning of its hyperparameters, compare the results of our network with the
 widely used matched-filtering gravitational-wave signal classification
 technique, and comment on future improvements and applications of this work.      
 
@@ -276,7 +281,7 @@ $\mathcal{O}(1)$ sec allowing us to use a relatively small datasets for this
 study. The input datasets consist of simulated gravitational wave timeseries
 data that has been whitened in the frequency domain. This process rescales the
 noise contribution at each frequency to have equal power resulting in "white"
-noise. Signal+noise data has it's constituent frequency components
+noise. Signal+noise data has its constituent frequency components
 reweighted according to the \ac{PSD} used.    
 
 %
@@ -381,7 +386,7 @@ In our model, we use a variant of a deep learning algorithm called a
 \ac{CNN}~\cite{726791}. The layers of such a network are composed of five
 primary variants: input, convolutional, activation, pooling, and
 hidden. The input layer holds the raw pixel values of the sample
-image which in our case is a 1-dimensional timeseries vector. As the data is 1-dimensional, the weight and bias parameters of the network are also in vector form. Each neuron in the convolutional layer computes the convolution between the neuron's weight vector and the outputs from the layer above it, and then the result is summed with the bias vector. Neuron weight vectors are updated through an optimisation algorithm called back-propogation \cite{LeCun1998}. 
+image which in our case is a 1-dimensional timeseries vector. As the data is 1-dimensional, the weight and bias parameters of the network are also in 1-dimensional vector form. Each neuron in the convolutional layer computes the convolution between the neuron's weight vector and the outputs from the layer above it, and then the result is summed with the bias vector. Neuron weight vectors are updated through an optimisation algorithm called back-propogation \cite{LeCun1998}. 
 Activation layers apply an element-wise non-linear activation function rescaling
 their inputs onto the range $[-1,1]$ and leaving the size of the previous
 layer's output unchanged. The activation function can be shifted to better fit network predictions by adjusting the bias vector. 
@@ -576,7 +581,7 @@ incorrectly identified samples to the total number of samples) of
 %
 % a description of the transfer learning approach (do we need this?)
 %
-\chris{remove this paragraph?} After tunning several hyperparameters and then settling on
+\chris{remove this paragraph?} After tuning several hyperparameters and then settling on
 an ideal network format (Table \ref{table:network}), we present the results of
 our classifier on a noise vs. signal+noise sample set. We trained our network
 using a transfer learning approach whereby we initially trained our network on
@@ -640,11 +645,11 @@ match filtering methods.  The first is produced by using the nominal template ba
 in the \textit{Sample Simulation Methods} section, whereas the second uses the
 optimal template for each injection, whereby optimal is defined as the template
 used to generate that injection. As seen in figure \ref{fig:ROC_curve} all
-three methods have equivalent performance proficiency at $\sim \mathrm{iSNR} >
+three methods have equivalent performance proficiency at $\sim \mathrm{SNR} >
 9$, whereas there is a marginal dip in performance in the nominal matched
 filtering method and our deep learning classifier. It should be noted that our
 classifier exceeds the performance proficiency of that of the nominal matched
-filtering method between iSNR 2 and iSNR 4.\chris{I rewrote this paragrpah
+filtering method between SNR 2 and SNR 4.\chris{I rewrote this paragrpah
 above. I thought that there was too much emphasis on the single template
 approach and no descriptiuon of he ROC curve. There is also a statement about
 us beating matched filtering as low SNR. This is tentative at the moment and
@@ -687,14 +692,14 @@ matched-filtering approaches produce indistinguishable results (within our
 uncertainties) at all choices of false alarm probability.
 
 \chris{Same here, I suggest removing this paragraph} We compare the results of
-all three methods at various injection iSNR values in figure
+all three methods at various injection SNR values in figure
 \ref{fig:isnr_curves}. It is not surprising to see that the matched filtering
 method using the optimal template consistantly performs better than both the
 nominal match filtering method and our deep learning classifier.  However, what
 is considerable is the comparison between the nominal matched filtering and the
 deep learning classifier detection probability curves. It can clearly be seen
 that our classifier exceeds the performance of the nominal matched filtering
-method at iSNR 2, 4 and 6. This is a promising result and certainly merits
+method at SNR 2, 4 and 6. This is a promising result and certainly merits
 further investigation.~\chris{I've kind of rewritten this paragraph above for
 the same reasons as used for the ROC curves. We just want to stick to the
 process of describing what we're plotting and dispassionately pointing out the
