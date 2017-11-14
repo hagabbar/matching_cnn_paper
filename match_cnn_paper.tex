@@ -100,9 +100,9 @@ floatfix,
 
 \author{Hunter Gabbard}
  \email{Corresponding author: h.gabbard.1@research.gla.ac.uk}
+\author{Michael Williams}
 \author{Fergus Hayes}
 \author{Chris Messenger}
-\author{Michael Williams}
 \affiliation{
  SUPA, School of Physics and Astronomy, \\
  University of Glasgow, \\
@@ -203,9 +203,8 @@ called template based matched filtering.
 %
 % introduce matched filtering
 %
-Matched template filtering uses a \textit{bank} of template waveforms that span
-the astrophysical parameter space \cite{PhysRevD.44.3819, PhysRevD.49.1707,
-PhysRevD.53.6749, PhysRevD.60.022002, 0264-9381-23-18-002, PhysRevD.80.104014, Blanchet2014, PhysRevD.89.061502}. A template bank will span a large astrophysical parameter space since we do not
+Matched template filtering uses a \textit{bank} \cite{PhysRevD.86.084017,1705.01845,PhysRevD.80.104014,PhysRevD.90.082004,PhysRevD.89.084041} of template waveforms \cite{PhysRevD.44.3819,PhysRevD.89.061502,PhysRevD.89.024003,Blanchet2014} that span
+the astrophysical parameter space. A template bank will span a large astrophysical parameter space since we do not
 know \textit{a priori} what the true parameters of the gravitational waves will
 be. The waveforms of the signals are well modeled by post-Newtonian
 theory~\cite{PhysRevD.84.049901,PhysRevD.80.084043,Blanchet2014,PhysRevD.93.084054},
@@ -542,8 +541,8 @@ efficiently computed and $\Delta t$ maximized over using \acp{FFT}.  All that
 remains is to further numerically maximize this quantity over a template of
 component mass combinations. In this analysis a comprehensive template bank is
 generated in the $m_{1},m_{2}$ mass space covering our predefined range of
-masses and with a maximum mismatch of $3\%$ using the PyCBC tools \cite{0264-9381-33-21-215004}
-. The template bank in this case contains $8000$ individual templates. 
+masses and with a maximum mismatch of $3\%$ and a lower frequency cutoff of $18\mathrm{Hz}$ using the PyCBC geometric non-spinning template bank generation tool \cite{pycbc-software,0264-9381-33-21-215004} 
+. The template bank in this case contains $8700$ individual templates. 
 
 %
 % describe the process of what we apply this to
