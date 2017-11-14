@@ -274,7 +274,7 @@ the Advanced LIGO frequency band. They typically then merge on the timescale of
 $\mathcal{O}(1)$ sec allowing us to use a relatively small datasets for this
 study. The input datasets consist of simulated gravitational wave timeseries
 data that has been whitened in the frequency domain. This process rescales the
-noise contribution at each frequency to have equal power resulting in "white"
+noise contribution at each frequency to have equal power resulting in ``white"
 noise. Signal+noise data has its constituent frequency components
 reweighted according to the \ac{PSD} used.    
 
@@ -327,7 +327,8 @@ datasets to be sub-divided into training, validation, and testing sets. Training
 set allows the developer to verify that the network is learning correctly, and
 the test set is used to quantify the performance of the trained network.
 Of the dataset generated we use $60\%$ of these samples for training,
-$20\%$ for validation, and $20\%$ for testing.
+$20\%$ for validation, and $20\%$ for testing. A dataset was generated for each 
+predefined optimal SNR of values $ \rho_{\mathrm{opt}} = 2, 4, 6, 8, 10, 12 $.
 
 %
 % How many sampes did we make
@@ -745,10 +746,10 @@ In this work we have presented results for \ac{BBH} mergers, however, this
 method could be applied to other merger types, such as \ac{BNS} and neutron
 star-black hole signals. This supervised learning approach can also be extended
 to other well modelled gravitational wave targets such as the continuous
-emission from rapidly rotating non-axisymmetric neutron stars \cite{1707.02669}. Whereas unsupervised approaches have the
-potential to be powerful detection tools in searches for unmodelled burst-like
-gravitational-wave signals.~\fergus{Maybe we could also mention the potential for
- parameter estimation here also?} 
+emission from rapidly rotating non-axisymmetric neutron stars \cite{1707.02669}. 
+Moreover unsupervised approaches have the potential to be powerful detection tools 
+in searches for unmodelled burst-like gravitational-wave signals.~\fergus{Maybe 
+we could also mention the potential for parameter estimation here also?} 
 
 %
 % acknowledge peopkle and funding agencies
