@@ -96,7 +96,7 @@ floatfix,
 %
 % Be clear and specific. Do not claim too much or too little.
 %
-\title{Matching Matched-Filtering with Deep Networks for Gravitational wave Astronomy}
+\title{Matching Matched Filtering with Deep Networks for Gravitational wave Astronomy}
 
 \author{Hunter Gabbard}
  \email{Corresponding author: h.gabbard.1@research.gla.ac.uk}
@@ -121,26 +121,20 @@ floatfix,
 \begin{abstract} 
 %
 We report on the construction of a deep convolutional neural network that can
-reproduce the sensitivity of a matched-filter search for binary black hole
+reproduce the sensitivity of a matched-filtering search for binary black hole
 gravitational wave signals. The standard method for the detection of well
 modeled transient gravitational wave signals is matched filtering. However,
 the computational cost of such searches in low latency will grow dramatically
 as the low frequency sensitivity of gravitational wave detectors improves.
 Convolutional neural networks provide a highly computationally efficient method
 for signal identification in which the majority of calculations are performed
-prior to data taking during a training process. We use only the gravitational
-wave time-series~\fergus{Toms suggestion: a whitened time
-series of measured GW strain} as an input and train and test on simulated binary black hole
-signals in Advanced detector Gaussian noise~\fergus{Toms suggestion: synthetic
-Gaussian noise representative of [final] Advanced LIGO [design]
-sensitivity}. We show that our network can classify signal from non-signal with a performance
-comparable to that of match-filtering applied to the same datasets when considering the sensitivity 
+prior to data taking during a training process. We use only whitened time
+series of measured gravitational-wave strain as an input and train and test on simulated binary black hole
+signals in synthetic Gaussian noise representative of Advanced LIGO sensitivity. 
+We show that our network can classify signal from non-signal with a performance
+comparable to that of match filtering applied to the same datasets when considering the sensitivity 
 defined by Reciever-Operator characteristics.
 
-match
-those of matched-filtering applied to the same datasets and find the methods
-to be comparable in sensitivity as defined by Receiver-Operator
-characteristics. 
 %
 \end{abstract}
 
@@ -187,10 +181,7 @@ PhysRevLett.116.241103, PhysRevLett.118.221101} and more recently the advanced
 detector network made the first detection of a binary neutron star
 system~\cite{PhysRevLett.119.161101} seen in conjunction with a gamma-ray
 burst~\cite{2017arXiv171005834L,2017arXiv171005446G,2017arXiv171005449S} and
-multiple post-merger electromagnetic signatures~\cite{2017arXiv171005833L}~\fergus{Tom comments: Not sure why you are citing the Fermi and Integral papers and the MMA 
-paper here - which are not relevant to detection of CBC signals in GW 
-data - when you don't include citations to the basic CBC matched filter 
-literature or to recent work on template banks}.
+multiple post-merger electromagnetic signatures~\cite{2017arXiv171005833L}.
 These detections were made possible by the Advanced Laser Interferometer
 Gravitational wave Observatory (aLIGO) detectors, as well as the recent joint
 detection of GW170814 with Advanced Virgo \cite{PhysRevLett.119.141101}. Over
@@ -213,22 +204,14 @@ called template based matched filtering.
 %
 % introduce matched filtering
 %
-Matched template filtering uses a \textit{bank} of template waveforms that span
-the astrophysical parameter space \cite{PhysRevD.44.3819, PhysRevD.49.1707,
-PhysRevD.53.6749, PhysRevD.60.022002, 0264-9381-23-18-002, PhysRevD.80.104014, Blanchet2014, PhysRevD.89.061502, PhysRevD.46.5236, PhysRevD.47.2198, PhysRevD.85.122006}. 
-~\fergus{Tom comments: its hard to give a proper set of citations 
-unless you separate the idea of the bank from the idea of the waveforms.
-Assuming that we're talking about the bank construction, your citations 
-run out in 2009.  However the banks used in O1 and O2 use more recent 
-methods.  Should cite \cite{1705.01845,PhysRevD.90.082004,PhysRevD.89.024003,PhysRevD.89.084041,PhysRevD.86.084017}. 
-Optionally remove the old refs as obsolete (they consider 
-inaccurate or incomplete waveform models).}
+Matched filtering uses a \textit{bank} of template waveforms that span
+the astrophysical parameter space \cite{PhysRevD.44.3819,PhysRevD.49.1707,
+PhysRevD.53.6749,PhysRevD.60.022002,0264-9381-23-18-002,PhysRevD.80.104014,Blanchet2014,PhysRevD.89.061502,PhysRevD.46.5236,PhysRevD.47.2198,PhysRevD.85.122006}. 
+~\fergus{Tom suggests citing: \cite{1705.01845,PhysRevD.90.082004,PhysRevD.89.024003,PhysRevD.89.084041,PhysRevD.86.084017}.} 
 A template bank will span a large astrophysical parameter space since we do not
 know \textit{a priori} what the true parameters of the gravitational waves will
 be. The waveforms of the signals are well modeled by post-Newtonian
-theory~\cite{PhysRevD.84.049901,PhysRevD.80.084043,Blanchet2014,PhysRevD.93.084054}~\fergus{Tom comments:
-it's not true that short BBH waveforms are well modelled by PN 
-theory. You need merger and ringdown as well and fitting of the complete waveform to NR},
+theory~\cite{PhysRevD.84.049901,PhysRevD.80.084043,Blanchet2014,PhysRevD.93.084054},
 and analysis pipelines use matched filtering to search for those signals buried
 in the detector noise. More on how we implement this technique and further
 comparisons with our model will be described later in this letter.
@@ -265,7 +248,7 @@ signal is present in the data or if the data contains only detector noise. We
 propose a deep learning procedure requiring only the raw data time
 series as input with minimum signal pre-processing. We show how this approach
 can be pre-trained using simulated data-sets and applied in low-latency 
-to achieve the same sensitivity as established matched filtering techniques. 
+to achieve the same sensitivity as established matched-filtering techniques. 
 
 %
 % the structure of the paper
@@ -285,7 +268,7 @@ technique, and comment on future improvements and applications of this work.
 % describe the simulations
 %
 In order to make a clean comparison between a deep learning approach and
-matched-filtering, we distinguish between only 2 cases, \ac{BBH} merger signals
+matched filtering, we distinguish between only 2 cases, \ac{BBH} merger signals
 in additive Gaussian noise (signal+noise) and Gaussian noise alone
 (noise-only). We choose to focus on \ac{BBH} signals only rather than including
 \ac{BNS} systems for the reason that \ac{BBH} systems are higher mass systems
@@ -310,8 +293,7 @@ to obtain time domain realisations representing idealized LIGO detector noise.
 % describe the signal generation 
 %
 Signals are simulated using a library of gravitational wave data analysis
-routines called \texttt{LALSuite}~\fergus{maybe prefer LALSimulation as that is the home of waveforms. 
-Please cite it via URL}. We use the IMRPhenomD type
+routines called \texttt{LALSuite}. We use the IMRPhenomD type
 waveform~\cite{PhysRevD.93.044006, PhysRevD.93.044007} which models the
 inspiral, merger and ringdown components of \ac{BBH} gravitational wave
 signals. We simulate systems with component black hole masses in the range from
@@ -336,8 +318,7 @@ where $\tilde{h(f)}$ is the frequency domain representation of the
 gravitational wave strain, $S_{\mathrm{n}}(f)$ is the detector noise \ac{PSD},
 and $f_{\mathrm{min}}$ is the frequency at which we start to accumulate
 \ac{SNR}. The simulated time series were chosen to be 1~sec in duration sampled
-at 8192 Hz.~\fergus{Tom suggests: at this point you haven't said how long the time series is. 
-Better mention it earlier, as well as the chosen values of SNR} Therefore we consider $f_{\mathrm{min}}$ as the
+at 8192 Hz. Therefore we consider $f_{\mathrm{min}}$ as the
 frequency of the gravitational wave signal at the start of the sample
 timeseries. An example timeseries can be seen in Figure~\ref{fig:waveform}. 
 
@@ -372,10 +353,9 @@ wave amplitude.
 We will only use the training set to teach the deep neural network about the
 signals that we wish to classify. For this reason we have chosen to distribute
 the masses of the training set according to the density of templates one would
-use in a matched filtering approach~\fergus{Tom suggests: Should cite where you got the formulae 
-from (Owen-Sathya?).  You should also mention that the correct density 
+use in a matched-filtering approach.  You should also mention that the correct density 
 of templates for the actual inspiral-merger-ringdown waveforms is 
-expected to be (somewhat) different. Tom suggests citing \cite{PhysRevD.91.124042}}. It is logical to place waveforms closer in
+expected to be (somewhat) different. Tom suggests citing \cite{PhysRevD.91.124042}. It is logical to place waveforms closer in
 regions where the waveforms change rapidly and hence we distribute the masses
 according to the total mass $M\sim M^{10/3}$ and the symmetric mass ratio
 $\eta\sim \eta^{-3}$ where $M=m_{1}+m_{2}$ and $\eta=m_{1}m_{2}/M^{2}$. The
@@ -388,8 +368,7 @@ astrophysically motivated distributions where we assume $m_{1,2}\sim
 \begin{figure} 
 \includegraphics[width=\columnwidth]{figures/waveform.pdf}
 \caption{A whitened noise-free time series of a \ac{BBH}
-signal (cyan)~\fergus{Marco asks: Is the cyan curve really
-    whitened?} with component masses $m_{1}=41.86\mathrm{M}_{\odot}$ and
+signal with component masses $m_{1}=41.86\mathrm{M}_{\odot}$ and
 $m_{2}=6.65\mathrm{M}_{\odot}$ with optimal \ac{SNR} $\optsnr=8$. The dark blue
 timeseries shows the same gravitational wave signal with additive whitened
 Gaussian noise of unit variance. This latter timeseries is representative of
@@ -487,8 +466,7 @@ The ranking statistic that we extract from the CNN analysis is taken from the fi
 composed of 2 neurons, where each neuron will output a probability value bewteen zero and 1. One 
 neuron gives the probability that the input data does not contains a signal and the second gives 
 the probability that the input contains a signal.
-~\fergus{Marcos says: Whereas... and following seems
-incomplete}
+
 % 
 % I am commenting this figure out for now
 %
@@ -540,22 +518,20 @@ as to give a probability value for each class.\label{table:network}}
 %
 % define the matched filter analysis
 %
-\textit{Applying matched-filtering} ---
+\textit{Applying matched filtering} ---
 %
 % introduce matched filtering
 %
 In order to establish the power of the deep learning approach we must compare
-our results to the standard matched filtering process used in the detection of
+our results to the standard matched-filtering process used in the detection of
 compact binary coalescence
 signals~\cite{PhysRevD.85.122006,2013PhRvD..87b4033B}. The ranking statistic
-used in this case is the matched-filter \ac{SNR} analytically maximised over arrival time,
-phase and distance.~\fergus{Tom comments: matched filter 
-automatically does the analytical maximization over distance and phase, but NOT over time. This is done numerically.} 
-By first defining the noise weighted inner
+used in this case is the matched filter \ac{SNR} analytically maximised over arrival time,
+phase and distance. By first defining the noise weighted inner
 product as a function of a time shift $\Delta t$ between the arrival time of
 the signal and the template,
 %
-% define the matched-filter SNR
+% define the matched filtering SNR
 %
 \begin{equation}
 (a\mid b)[\Delta t] =
@@ -581,12 +557,12 @@ masses and with a maximum mismatch of $3\%$ using the PyCBC tools \cite{0264-938
 %
 % describe the process of what we apply this to
 %
-For the practical computation of the matched-filter analysis we take each of
+For the practical computation of the matched-filtering analysis we take each of
 the data samples from the testing dataset and compute the time, phase and
 amplitude maximized ranking statistic $\rho$ for each template in the bank. We
 then record the value of $\rho$ maximized over each template. With values of
 statistics now assigned to each test data sample from both the
-matched-filtering and \ac{CNN} approaches, and having knowledge of the
+matched filtering and \ac{CNN} approaches, and having knowledge of the
 true class associated with that sample, we may now construct \ac{ROC} curves.  
 
 %
@@ -608,15 +584,17 @@ incorrectly identified samples to the total number of samples) of
 %
 % a description of the transfer learning approach (do we need this?)
 %
-After tunning several hyperparameters and then settling on
+After tuning several hyperparameters and then settling on
 an ideal network format (Table \ref{table:network}), we present the results of
 our classifier on a noise vs. signal+noise sample set. We trained our network
 using a transfer learning approach whereby we initially trained our network on
 a sample set of 1,000 noise and 1,000 injection signals (each with 25 different
 noise realizations) with an integrated SNR value of 12. We then lowered the
 integrated SNR value by 2 and (using the same weights from our previous
-network) we trained our classifier again. This approach seemed to only have a
-marginal benefit on the overall performance of the classifier.  
+network) we trained our classifier again. This is repeated until the network trains on 
+data of a desired value of SNR. This approach seemed to only have a marginal benefit 
+on the overall performance of the classifier when compared to only training on data of 
+the desired SNR.  
 
 %
 % confusion matrix plot
@@ -651,7 +629,7 @@ approach matches the sensitivity of matched filtering for all test datasets
 across the full range of false alarm probabilities explored in this
 analysis\footnote{We are limited to a minimal false alarm probability of $\sim
 10^{-4}$ due to the limited number of testing samples used.}. We also plot as a
-reference, the \ac{ROC} curve corresponding to a matched filter analysis for
+reference, the \ac{ROC} curve corresponding to a matched-filtering analysis for
 which the true masses and arrival time of the signal is known. In this case
 there is only a single template and the sensitivity is consequently improved.  
 
@@ -660,34 +638,29 @@ there is only a single template and the sensitivity is consequently improved.
 %
 In Figure~\ref{fig:ROC_curves} we
 compare our results to that of matched filtering, where we use two alternative
-match filtering methods.  The first is produced by using the nominal template bank described
+match-filtering methods.  The first is produced by using the nominal template bank described
 in the \textit{Sample Simulation Methods} section, whereas the second uses the
 optimal template for each injection, whereby optimal is defined as the template
 used to generate that injection. As seen in figure \ref{fig:ROC_curves} all
-three methods have equivalent performance proficiency at $\sim \mathrm{iSNR} >
-9$, whereas there is a marginal dip in performance in the nominal matched
-filtering method and our deep learning classifier. It should be noted that our
-classifier exceeds the performance proficiency of that of the nominal matched
-filtering method between iSNR 2 and iSNR 4.
+three methods have equivalent performance proficiency at $\sim \mathrm{SNR} >
+9$, whereas there is a marginal dip in performance in the nominal matched-filtering 
+method and our deep learning classifier. It should be noted that our
+classifier exceeds the performance proficiency of that of the nominal matched-filtering 
+method between SNR 2 and SNR 4.
 
 %
 % show ROC curves
 %
 \begin{figure}[]
 \includegraphics[width=\columnwidth] {figures/ROC_curves.pdf}
-\caption{~\fergus{Marco comments: different curves in some of the plots are 
-really difficult to distinguish}The \ac{ROC} curves for test datasets containing 
+\caption{The \ac{ROC} curves for test datasets containing 
 signals with optimal SNR $\rho_{\mathrm{opt}}=2,4,6,8,10,12$.  In each panel we plot the detection
 probability as a function of the false alarm probability estimated from the
 output of the \ac{CNN} (purple) and matched-filtering (cyan) approaches. We also
-plot the \ac{ROC} curves corresponding to a single template matched-filter
-analysis (orange) maximized over phase, amplitude and time shift.
-%\chris{OK, first can we make these plots 2x3 rather
-%than 3x2 so that they are easier to see. Please put the SNR labels inside the
-%plots rather than on top of them. No need to have dashed curves here so make
-%the CNN and matched-filter curves solid. Ditch the legend and make the y-axes
-%log -scale. That should be enough to get on with.}
-\label{fig:ROC_curves}}
+plot the \ac{ROC} curves corresponding to a single template matched-filtering
+analysis (orange) maximized over phase, amplitude and time shift.}
+
+\label{fig:ROC_curves}
 \end{figure}
 
 %
@@ -705,14 +678,14 @@ matched-filtering approaches produce indistinguishable results (within our
 uncertainties) at all choices of false alarm probability.
 
 We compare the results of
-all three methods at various injection iSNR values in figure
-\ref{fig:ROC_curves}. It is not surprising to see that the matched filtering
+all three methods at various injection SNR values in figure
+\ref{fig:ROC_curves}. It is not surprising to see that the matched-filtering
 method using the optimal template consistently performs better than both the
-nominal match filtering method and our deep learning classifier.  However, what
+nominal match-filtering method and our deep learning classifier.  However, what
 is considerable is the comparison between the nominal matched filtering and the
 deep learning classifier detection probability curves. It can clearly be seen
-that our classifier exceeds the performance of the nominal matched filtering
-method at iSNR 2, 4 and 6. This is a promising result and certainly merits
+that our classifier exceeds the performance of the nominal matched-filtering
+method at SNR 2, 4 and 6. This is a promising result and certainly merits
 further investigation.
 
 %
@@ -721,11 +694,11 @@ further investigation.
 \begin{figure}[]
 \includegraphics[width=\columnwidth] {figures/efficiency.pdf}
 \caption{Efficiency curves comparing the performance of the \ac{CNN} and
-matched-filter approaches for a selection of false alarm probabilities. The
+matched-filtering approaches for a selection of false alarm probabilities. The
 detection probability is plotted as a function of the optimal \ac{SNR} for the 
 \ac{CNN} (purple) and the matched-filtering (cyan) analyses. Each collection of
 curves is labeled with the corresponding false alarm probability and in each
-case for reference we also plot curves for the single template matched-filter
+case for reference we also plot curves for the single template matched-filtering
 case (orange).
 %\chris{So can we change the x-axis ranges to span exactly 2-12
 %and the y-axis to span exactly 0-1. Can we label the x-axis as $\optsnr$. Can
@@ -750,7 +723,7 @@ gravitational-wave timeseries data, is able to reproduce the results of a
 matched-filtering analysis in Gaussian noise. We employ a deep convolutional
 neural network with carefully chosen hyperparameters and produce an output that
 returns a ranking statistic equivalent to the probability that data contains a
-signal. Matched filter analyses are often described as the optimal approach for
+signal. Matched-filtering analyses are often described as the optimal approach for
 signal detection in Gaussian noise. By building a neural network that is
 capable of reproducing this optimality we answer a fundamental question
 regarding the applicability of neural networks for gravitational wave data
@@ -761,12 +734,12 @@ analysis.
 %
 In practice, searches for transient signals in gravitational wave data are
 strongly affected by non-Gaussian noise artefacts. To account for this,
-standard matched filtering approaches are modified to include carefully chosen
+standard matched-filtering approaches are modified to include carefully chosen
 changes to the ranking statistic together with the excision of poor quality
 data \cite{0264-9381-28-23-235005}. Our analysis
 represents a starting point from which a deep network can be trained on
 realistic non-Gaussian data with the potential aim of exceeding the sensitivity
-of existing matched filter approaches.
+of existing matched-filtering approaches.
 
 %
 % Other sources and final statement
