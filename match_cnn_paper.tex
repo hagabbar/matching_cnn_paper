@@ -186,7 +186,10 @@ PhysRevLett.116.241103, PhysRevLett.118.221101} and more recently the advanced
 detector network made the first detection of a binary neutron star
 system~\cite{PhysRevLett.119.161101} seen in conjuction with a gamma-ray
 burst~\cite{2017arXiv171005834L,2017arXiv171005446G,2017arXiv171005449S} and
-multiple post-merger electromagnetic signatures~\cite{2017arXiv171005833L}.
+multiple post-merger electromagnetic signatures~\cite{2017arXiv171005833L}~\fergus{Tom comments: Not sure why you are citing the Fermi and Integral papers and the MMA 
+paper here - which are not relevant to detection of CBC signals in GW 
+data - when you don't include citations to the basic CBC matched filter 
+literature or to recent work on template banks}.
 These detections were made possible by the Advanced Laser Interferometer
 Gravitational wave Observatory (aLIGO) detectors, as well as the recent joint
 detection of GW170814 with Advanced Virgo \cite{PhysRevLett.119.141101}. Over
@@ -211,10 +214,20 @@ called template based matched filtering.
 %
 Matched template filtering uses a \textit{bank} of template waveforms that span
 the astrophysical parameter space \cite{PhysRevD.44.3819, PhysRevD.49.1707,
-PhysRevD.53.6749, PhysRevD.60.022002, 0264-9381-23-18-002, PhysRevD.80.104014, Blanchet2014, PhysRevD.89.061502, PhysRevD.46.5236, PhysRevD.47.2198, PhysRevD.85.122006}. A template bank will span a large astrophysical parameter space since we do not
+PhysRevD.53.6749, PhysRevD.60.022002, 0264-9381-23-18-002, PhysRevD.80.104014, Blanchet2014, PhysRevD.89.061502, PhysRevD.46.5236, PhysRevD.47.2198, PhysRevD.85.122006}. 
+~\fergus{Tom comments: its hard to give a proper set of citations 
+unless you separate the idea of the bank from the idea of the waveforms.
+Assuming that we're talking about the bank construction, your citations 
+run out in 2009.  However the banks used in O1 and O2 use more recent 
+methods.  Should cite \cite{1705.01845,PhysRevD.90.082004,PhysRevD.89.024003,PhysRevD.89.084041,PhysRevD.86.084017}. 
+Optionally remove the old refs as obsolete (they consider 
+inaccurate or incomplete waveform models).}
+A template bank will span a large astrophysical parameter space since we do not
 know \textit{a priori} what the true parameters of the gravitational waves will
 be. The waveforms of the signals are well modeled by post-Newtonian
-theory~\cite{PhysRevD.84.049901,PhysRevD.80.084043,Blanchet2014,PhysRevD.93.084054},
+theory~\cite{PhysRevD.84.049901,PhysRevD.80.084043,Blanchet2014,PhysRevD.93.084054}~\fergus{Tom comments:
+it's not true that short BBH waveforms are well modelled by PN 
+theory. You need merger and ringdown as well and fitting of the complete waveform to NR},
 and analysis pipelines use matched filtering to search for those signals buried
 in the detector noise. More on how we implement this technique and further
 comparisons with our model will be described later in this letter.
@@ -287,16 +300,17 @@ reweighted according to the \ac{PSD} used.
 %
 % describe the noise (Gaussian)
 %
-Our noise is generated from a \ac{PSD} equivelent to the projected Advanced
+Our noise is generated from a \ac{PSD} equivelent to the Advanced
 LIGO design sensitivity. The \ac{PSD} is used to draw random complex Gaussian
 amplitudes to construct frequency series to which we apply an inverse \ac{FFT}
-to obtain time domain realisations representing LIGO detector noise.
+to obtain time domain realisations representing idealized LIGO detector noise.
 
 %
 % describe the signal generation 
 %
 Signals are simulated using a library of gravitational wave data analysis
-routines called \texttt{LALSuite}. We use the IMRPhenomD type
+routines called \texttt{LALSuite}~\fergus{maybe prefer LALSimulation as that is the home of waveforms. 
+Please cite it via URL}. We use the IMRPhenomD type
 waveform~\cite{PhysRevD.93.044006, PhysRevD.93.044007} which models the
 inspiral, merger and ringdown components of \ac{BBH} gravitational wave
 signals. We simulate systems with component black hole masses in the range from
@@ -307,7 +321,8 @@ isotropic prior on the sky, the polarization angle and phase are drawen from a
 uniform prior on the range $[0,\pi]$, and the inclination angle is drawn such
 that the cosine of inclination is uniform on the range $[-1,1]$. The waveforms
 are then randomly placed within the time series, see figure \ref{fig:waveform},
-such that the peak of each waveform is then randomly placed within the final $ 20\% $ of the time series. The waveform amplitude is scaled to achieve a predefined optimnal
+such that the peak of each waveform is then randomly placed within the final $ 20\% $ of the time series. 
+The waveform amplitude is scaled to achieve a predefined optimnal
 \ac{SNR} defined as
 %
 % the optimal SNR
@@ -320,7 +335,8 @@ where $\tilde{h(f)}$ is the frequency domain representation of the
 gravitational wave strain, $S_{\mathrm{n}}(f)$ is the detector noise \ac{PSD},
 and $f_{\mathrm{min}}$ is the frequency at which we start to accumulate
 \ac{SNR}. The simulated time series were chosen to be 1~sec in duration sampled
-at 8192 Hz. Therefore we consider $f_{\mathrm{min}}$ as the
+at 8192 Hz.~\fergus{Tom suggests: at this point you haven't said how long the time series is. 
+Better mention it earlier, as well as the chosen values of SNR} Therefore we consider $f_{\mathrm{min}}$ as the
 frequency of the gravitational wave signal at the start of the sample
 timeseries. An example timeseries can be seen in Figure~\ref{fig:waveform}. 
 
@@ -355,7 +371,10 @@ wave amplitude.
 We will only use the training set to teach the deep neural network about the
 signals that we wish to classify. For this reason we have chosen to distribute
 the masses of the training set according to the density of templates one would
-use in a matched filtering approach. It is logical to place waveforms closer in
+use in a matched filtering approach~\fergus{Tom suggests: Should cite where you got the formulae 
+from (Owen-Sathya?).  You should also mention that the correct density 
+of templates for the actual inspiral-merger-ringdown waveforms is 
+expected to be (somewhat) different. Tom suggests citing \cite{PhysRevD.91.124042}}. It is logical to place waveforms closer in
 regions where the waveforms change rapidly and hence we distribute the masses
 according to the total mass $M\sim M^{10/3}$ and the symmetric mass ratio
 $\eta\sim \eta^{-3}$ where $M=m_{1}+m_{2}$ and $\eta=m_{1}m_{2}/M^{2}$. The
@@ -368,7 +387,8 @@ astrophysically motivated distributions where we assume $m_{1,2}\sim
 \begin{figure} 
 \includegraphics[width=\columnwidth]{figures/waveform.pdf}
 \caption{A whitened noise-free time series of a \ac{BBH}
-signal (cyan) with component masses $m_{1}=41.86\mathrm{M}_{\odot}$ and
+signal (cyan)~\fergus{Marco asks: Is the cyan curve really
+    whitened?} with component masses $m_{1}=41.86\mathrm{M}_{\odot}$ and
 $m_{2}=6.65\mathrm{M}_{\odot}$ with optimal \ac{SNR} $\optsnr=8$. The dark blue
 timeseries shows the same gravitational wave signal with additive whitened
 Gaussian noise of unit variance. This latter timeseries is representative of
@@ -431,7 +451,8 @@ $\pm\mathcal{O}(1)$ due to the natural variation of Gaussian noise. We also
 attempted applying transfer learning \cite{5288526}
 where we used networks pre-trained on high \ac{SNR} datasets as starting points
 for application to successively lower \ac{SNR} datasets. We found that there
-were no performance benefits using this approach.  Network depth was adjusted
+were no performance benefits in using this approach compared to training the network 
+solely on each \ac{SNR} dataset seperately. The network depth was adjusted
 between 2 and 10 convolutional layers. The
 inclusion of dropout was used within the fully-connected layers as a form of
 regularization.
@@ -462,7 +483,9 @@ neural network architecture used can be found in
 Table~\ref{table:network}. 
 
 The ranking statistic that we extract from the CNN analysis is taken from the final output layer,
-composed of 2 neurons, where each neuron will output a probability value bewteen zero and 1. One neuron gives the probability that a signal is noise and the second gives the probability that the signal is astrophysical. This output is then used to classify our signals.
+composed of 2 neurons, where each neuron will output a probability value bewteen zero and 1. One 
+neuron gives the probability that the input data does not contains a signal and the second gives 
+the probability that the input contains a signal.
 
 % 
 % I am commenting this figure out for now
@@ -523,8 +546,10 @@ In order to establish the power of the deep learning approach we must compare
 our results to the standard matched filtering process used in the detection of
 compact binary coalescence
 signals~\cite{PhysRevD.85.122006,2013PhRvD..87b4033B}. The ranking statistic
-used in this case is the matched-filter \ac{SNR} analytically maximised over
-arrival time, phase and distance. By first defining the noise weighted inner
+used in this case is the matched-filter \ac{SNR} analytically maximised over arrival time,
+phase and distance.~\fergus{Tom comments: matched filter 
+automatically does the analytical maximization over distance and phase, but NOT over time. This is done numerically.} 
+By first defining the noise weighted inner
 product as a function of a time shift $\Delta t$ between the arrival time of
 the signal and the template,
 %
@@ -549,7 +574,8 @@ remains is to further numerically maximise this quantity over a template of
 component mass combinations. In this analysis a comprehensive template bank is
 generated in the $m_{1},m_{2}$ mass space covering our predefined range of
 masses and with a mismatch of $?\%$ using the PyCBC tools~\chris{need a
-reference}. The template bank in this case contains $?$ individual templates. 
+reference}~\fergus{Tom also suggests naming the specific tools, and the value of flow used}. 
+The template bank in this case contains $?$ individual templates. 
 
 %
 % describe the process of what we apply this to
@@ -663,8 +689,9 @@ derived from the ROC.}
 %
 \begin{figure}[]
 \includegraphics[width=\columnwidth] {figures/ROC_curves.pdf}
-\caption{The \ac{ROC} curves for test datasets containing signals with optimal
-SNR $\rho_{\mathrm{opt}}=2,4,6,8,10,12$.  In each panel we plot the detection
+\caption{~\fergus{Marco comments: different curves in some of the plots are 
+really difficult to distinguish}The \ac{ROC} curves for test datasets containing 
+signals with optimal SNR $\rho_{\mathrm{opt}}=2,4,6,8,10,12$.  In each panel we plot the detection
 probability as a function of the false alarm probability estimated from the
 output of the \ac{CNN} (purple) and matched-filtering (cyan) approaches. We also
 plot the \ac{ROC} ciurves corresponding to a single template matched-filter
@@ -767,9 +794,11 @@ method could be applied to other merger types, such as \ac{BNS} and neutron
 star-black hole signals. This supervised learning approach can also be extended
 to other well modelled gravitational wave targets such as the continuous
 emission from rapidly rotating non-axisymmetric neutron stars~\chris{cite the
-LIGO O1 or O2 einstein at home paper}. Whereas unsupervised approaches have the
+LIGO O1 or O2 einstein at home paper}. Whereas~\fergus{Marcos says: Whereas... and following seems
+incomplete} unsupervised approaches have the
 potential to be powerful detection tools in searches for unmodelled burst-like
-gravitational-wave signals. 
+gravitational-wave signals.~\fergus{Maybe we could also mention the potential for
+ parameter estimation here also?} 
 
 %
 % acknowledge peopkle and funding agencies
