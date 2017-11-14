@@ -73,7 +73,7 @@ floatfix,
 %]{geometry}
 
 %% ----- some handy shortcuts
-\newcommand{\dcc}{LIGO-PXXXXXXXX}
+\newcommand{\dcc}{LIGO-P1700378}
 \newcommand{\optsnr}{\rho_{\mathrm{opt}}}
 \newcommand{\fmin}{f_{\mathrm{min}}}
 
@@ -121,8 +121,9 @@ floatfix,
 \begin{abstract} 
 %
 We report on the construction of a deep convolutional neural network that can
-reproduce the sensitivity of a matched-filter search for binary black hole gravitational wave signals. The standard method for the detection of well
-modelled transient gravitational wave signals is matched filtering. However,
+reproduce the sensitivity of a matched-filter search for binary black hole
+gravitational wave signals. The standard method for the detection of well
+modeled transient gravitational wave signals is matched filtering. However,
 the computational cost of such searches in low latency will grow dramatically
 as the low frequency sensitivity of gravitational wave detectors improves.
 Convolutional neural networks provide a highly computationally efficient method
@@ -138,7 +139,7 @@ defined by Reciever-Operator characteristics.
 
 match
 those of matched-filtering applied to the same datasets and find the methods
-to be comparable in sensitivity as defined by Reciever-Operator
+to be comparable in sensitivity as defined by Receiver-Operator
 characteristics. 
 %
 \end{abstract}
@@ -184,7 +185,7 @@ binary coalescence detections over the past several years. The first of these
 were binary black hole detections~\cite{PhysRevLett.116.061102,
 PhysRevLett.116.241103, PhysRevLett.118.221101} and more recently the advanced
 detector network made the first detection of a binary neutron star
-system~\cite{PhysRevLett.119.161101} seen in conjuction with a gamma-ray
+system~\cite{PhysRevLett.119.161101} seen in conjunction with a gamma-ray
 burst~\cite{2017arXiv171005834L,2017arXiv171005446G,2017arXiv171005449S} and
 multiple post-merger electromagnetic signatures~\cite{2017arXiv171005833L}~\fergus{Tom comments: Not sure why you are citing the Fermi and Integral papers and the MMA 
 paper here - which are not relevant to detection of CBC signals in GW 
@@ -264,7 +265,7 @@ signal is present in the data or if the data contains only detector noise. We
 propose a deep learning procedure requiring only the raw data time
 series as input with minimum signal pre-processing. We show how this approach
 can be pre-trained using simulated data-sets and applied in low-latency 
-to acheive the same sensitivity as established matched filtering techniques. 
+to achieve the same sensitivity as established matched filtering techniques. 
 
 %
 % the structure of the paper
@@ -317,7 +318,7 @@ signals. We simulate systems with component black hole masses in the range from
 5\(M_\odot\) to 100\(M_\odot\), $m_{1} > m_{2}$, and all with zero spin. The
 specific distribution of masses within these ranges is discussed later on. Each
 injection is given a random right ascension and declination assuming an
-isotropic prior on the sky, the polarization angle and phase are drawen from a
+isotropic prior on the sky, the polarization angle and phase are drawn from a
 uniform prior on the range $[0,\pi]$, and the inclination angle is drawn such
 that the cosine of inclination is uniform on the range $[-1,1]$. The waveforms
 are then randomly placed within the time series, see figure \ref{fig:waveform},
@@ -347,7 +348,7 @@ Supervised deep learning requires
 datasets to be sub-divided into training, validation, and testing sets. Training sets are the data samples that the network learns from, the validation
 set allows the developer to verify that the network is learning correctly, and
 the test set is used to quantify the performance of the trained network.
-Of the datasest generated we use $60\%$ of these samples for training,
+Of the dataset generated we use $60\%$ of these samples for training,
 $20\%$ for validation, and $20\%$ for testing.
 
 %
@@ -356,13 +357,13 @@ $20\%$ for validation, and $20\%$ for testing.
 Our training datasets contain 50,000 independent timeseries with 50\% containing
 signal+noise and 50\% noise-only. For each simulated gravitational wave signal
 (drawn from the signal parameter space) we generate 25 independent noise
-realisations from which 25 signal+noise samples are produced. This procedure is
+realizations from which 25 signal+noise samples are produced. This procedure is
 standard within machine learning classification and allows the network to learn
 how to identify individual signals under different noise scenarios. Each
-noise-only sample consists of an independent noise realisation and in total we
+noise-only sample consists of an independent noise realization and in total we
 use 1000 unique waveforms in the $m_{1},m_{2}$ mass space. Each data sample
 timeseries is then represented in the form of a $1 \times 8192$ pixel image
-with the grayscale intensity of each pixel proportional to the gravitational
+with the gray-scale intensity of each pixel proportional to the gravitational
 wave amplitude.
 
 %
@@ -436,14 +437,14 @@ choose. Such parameters include the choice of the number and type of network
 layers, the number of neurons within each layer, the size of the neuron weight vectors, the max-pooling
 parameters, the type of activation functions, preprocessing of input data,
  learning rate, and the application (or otherwise) of specific deep learning techniques. We begin
-the entire process with the simplest network that provides a discernable level
+the entire process with the simplest network that provides a discernible level
 of effective classification. In most cases this consists of an input,
 convolutional, hidden, and logistic output layer.
 
 %
 % go into more detail about what we tried in network design
 %
-Within our optimisation process we experimented with rescaling the input data
+Within our optimization process we experimented with rescaling the input data
 which we found to have minimal effect on the network performance. The reason
 for this is that our input data is whitened and our signals are buried beneath
 the noise. Therefore our data is essentially prescaled on a range
@@ -462,10 +463,10 @@ regularization.
 %
 For updating our weights and bias parameters (in
 order to minimize our loss function, $f(\theta)$, \eqref{eq:loss}) we settled
-on the Nesterov momentum optimization function. The optimisation function (back-propogation) works by
-computing the gradient of the loss function, then attempting to minimise 
-that loss function. The errors are then propogated back through the network while at the same time 
-updating the weight and bias terms accordingly.  Back propogation is done over multiple iterations called \textit{epochs}. 
+on the Nesterov momentum optimization function. The optimization function (back-propagation) works by
+computing the gradient of the loss function, then attempting to minimize 
+that loss function. The errors are then propagated back through the network while at the same time 
+updating the weight and bias terms accordingly.  Back propagation is done over multiple iterations called \textit{epochs}. 
 
 %\begin{equation} \label{eq:nesterov1}
 %v_{i+1} = \mu v_{i} - \epsilon \nabla f(\theta_{i} + \mu v_{i}),
@@ -486,7 +487,8 @@ The ranking statistic that we extract from the CNN analysis is taken from the fi
 composed of 2 neurons, where each neuron will output a probability value bewteen zero and 1. One 
 neuron gives the probability that the input data does not contains a signal and the second gives 
 the probability that the input contains a signal.
-
+~\fergus{Marcos says: Whereas... and following seems
+incomplete}
 % 
 % I am commenting this figure out for now
 %
@@ -521,7 +523,7 @@ Type & C & C & C & C & C & C & C & C & H & H \\
 No. Neurons  & 8  & 16  & 16 & 32 & 64 & 64 & 128 & 128 & 64  & 2  \\
 Filter Size  & 32 & 16  & 16 & 16 & 8  & 8  & 4   & 4   & n/a & n/a \\
 MaxPool Size & 8 & n/a & n/a & n/a & 6 & n/a & n/a & 4 & n/a & n/a \\
-Drop out  & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0.5 \\
+Drop out  & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0.5 & 0 \\
 Act. Func. & Elu & Elu & Elu & Elu & Elu & Elu & Elu & Elu & Elu & SMax \\
 \hline
 \end{tabular}
@@ -569,24 +571,23 @@ we can construct the matched-filter \ac{SNR} as
 %
 where $s$ is the data containing noise and a potential signal and $h$ is the
 noise-free gravitational wave template. For a given template this quantity is
-efficiently computed and $\Delta t$ maximised over using \acp{FFT}.  All that
-remains is to further numerically maximise this quantity over a template of
+efficiently computed and $\Delta t$ maximized over using \acp{FFT}.  All that
+remains is to further numerically maximize this quantity over a template of
 component mass combinations. In this analysis a comprehensive template bank is
 generated in the $m_{1},m_{2}$ mass space covering our predefined range of
-masses and with a mismatch of $?\%$ using the PyCBC tools~\chris{need a
-reference}~\fergus{Tom also suggests naming the specific tools, and the value of flow used}. 
-The template bank in this case contains $?$ individual templates. 
+masses and with a maximum mismatch of $3\%$ using the PyCBC tools \cite{0264-9381-33-21-215004}
+. The template bank in this case contains $8000$ individual templates. 
 
 %
 % describe the process of what we apply this to
 %
 For the practical computation of the matched-filter analysis we take each of
 the data samples from the testing dataset and compute the time, phase and
-amplitude maximised ranking statistic $\rho$ for each template in the bank. We
-then record the value of $\rho$ maximised over each template. With values of
+amplitude maximized ranking statistic $\rho$ for each template in the bank. We
+then record the value of $\rho$ maximized over each template. With values of
 statistics now assigned to each test data sample from both the
 matched-filtering and \ac{CNN} approaches, and having knowledge of the
-true class associated with that sample, we may now contruct \ac{ROC} curves.  
+true class associated with that sample, we may now construct \ac{ROC} curves.  
 
 %
 % Describe the main results of the study
@@ -607,7 +608,7 @@ incorrectly identified samples to the total number of samples) of
 %
 % a description of the transfer learning approach (do we need this?)
 %
-\chris{remove this paragraph?} After tuning several hyperparameters and then settling on
+After tunning several hyperparameters and then settling on
 an ideal network format (Table \ref{table:network}), we present the results of
 our classifier on a noise vs. signal+noise sample set. We trained our network
 using a transfer learning approach whereby we initially trained our network on
@@ -615,10 +616,7 @@ a sample set of 1,000 noise and 1,000 injection signals (each with 25 different
 noise realizations) with an integrated SNR value of 12. We then lowered the
 integrated SNR value by 2 and (using the same weights from our previous
 network) we trained our classifier again. This approach seemed to only have a
-marginal benefit on the overall performance of the classifier~\chris{Do we
-actually do this? Does it make the results better OR does it simply speed the
-process up? Earlier on in the paper we say that we don't use it. If it doesn't
-actually change our results then we shoud remove most of this paragraph.}  
+marginal benefit on the overall performance of the classifier.  
 
 %
 % confusion matrix plot
@@ -629,17 +627,12 @@ actually change our results then we shoud remove most of this paragraph.}
 optimal SNR $\rho_{\mathrm{opt}}=2,4,6,8,10,12$.  Numbers superimposed within
 matrix elements are the number of samples corresponding to samples that were of
 true class indicated by the y-axis label but identified as the corresponding
-x-axis label. For our 2 class system these are equivelent to the numbers of
+x-axis label. For our 2 class system these are equivalent to the numbers of
 true positive, true negative, false negative, or false positive. The accuracy
-percentages for all injection SNR values are listed as follows: $50.19\%$ at
-$\optsnr=2$, $68.34\%$ at $\optsnr=4$, $88.72\%$ at $\optsnr=6$, $97.88\%$ at
-$\optsnr=8$, $99.64\%$ at $\optsnr=10$ and $99.86\%$ at
-$\optsnr=12$.
-%\chris{maybe plot 2x3 rather than 3x2 if we have the space. Also
-%we have to anser the question of why the SNR=2 case mostly predicts an signal,
-%why are there not equal numbers in each element as you would
-%expect?}
-\label{fig:confusion}}
+percentages for all injection SNR values are listed as follows: $51.86\%$ at
+$\optsnr=2$, $65.51\%$ at $\optsnr=4$, $85.63\%$ at $\optsnr=6$, $96.66\%$ at
+$\optsnr=8$, $99.41\%$ at $\optsnr=10$ and $99.99\%$ at
+$\optsnr=12$.\label{fig:confusion}}
 \end{figure}
 
 %
@@ -647,12 +640,12 @@ $\optsnr=12$.
 %
 In Figure~\ref{fig:ROC_curves} we compare our \ac{CNN} results to that of
 matched filtering. Given the ranking statistic from a particular analysis and
-defining a parametric threshold value on that statsistic we are able to plot
+defining a parametric threshold value on that statistic we are able to plot
 the fraction of noise samples incorrectly identified (false alarm or false
 positive probability) as signals versus the fraction of signal samples
 correctly identified (true alarm or true positive probability). These curves
 are defined as \ac{ROC} curves and a ranking statistic is deemed superior to
-another if at a given false alarm probability it acheives a higher detection
+another if at a given false alarm probability it achieves a higher detection
 probability. Our results show that within our uncertainties the \ac{CNN}
 approach matches the sensitivity of matched filtering for all test datasets
 across the full range of false alarm probabilities explored in this
@@ -665,24 +658,17 @@ there is only a single template and the sensitivity is consequently improved.
 %
 % Alternative ROC/efficiency results
 %
-\chris{I advise removing this paragraph} In Figure~\ref{fig:ROC_curve} we
+In Figure~\ref{fig:ROC_curves} we
 compare our results to that of matched filtering, where we use two alternative
 match filtering methods.  The first is produced by using the nominal template bank described
 in the \textit{Sample Simulation Methods} section, whereas the second uses the
 optimal template for each injection, whereby optimal is defined as the template
-used to generate that injection. As seen in figure \ref{fig:ROC_curve} all
-three methods have equivalent performance proficiency at $\sim \mathrm{SNR} >
+used to generate that injection. As seen in figure \ref{fig:ROC_curves} all
+three methods have equivalent performance proficiency at $\sim \mathrm{iSNR} >
 9$, whereas there is a marginal dip in performance in the nominal matched
 filtering method and our deep learning classifier. It should be noted that our
 classifier exceeds the performance proficiency of that of the nominal matched
-filtering method between SNR 2 and SNR 4.\chris{I rewrote this paragrpah
-above. I thought that there was too much emphasis on the single template
-approach and no descriptiuon of he ROC curve. There is also a statement about
-us beating matched filtering as low SNR. This is tentative at the moment and
-also, if true, annoyingly at low SNR.  Let's wait and see the final results
-before we say things contraversial. Also you were describing the efficiency
-curves and not the ROC curve which should come first sine the efficiency is
-derived from the ROC.} 
+filtering method between iSNR 2 and iSNR 4.
 
 %
 % show ROC curves
@@ -694,8 +680,8 @@ really difficult to distinguish}The \ac{ROC} curves for test datasets containing
 signals with optimal SNR $\rho_{\mathrm{opt}}=2,4,6,8,10,12$.  In each panel we plot the detection
 probability as a function of the false alarm probability estimated from the
 output of the \ac{CNN} (purple) and matched-filtering (cyan) approaches. We also
-plot the \ac{ROC} ciurves corresponding to a single template matched-filter
-analysis (orange) maximised over phase, amplitude and time shift.
+plot the \ac{ROC} curves corresponding to a single template matched-filter
+analysis (orange) maximized over phase, amplitude and time shift.
 %\chris{OK, first can we make these plots 2x3 rather
 %than 3x2 so that they are easier to see. Please put the SNR labels inside the
 %plots rather than on top of them. No need to have dashed curves here so make
@@ -710,7 +696,7 @@ analysis (orange) maximised over phase, amplitude and time shift.
 We can make an additional direct comparison between approaches by fixing a
 false alarm probability and plotting the corresponding detection probability
 versus the optimal SNR of the signals in each test dataset. We show these
-efficiency curves in Figure~\ref{fig:efficiency_curves} at 3 different false alarm
+efficiency curves in Figure~\ref{fig:efficiency_curve} at 3 different false alarm
 probabilities $10^{-1},10^{-2},10^{-3}$ for both the \ac{CNN} and
 matched-filtering approaches. Since these efficiency curves are derived from
 the data used to generate the \ac{ROC} curves shown in
@@ -718,20 +704,16 @@ Figure~\ref{fig:ROC_curves} it is not surprising that the \ac{CNN} and
 matched-filtering approaches produce indistinguishable results (within our
 uncertainties) at all choices of false alarm probability.
 
-\chris{Same here, I suggest removing this paragraph} We compare the results of
-all three methods at various injection SNR values in figure
-\ref{fig:isnr_curves}. It is not surprising to see that the matched filtering
-method using the optimal template consistantly performs better than both the
+We compare the results of
+all three methods at various injection iSNR values in figure
+\ref{fig:ROC_curves}. It is not surprising to see that the matched filtering
+method using the optimal template consistently performs better than both the
 nominal match filtering method and our deep learning classifier.  However, what
 is considerable is the comparison between the nominal matched filtering and the
 deep learning classifier detection probability curves. It can clearly be seen
 that our classifier exceeds the performance of the nominal matched filtering
-method at SNR 2, 4 and 6. This is a promising result and certainly merits
-further investigation.~\chris{I've kind of rewritten this paragraph above for
-the same reasons as used for the ROC curves. We just want to stick to the
-process of describing what we're plotting and dispassionately pointing out the
-key result. No need to again highlight the single-filter result which is only
-there for reference.}  
+method at iSNR 2, 4 and 6. This is a promising result and certainly merits
+further investigation.
 
 %
 % show efficiency curve
@@ -742,7 +724,7 @@ there for reference.}
 matched-filter approaches for a selection of false alarm probabilities. The
 detection probability is plotted as a function of the optimal \ac{SNR} for the 
 \ac{CNN} (purple) and the matched-filtering (cyan) analyses. Each collection of
-curves is labelled with the corresponding false alarm probability and in each
+curves is labeled with the corresponding false alarm probability and in each
 case for reference we also plot curves for the single template matched-filter
 case (orange).
 %\chris{So can we change the x-axis ranges to span exactly 2-12
@@ -767,7 +749,7 @@ We have demonstrated that deep learning, when applied to a raw
 gravitational-wave timeseries data, is able to reproduce the results of a
 matched-filtering analysis in Gaussian noise. We employ a deep convolutional
 neural network with carefully chosen hyperparameters and produce an output that
-returns a ranking statistic equivelent to the probability that data contains a
+returns a ranking statistic equivalent to the probability that data contains a
 signal. Matched filter analyses are often described as the optimal approach for
 signal detection in Gaussian noise. By building a neural network that is
 capable of reproducing this optimality we answer a fundamental question
@@ -781,7 +763,7 @@ In practice, searches for transient signals in gravitational wave data are
 strongly affected by non-Gaussian noise artefacts. To account for this,
 standard matched filtering approaches are modified to include carefully chosen
 changes to the ranking statistic together with the excision of poor quality
-data~\chris{we should cite a detchar paper or Toms new-snr paper}. Our analysis
+data \cite{0264-9381-28-23-235005}. Our analysis
 represents a starting point from which a deep network can be trained on
 realistic non-Gaussian data with the potential aim of exceeding the sensitivity
 of existing matched filter approaches.
@@ -793,9 +775,7 @@ In this work we have presented results for \ac{BBH} mergers, however, this
 method could be applied to other merger types, such as \ac{BNS} and neutron
 star-black hole signals. This supervised learning approach can also be extended
 to other well modelled gravitational wave targets such as the continuous
-emission from rapidly rotating non-axisymmetric neutron stars~\chris{cite the
-LIGO O1 or O2 einstein at home paper}. Whereas~\fergus{Marcos says: Whereas... and following seems
-incomplete} unsupervised approaches have the
+emission from rapidly rotating non-axisymmetric neutron stars \cite{1707.02669}. Whereas unsupervised approaches have the
 potential to be powerful detection tools in searches for unmodelled burst-like
 gravitational-wave signals.~\fergus{Maybe we could also mention the potential for
  parameter estimation here also?} 
