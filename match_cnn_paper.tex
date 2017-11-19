@@ -222,7 +222,7 @@ recent years~\cite{NIPS2012_4824, 1406.2661, 1409.1556, 1412.7062, 1311.2901,
 implementations of deep learning have been used in the colorization of black
 and white images \cite{1603.08511}, automatic image caption generation
 \cite{1412.2306}, object classification and detection in photographs
-\cite{NIPS2012_4824}, machine learning for medical diagnosis \cite{KONONENKO200189}, and microarray gene expression classification \cite{Pirooznia2008}. There has also been some recent success in the field of gravitational wave astronomy in the form of glitch classification \cite{0264-9381-34-6-064003,1706.07446} and signal identification \cite{1701.00008}. One
+\cite{NIPS2012_4824}, machine learning for medical diagnosis \cite{KONONENKO200189}, and microarray gene expression classification \cite{Pirooznia2008}. There has also been some recent success in the field of gravitational wave astronomy in the form of glitch classification \cite{PhysRevD.95.104059, 0264-9381-34-6-064003,1706.07446} and signal identification \cite{1701.00008}. One
 advantage of deep learning is its ability to perform analyses very rapidly
 since the method's computationally intensive stage is pre-computed during the
 training step prior to the analysis of actual data. This results in low-latency
@@ -351,9 +351,9 @@ wave amplitude.
 We will only use the training set to teach the deep neural network about the
 signals that we wish to classify. For this reason we have chosen to distribute
 the masses of the training set according to the density of templates one would
-use in a matched-filtering approach.  You should also mention that the correct density 
-of templates for the actual inspiral-merger-ringdown waveforms is 
-expected to be (somewhat) different. Tom suggests citing \cite{PhysRevD.91.124042}. It is logical to place waveforms closer in
+use in a matched filtering approach dervied from \cite{0264-9381-23-18-002}. 
+The idealized density of templates is expected to be somewhat different \cite{PhysRevD.91.124042}. 
+It is logical to place waveforms closer in
 regions where the waveforms change rapidly and hence we distribute the masses
 according to the total mass $M\sim M^{10/3}$ and the symmetric mass ratio
 $\eta\sim \eta^{-3}$ where $M=m_{1}+m_{2}$ and $\eta=m_{1}m_{2}/M^{2}$. The
@@ -524,8 +524,8 @@ In order to establish the power of the deep learning approach we must compare
 our results to the standard matched-filtering process used in the detection of
 compact binary coalescence
 signals~\cite{PhysRevD.85.122006,2013PhRvD..87b4033B}. The ranking statistic
-used in this case is the matched filter \ac{SNR} analytically maximised over arrival time,
-phase and distance. By first defining the noise weighted inner
+used in this case is the matched-filter \ac{SNR} numerically maximized over
+arrival time, phase and distance. By first defining the noise weighted inner
 product as a function of a time shift $\Delta t$ between the arrival time of
 the signal and the template,
 %
@@ -732,8 +732,8 @@ analysis.
 %
 In practice, searches for transient signals in gravitational wave data are
 strongly affected by non-Gaussian noise artefacts. To account for this,
-standard matched-filtering approaches are modified to include carefully chosen
-changes to the ranking statistic together with the excision of poor quality
+standard matched filtering approaches are modified to include carefully chosen
+changes to the ranking statistic \cite{PhysRevD.71.062001,0004-637X-849-2-118} together with the excision of poor quality
 data \cite{1710.02185, 0264-9381-33-13-134001}. Our analysis
 represents a starting point from which a deep network can be trained on
 realistic non-Gaussian data with the potential aim of exceeding the sensitivity
