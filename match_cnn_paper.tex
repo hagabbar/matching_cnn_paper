@@ -87,7 +87,7 @@ floatfix,
 \newcommand{\cnnsnreight}{97.88}
 
 %% ----- input git-version tag
-\input{tag.tex}
+%\input{tag.tex}
 
 \begin{document}
 
@@ -109,10 +109,10 @@ floatfix,
  Glasgow G12 8QQ, United Kingdom \\
 }
 
-%\date{\today}% It is always \today, today,
+\date{\today}% It is always \today, today,
              %  but any date may be explicitly specified
 
-\date{\commitDATE\\\mbox{\small \commitID}\\\mbox{\dcc}}
+%\date{\commitDATE\\\mbox{\small \commitID}\\\mbox{\dcc}}
 
 %
 % Explain what the result is and why it’s important, plus possibly a sentence
@@ -194,12 +194,7 @@ methods will be more pertinent as the detectors increase in sensitivity.
 %
 % describe the existing algorithms
 %
-The algorithms used to make these detections \cite{0264-9381-33-21-215004, 0004-637X-748-2-136, PhysRevD.90.082004} are computationally expensive to run.
-Part of the reason being that the methods used by these \textit{search
-pipelines} are complex, sophisticated processes run over a large parameter
-space using advanced signal processing techniques~\fergus{Tom suggests remove this}. Distinguishing noise from
-signal in this search pipeline, and others like it, is done using a technique
-called template based matched filtering. 
+The algorithms used to make detections \cite{0264-9381-33-21-215004, 0004-637X-748-2-136, PhysRevD.90.082004} are computationally expensive to run. The methods used by the \textit{search pipelines} are complex, sophisticated processes run over a large parameter space using advanced signal processing techniques. The computational cost to run the search analysis is primarily due to the large size of the parameter space covered. Distinguishing noise from signal in this search pipeline, and others like it, is done using a technique called template based matched filtering. 
 
 %
 % introduce matched filtering
@@ -570,14 +565,14 @@ true class associated with that sample, we may now construct \ac{ROC} curves.
 %
 % introduce the confusion matrix results
 %
-A standard method for displaying the accuracy of a classifier is through a
-confusion matrix in which the number of samples of each true class identified
-as every possible class are listed in a square matrix. A fully diagonal matrix
-would imply no incorrectly classified samples and a uniform matrix would imply
-no classification power. In Figure~\ref{fig:confusion} we show results for the
-\ac{CNN} approach from which we highlight the overall accuracy (the ratio of
-incorrectly identified samples to the total number of samples) of
-\cnnsnreight\% at $\rho_{\mathrm{opt}}=8$.
+%A standard method for displaying the accuracy of a classifier is through a
+%confusion matrix in which the number of samples of each true class identified
+%as every possible class are listed in a square matrix. A fully diagonal matrix
+%would imply no incorrectly classified samples and a uniform matrix would imply
+%no classification power. In Figure~\ref{fig:confusion} we show results for the
+%\ac{CNN} approach from which we highlight the overall accuracy (the ratio of
+%incorrectly identified samples to the total number of samples) of
+%\cnnsnreight\% at $\rho_{\mathrm{opt}}=8$.
 
 %
 % a description of the transfer learning approach (do we need this?)
@@ -597,19 +592,19 @@ the desired SNR.
 %
 % confusion matrix plot
 %
-\begin{figure}[]
-\includegraphics[width=\columnwidth] {figures/confusion_matrix.pdf}
-\caption{Confusion matrices for testing datasets containing signals with
-optimal SNR $\rho_{\mathrm{opt}}=2,4,6,8,10,12$.  Numbers superimposed within
-matrix elements are the number of samples corresponding to samples that were of
-true class indicated by the y-axis label but identified as the corresponding
-x-axis label. For our 2 class system these are equivalent to the numbers of
-true alarm, true dismissal, false dismissal, or false alarm. The accuracy
-percentages for all injection SNR values are listed as follows: $51.86\%$ at
-$\optsnr=2$, $65.51\%$ at $\optsnr=4$, $85.63\%$ at $\optsnr=6$, $96.66\%$ at
-$\optsnr=8$, $99.41\%$ at $\optsnr=10$ and $99.99\%$ at
-$\optsnr=12$.\label{fig:confusion}}
-\end{figure}
+%\begin{figure}[]
+%\includegraphics[width=\columnwidth] {figures/confusion_matrix.pdf}
+%\caption{Confusion matrices for testing datasets containing signals with
+%optimal SNR $\rho_{\mathrm{opt}}=2,4,6,8,10,12$.  Numbers superimposed within
+%matrix elements are the number of samples corresponding to samples that were of
+%true class indicated by the y-axis label but identified as the corresponding
+%x-axis label. For our 2 class system these are equivalent to the numbers of
+%true alarm, true dismissal, false dismissal, or false alarm. The accuracy
+%percentages for all injection SNR values are listed as follows: $51.86\%$ at
+%$\optsnr=2$, $65.51\%$ at $\optsnr=4$, $85.63\%$ at $\optsnr=6$, $96.66\%$ at
+%$\optsnr=8$, $99.41\%$ at $\optsnr=10$ and $99.99\%$ at
+%$\optsnr=12$.\label{fig:confusion}}
+%\end{figure}
 
 %
 % describe ROC curves
