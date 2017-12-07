@@ -266,7 +266,7 @@ in additive Gaussian noise (signal+noise) and Gaussian noise alone
 \ac{BNS} systems for the reason that \ac{BBH} systems are higher mass systems
 and have shorter duration signals once the inspiralling systems have entered
 the Advanced LIGO frequency band. They typically then merge on the timescale of
-$\mathcal{O}(1)$ sec allowing us to use a relatively small datasets for this
+$\mathcal{O}(1)$ sec allowing us to use relatively small datasets for this
 study. The input datasets consist of simulated gravitational wave timeseries
 data that has been whitened in the frequency domain. This process rescales the
 noise contribution at each frequency to have equal power resulting in ``white"
@@ -289,7 +289,7 @@ routines called \texttt{LALSuite}. We use the IMRPhenomD type
 waveform~\cite{PhysRevD.93.044006, PhysRevD.93.044007} which models the
 inspiral, merger and ringdown components of \ac{BBH} gravitational wave
 signals. We simulate systems with component black hole masses in the range from
-5\(M_\odot\) to 100\(M_\odot\), $m_{1} > m_{2}$, and all with zero spin. The
+5\(M_\odot\) to 95\(M_\odot\), $m_{1} > m_{2}$, and all with zero spin. The
 specific distribution of masses within these ranges is discussed later on. Each
 injection is given a random right ascension and declination assuming an
 isotropic prior on the sky, the polarization angle and phase are drawn from a
@@ -561,7 +561,6 @@ true class associated with that sample, we may now construct \ac{ROC} curves.
 %
 % Describe the main results of the study
 %
-\textit{Results} --- 
 %
 % introduce the confusion matrix results
 %
@@ -577,7 +576,7 @@ true class associated with that sample, we may now construct \ac{ROC} curves.
 %
 % a description of the transfer learning approach (do we need this?)
 %
-After tuning several hyperparameters and then settling on
+\textit{Results} --- After tuning several hyperparameters and then settling on
 an ideal network format (Table \ref{table:network}), we present the results of
 our classifier on a noise vs. signal+noise sample set. We trained our network
 using a transfer learning approach whereby we initially trained our network on
