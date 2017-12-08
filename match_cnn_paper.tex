@@ -131,8 +131,9 @@ for signal identification in which the majority of calculations are performed
 prior to data taking during a training process. We use only whitened time
 series of measured gravitational-wave strain as an input, and we train and test on simulated binary black hole
 signals in synthetic Gaussian noise representative of Advanced LIGO sensitivity. 
-We show that our network can classify signal from non-signal with a performance
-{\color{red}comparable to that of match filtering} applied to the same datasets when considering the sensitivity 
+We show that our network can classify signal from non-signal with a performance\fergus{in the case
+of if having to change the letter to account for new results, I have highlighted red all references to the
+CNN/matched filter performance outside the Results section to make sure we do not miss anything.} {\color{red}comparable to that of match filtering} applied to the same datasets when considering the sensitivity 
 defined by Reciever-Operator characteristics.
 
 %
@@ -302,10 +303,16 @@ uniform prior on the range $[0,\pi]$, and the inclination angle is drawn such
 that the cosine of inclination is uniform on the range $[-1,1]$. The waveforms
 are then randomly placed within the time series, see figure \ref{fig:waveform},
 such that the peak of each waveform is then randomly placed within the final $ 20\% $ 
-of the time series \fergus{Instead ``The simulated time series were chosen to be 2s in 
+of the time series 
+
+\fergus{Instead ``The simulated time series were chosen to be 2s in 
 duration. The waveforms were then placed within the timeseries such that the peak 
-of each waveform are in the interval [1.25,1.45]s, such that the waveform approximately 
-lies within the middle 1s.'', replacing the previous sentence and some that follow}. 
+of each waveform are in the interval [1.25, 1.45]s, such that the waveform approximately 
+lies within the middle 1s. The time series is sampled at 8,192 Hz.'', or something like that ,
+replacing the previous sentence and some that follow. We would then have to alter the next 
+paragraph to account for the network only receiving the middle 1s, and the timeseries being 
+cut with the tukey window, straddling the middle 1s for the matched filter}. 
+
 The waveform amplitude is scaled to achieve a predefined optimnal \ac{SNR} defined as
 %
 % the optimal SNR
@@ -318,7 +325,7 @@ where $\tilde{h(f)}$ is the frequency domain representation of the
 gravitational wave strain, $S_{\mathrm{n}}(f)$ is the detector noise \ac{PSD},
 and $f_{\mathrm{min}}$ is the frequency at which we start to accumulate
 \ac{SNR}. The simulated time series were chosen to be 1~sec in duration sampled
-at 8192 Hz. Therefore we consider $f_{\mathrm{min}}$ as the
+at 8,192 Hz. Therefore we consider $f_{\mathrm{min}}$ as the
 frequency of the gravitational wave signal at the start of the sample
 timeseries. An example timeseries can be seen in Figure~\ref{fig:waveform}. 
 
@@ -342,8 +349,8 @@ realizations from which 25 signal+noise samples are produced. This procedure is
 standard within machine learning classification and allows the network to learn
 how to identify individual signals under different noise scenarios. Each
 noise-only sample consists of an independent noise realization and in total we
-use 1000 unique waveforms in the $m_{1},m_{2}$ mass space. Each data sample
-timeseries is then represented in the form of a $1 \times 8192$ pixel image
+use 1,000 unique waveforms in the $m_{1},m_{2}$ mass space. Each data sample
+timeseries is then represented in the form of a $1 \times 8,192$ pixel image
 with the gray-scale intensity of each pixel proportional to the gravitational
 wave amplitude.
 
@@ -386,15 +393,20 @@ In our model, we use a variant of a deep learning algorithm called a
 \ac{CNN}~\cite{726791}. The layers of such a network are composed of five
 primary variants: input, convolutional, activation, pooling, and
 hidden. The input layer holds the raw pixel values of the sample
-image which in our case is a 1-dimensional timeseries vector. As the data is 1-dimensional, the weight and bias parameters of the network are also in 1-dimensional vector form. Each neuron in the convolutional layer computes the convolution between the neuron's weight vector and the outputs from the layer above it, and then the result is summed with the bias vector. Neuron weight vectors are updated through an optimisation algorithm called back-propogation \cite{LeCun1998}. 
+image which, in our case, is a 1-dimensional timeseries vector. As the data is 
+1-dimensional, the weight and bias parameters of the network are also in 1-dimensional 
+vector form. Each neuron in the convolutional layer computes the convolution between 
+the neuron's weight vector and the outputs from the layer below it, and then the 
+result is summed with the bias vector. Neuron weight vectors are updated through an 
+optimisation algorithm called back-propogation \cite{LeCun1998}. 
 Activation layers apply an element-wise non-linear activation function rescaling
 their inputs onto the range $[-1,1]$ and leaving the size of the previous
-layer's output unchanged. The activation function can be shifted to better fit network predictions by adjusting the bias vector. 
-Pooling layers perform a downsampling operation along
-the spatial dimensions of their input, essentially acting as a data reduction
-process speeding up the training of the network for minimal loss of
-information. Finally we have a hidden layer that is connected to a final output layer which
-computes the class scores using an error function, cross-entropy, defined as
+layer's output unchanged. The activation function can be shifted to better fit network 
+predictions by adjusting the bias vector. Pooling layers perform a downsampling 
+operation along the spatial dimensions of their input, essentially acting as a data 
+reduction process speeding up the training of the network for minimal loss of
+information. Finally we have a hidden layer that is connected to a final output layer 
+which computes the class scores using an error function, cross-entropy, defined as
 %
 % define the loss function
 %
@@ -548,8 +560,8 @@ efficiently computed and $\Delta t$ maximized over using \acp{FFT}.  All that
 remains is to further numerically maximize this quantity over a template of
 component mass combinations. In this analysis a comprehensive template bank is
 generated in the $m_{1},m_{2}$ mass space covering our predefined range of
-masses and with a maximum mismatch of $3\%$ and a lower frequency cutoff of $18\mathrm{Hz}$ using the PyCBC geometric non-spinning template bank generation tool \cite{pycbc-software,0264-9381-33-21-215004} 
-. The template bank in this case contains $8700$ individual templates. 
+masses and with a maximum mismatch of $3\%$ and a lower frequency cutoff of $18~\mathrm{Hz}$ using the PyCBC geometric non-spinning template bank generation tool \cite{pycbc-software,0264-9381-33-21-215004} 
+. The template bank in this case contains $8,700$ individual templates. 
 
 %
 % describe the process of what we apply this to
@@ -582,7 +594,7 @@ true class associated with that sample, we may now construct \ac{ROC} curves.
 %
 \textit{Results} --- After tuning several hyperparameters and then settling on
 an ideal network format (Table \ref{table:network}), we present the results of
-our classifier on a noise vs. signal+noise sample set. We trained our network
+our classifier on a noise vs. signal+noise sample set.We trained our network
 using a transfer learning approach whereby we initially trained our network on
 a sample set of 1,000 noise and 1,000 injection signals (each with 25 different
 noise realizations) with an integrated SNR value of 12. We then lowered the
@@ -715,13 +727,13 @@ case (orange).
 % summary of what we did
 %
 We have demonstrated that deep learning, when applied to a raw
-gravitational-wave timeseries data, is able to reproduce the results of a
-matched-filtering analysis in Gaussian noise. We employ a deep convolutional
+gravitational-wave timeseries data, {\color{red}is able to reproduce the results of a
+matched-filtering analysis in Gaussian noise}. We employ a deep convolutional
 neural network with carefully chosen hyperparameters and produce an output that
 returns a ranking statistic equivalent to the probability that data contains a
 signal. Matched-filtering analyses are often described as the optimal approach for
 signal detection in Gaussian noise. By building a neural network that is
-capable of reproducing this optimality we answer a fundamental question
+capable of {\color{red}reproducing this optimality} we answer a fundamental question
 regarding the applicability of neural networks for gravitational wave data
 analysis. 
 
