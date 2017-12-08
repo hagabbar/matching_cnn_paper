@@ -96,7 +96,7 @@ floatfix,
 %
 % Be clear and specific. Do not claim too much or too little.
 %
-\title{Matching Matched Filtering with Deep Networks for Gravitational wave Astronomy}
+\title{Matching Matched Filtering with Deep Networks for Gravitational Wave Astronomy}
 
 \author{Hunter Gabbard}
  \email{Corresponding author: h.gabbard.1@research.gla.ac.uk}
@@ -129,10 +129,10 @@ as the low frequency sensitivity of gravitational wave detectors improves.
 Convolutional neural networks provide a highly computationally efficient method
 for signal identification in which the majority of calculations are performed
 prior to data taking during a training process. We use only whitened time
-series of measured gravitational-wave strain as an input and train and test on simulated binary black hole
+series of measured gravitational-wave strain as an input, and we train and test on simulated binary black hole
 signals in synthetic Gaussian noise representative of Advanced LIGO sensitivity. 
 We show that our network can classify signal from non-signal with a performance
-comparable to that of match filtering applied to the same datasets when considering the sensitivity 
+{\color{red}comparable to that of match filtering} applied to the same datasets when considering the sensitivity 
 defined by Reciever-Operator characteristics.
 
 %
@@ -228,9 +228,14 @@ comparable classification methods.
 % more detail on deep learning
 %
 A deep learning algorithm is composed of stacked arrays of processing units, called
-neurons, which can be anywhere from one to several layers deep. A neuron acts as a filter, whereby it is passed an array of inputs, performs a transformation on them and then outputs scalar values. This transformation is a linear operation between the input array and the weight and bias parameters assosicated to the neuron. Deep learning algorithms typically consist of an input layer, followed by one to several hidden layers
-and then one to multiple output neurons. The scalars produced from the output neurons can be used to solve classification problems, where each output neuron corresponds to the probability
-that a particular input sample is of a certain class.
+neurons, which can be anywhere from one to several layers deep. A neuron acts as a filter, 
+whereby it performs a transformation on an array of inputs. This transformation is a linear operation 
+between the input array and the weight and bias parameters assosicated to the neuron. The resulting 
+array is then typically passed to a non-linear activation function to constrain the neuron output 
+to be within a set range. Deep learning algorithms typically consist of an input layer, followed by 
+one to several hidden layers and then one to multiple output neurons. The scalars produced from the 
+output neurons can be used to solve classification problems, where each output neuron corresponds to 
+the probability that a particular input sample is of a certain class.
 
 %
 % what are we going to do
@@ -240,7 +245,7 @@ signal is present in the data or if the data contains only detector noise. We
 propose a deep learning procedure requiring only the raw data time
 series as input with minimum signal pre-processing. We show how this approach
 can be pre-trained using simulated data-sets and applied in low-latency 
-to achieve the same sensitivity as established matched-filtering techniques. 
+to {\color{red}achieve the same sensitivity as established matched-filtering techniques.} 
 
 %
 % the structure of the paper
@@ -260,9 +265,9 @@ technique, and comment on future improvements and applications of this work.
 % describe the simulations
 %
 In order to make a clean comparison between a deep learning approach and
-matched filtering, we distinguish between only 2 cases, \ac{BBH} merger signals
+matched filtering, we distinguish between only two cases, \ac{BBH} merger signals
 in additive Gaussian noise (signal+noise) and Gaussian noise alone
-(noise-only). We choose to focus on \ac{BBH} signals only rather than including
+(noise-only). We choose to only focus on \ac{BBH} signals rather than including
 \ac{BNS} systems for the reason that \ac{BBH} systems are higher mass systems
 and have shorter duration signals once the inspiralling systems have entered
 the Advanced LIGO frequency band. They typically then merge on the timescale of
@@ -296,9 +301,12 @@ isotropic prior on the sky, the polarization angle and phase are drawn from a
 uniform prior on the range $[0,\pi]$, and the inclination angle is drawn such
 that the cosine of inclination is uniform on the range $[-1,1]$. The waveforms
 are then randomly placed within the time series, see figure \ref{fig:waveform},
-such that the peak of each waveform is then randomly placed within the final $ 20\% $ of the time series. 
-The waveform amplitude is scaled to achieve a predefined optimnal
-\ac{SNR} defined as
+such that the peak of each waveform is then randomly placed within the final $ 20\% $ 
+of the time series \fergus{Instead ``The simulated time series were chosen to be 2s in 
+duration. The waveforms were then placed within the timeseries such that the peak 
+of each waveform are in the interval [1.25,1.45]s, such that the waveform approximately 
+lies within the middle 1s.'', replacing the previous sentence and some that follow}. 
+The waveform amplitude is scaled to achieve a predefined optimnal \ac{SNR} defined as
 %
 % the optimal SNR
 %
@@ -317,8 +325,7 @@ timeseries. An example timeseries can be seen in Figure~\ref{fig:waveform}.
 %
 % How we split training, validation, and testing
 %
-Supervised deep learning requires
-datasets to be sub-divided into training, validation, and testing sets. Training sets are the data samples that the network learns from, the validation
+Supervised deep learning requires datasets to be sub-divided into training, validation, and testing sets. Training sets are the data samples that the network learns from, the validation
 set allows the developer to verify that the network is learning correctly, and
 the test set is used to quantify the performance of the trained network.
 Of the dataset generated we use $60\%$ of these samples for training,
