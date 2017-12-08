@@ -266,7 +266,7 @@ in additive Gaussian noise (signal+noise) and Gaussian noise alone
 \ac{BNS} systems for the reason that \ac{BBH} systems are higher mass systems
 and have shorter duration signals once the inspiralling systems have entered
 the Advanced LIGO frequency band. They typically then merge on the timescale of
-$\mathcal{O}(1)$ sec allowing us to use relatively small datasets for this
+$\mathcal{O}(1)$ sec allowing us to use a relatively small datasets for this
 study. The input datasets consist of simulated gravitational wave timeseries
 data that has been whitened in the frequency domain. This process rescales the
 noise contribution at each frequency to have equal power resulting in ``white"
@@ -289,7 +289,7 @@ routines called \texttt{LALSuite}. We use the IMRPhenomD type
 waveform~\cite{PhysRevD.93.044006, PhysRevD.93.044007} which models the
 inspiral, merger and ringdown components of \ac{BBH} gravitational wave
 signals. We simulate systems with component black hole masses in the range from
-5\(M_\odot\) to 95\(M_\odot\), $m_{1} > m_{2}$, and all with zero spin. The
+5\(M_\odot\) to 100\(M_\odot\), $m_{1} > m_{2}$, and all with zero spin. The
 specific distribution of masses within these ranges is discussed later on. Each
 injection is given a random right ascension and declination assuming an
 isotropic prior on the sky, the polarization angle and phase are drawn from a
@@ -435,7 +435,7 @@ regularization.
 %
 For updating our weights and bias parameters (in
 order to minimize our loss function, $f(\theta)$, \eqref{eq:loss}) we settled
-on the Nesterov momentum optimization function. The optimization function (back-propagation) works by
+on adaptive moment estimation with incorporated Nesterov momentum (Nadam) \cite{dozat2016incorporating}. The optimization function (back-propagation) works by
 computing the gradient of the loss function, then attempting to minimize 
 that loss function. The errors are then propagated back through the network while at the same time 
 updating the weight and bias terms accordingly.  Back propagation is done over multiple iterations called \textit{epochs}. 
@@ -448,15 +448,12 @@ updating the weight and bias terms accordingly.  Back propagation is done over m
 %\theta_{i+1} = \theta_{i} + v_{i+1},
 %\end{equation} \\
 
-Nesterov momentum was the ideal choice because of its prescient ability to
-approximate the next position of the weights and bias parameters which
-therefore gives a rough approximation of their future values
-\cite{Sutskever:2013:IIM:3042817.3043064}. Further detailed description of the
+We used the learning parameters recommended for Nadam in \cite{dozat2016incorporating}, that is a learning rate of $0.002$, $\beta_{1}=0.9$, $beta_{2}=0.999$, $\epsilon = 10^{-8}$ and a momentum schedule of $0.004$. \michael{I know we don't explicitly explain what they are, but we should include there parameters} Further detailed description of the
 neural network architecture used can be found in
 Table~\ref{table:network}. 
 
 The ranking statistic that we extract from the CNN analysis is taken from the final output layer,
-composed of 2 neurons, where each neuron will output a probability value bewteen zero and 1. One 
+composed of 2 neurons, where each neuron will output a probability value between zero and 1. One 
 neuron gives the probability that the input data does not contains a signal and the second gives 
 the probability that the input contains a signal.
 
@@ -483,24 +480,24 @@ the probability that the input contains a signal.
 %\end{figure}
 
 \begin{table}[]
-\begin{tabular}{lcccccccccc}
+\begin{tabular}{lccccccccc}
 \hline
 \hline
-Parameter & \multicolumn{10}{c}{Layer}\\
-\cline{2-11}
-(Option) & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
+Parameter & \multicolumn{9}{c}{Layer}\\
+\cline{2-10}
+(Option) & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 \\
 \hline
-Type & C & C & C & C & C & C & C & C & H & H \\
-No. Neurons  & 8  & 16  & 16 & 32 & 64 & 64 & 128 & 128 & 64  & 2  \\
-Filter Size  & 32 & 16  & 16 & 16 & 8  & 8  & 4   & 4   & n/a & n/a \\
-MaxPool Size & 8 & n/a & n/a & n/a & 6 & n/a & n/a & 4 & n/a & n/a \\
-Drop out  & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0.5 & 0 \\
-Act. Func. & Elu & Elu & Elu & Elu & Elu & Elu & Elu & Elu & Elu & SMax \\
+Type & C & C & C & C & C & C & H & H & H \\
+No. Neurons  & 8  & 8  & 16 & 16 & 32 & 32 & 64  & 64  & 2  \\
+Filter Size  & 32 & 32 & 16 & 16 & 8  & 8  & n/a & n/a & n/a  \\
+MaxPool Size & n/a & 8 & n/a & 6 & n/a & 4 & n/a & n/a & n/a \\
+Drop out  & 0 & 0 & 0 & 0 & 0 & 0 & 0.5 & 0.5 & 0 \\
+Act. Func. & Elu & Elu & Elu & Elu & Elu & Elu & Elu & Elu & SMax \\
 \hline
 \end{tabular}
 \caption{The optimal network structure was determined through multiple tests
 and tunings of hyperparameters by means of trial and error. The network
-consists of 8 convolutional layers (C), followed by 2 hidden layers (H).
+consists of 6 convolutional layers (C), followed by 3 hidden layers (H).
 Max-pooling is performed on the first, fifth, and eighth layer,
 whereas dropout is only performed on the two hidden layers. Each layer
 uses an Elu activation function while the last layer uses a Softmax (SMax) activation
@@ -561,6 +558,7 @@ true class associated with that sample, we may now construct \ac{ROC} curves.
 %
 % Describe the main results of the study
 %
+\textit{Results} --- 
 %
 % introduce the confusion matrix results
 %
@@ -576,7 +574,7 @@ true class associated with that sample, we may now construct \ac{ROC} curves.
 %
 % a description of the transfer learning approach (do we need this?)
 %
-\textit{Results} --- After tuning several hyperparameters and then settling on
+After tuning several hyperparameters and then settling on
 an ideal network format (Table \ref{table:network}), we present the results of
 our classifier on a noise vs. signal+noise sample set. We trained our network
 using a transfer learning approach whereby we initially trained our network on
