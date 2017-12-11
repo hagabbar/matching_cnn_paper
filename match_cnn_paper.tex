@@ -122,10 +122,10 @@ floatfix,
 %
 We report on the construction of a deep convolutional neural network that can
 reproduce the sensitivity of a matched-filtering search for binary black hole
-gravitational wave signals. The standard method for the detection of well
-modeled transient gravitational wave signals is matched filtering. However, the
+gravitational-wave signals. The standard method for the detection of well
+modeled transient gravitational-wave signals is matched filtering. However, the
 computational cost of such searches in low latency will grow dramatically as
-the low frequency sensitivity of gravitational wave detectors improves.
+the low frequency sensitivity of gravitational-wave detectors improves.
 Convolutional neural networks provide a highly computationally efficient method
 for signal identification in which the majority of calculations are performed
 prior to data taking during a training process. We use only whitened time
@@ -150,9 +150,7 @@ sensitivity defined by Reciever-Operator characteristics.
 
 \acrodef{BBH}[BBH]{binary black hole}
 \acrodef{SNR}[SNR]{signal-to-noise ratio}
-\acrodef{GPU}[GPU]{graphics processing unit}
 \acrodef{PSD}[PSD]{power spectral density}
-\acrodef{BNS}[BNS]{binary neutron star}
 \acrodef{FFT}[FFT]{fast Fourier transform}
 \acrodef{CNN}[CNN]{convolutional neural network}
 \acrodef{ROC}[ROC]{receiver operator characteristic}
@@ -171,57 +169,76 @@ sensitivity defined by Reciever-Operator characteristics.
 %
 \textit{Introduction.}--- 
 %
-% intro to gravitational waves
+% intro to gravitational-waves
 %
-The field of gravitational wave astronomy has seen an explosion of compact
+The field of gravitational-wave astronomy has seen an explosion of compact
 binary coalescence detections over the past several years. The first of these
 were binary black hole detections~\cite{PhysRevLett.116.061102,
 PhysRevLett.116.241103, PhysRevLett.118.221101} and more recently the advanced
 detector network made the first detection of a binary neutron star
-system~\cite{PhysRevLett.119.161101} seen in conjunction with a gamma-ray
+system~\cite{PhysRevLett.119.161101}. This latter event was seen in conjunction
+with a gamma-ray
 burst~\cite{2017arXiv171005834L,2017arXiv171005446G,2017arXiv171005449S} and
 multiple post-merger electromagnetic signatures~\cite{2017arXiv171005833L}.
 These detections were made possible by the Advanced Laser Interferometer
 Gravitational wave Observatory (aLIGO) detectors, as well as the recent joint
-detection of GW170814 with Advanced Virgo \cite{PhysRevLett.119.141101}. Over
-the coming years many more such observations, including \ac{BBH}, binary
-neutron stars, as well as other more exotic sources such as intermediate black
-holes (IMBH), and neutron star black hole (NSBH) mergers, are likely to be
-observed on a more frequent basis. As such, the need for more efficient search
-methods will be more pertinent as the detectors increase in sensitivity.
+detections of GW170814 and GW170817 with Advanced Virgo
+\cite{PhysRevLett.119.141101,PhysRevLett.119.161101}. Over the coming years
+many more such observations, including \ac{BBH}, binary neutron stars, as well
+as other more exotic sources such as intermediate black holes, and neutron star
+black hole mergers, are likely to be observed on a more frequent basis. As
+such, the need for more efficient search methods will be more pertinent as the
+detectors increase in sensitivity.
 
 %
-% describe the existing algorithms
+% describe the existing algorithms and their potential limitations
 %
-The algorithms used to make detections \cite{0264-9381-33-21-215004, 0004-637X-748-2-136, PhysRevD.90.082004} are computationally expensive to run. The methods used by the \textit{search pipelines} are complex, sophisticated processes run over a large parameter space using advanced signal processing techniques. The computational cost to run the search analysis is primarily due to the large size of the parameter space covered. Distinguishing noise from signal in this search pipeline, and others like it, is done using a technique called template based matched filtering. 
+The algorithms used by the search pipelines to make
+detections~\cite{0264-9381-33-21-215004, 0004-637X-748-2-136,
+PhysRevD.90.082004} are, in general, computationally expensive. The methods
+used are complex, sophisticated processes computed over a large parameter space
+using advanced signal processing techniques. The computational cost to run the
+search analysis is due to the large parameter space and the increasing cost of
+analysing longer duration waveforms as the low frequency sensitivity of the
+detectors improves. Distinguishing noise from signal in these search pipelines
+is acheived using a technique known as template based matched-filtering. 
 
 %
-% introduce matched filtering
+% introduce matched-filtering
 %
-Matched template filtering uses a \textit{bank} \cite{PhysRevD.86.084017,1705.01845,PhysRevD.80.104014,PhysRevD.90.082004,PhysRevD.89.084041} of template waveforms \cite{PhysRevD.44.3819,PhysRevD.89.061502,PhysRevD.89.024003,Blanchet2014} that span
-the astrophysical parameter space. A template bank will span a large astrophysical parameter space since we do not
-know \textit{a priori} what the true parameters of the gravitational waves will
-be. The waveforms of the signals are well modeled by post-Newtonian
+Matched-filtering uses a bank~\cite{PhysRevD.86.084017,
+1705.01845,PhysRevD.80.104014, PhysRevD.90.082004, PhysRevD.89.084041} of
+template waveforms~\cite{PhysRevD.44.3819, PhysRevD.89.061502,
+PhysRevD.89.024003, Blanchet2014} each with different component mass components
+and/or spin values. A template bank will span a large astrophysical parameter
+space since we do not know a priori the true gravitational-waves parameter
+values. Waveform models that cover the inspiral, merger, and ringdown phases of
+a compact binary coalescence are based on combining post-Newtonian
 theory~\cite{PhysRevD.84.049901,PhysRevD.80.084043,Blanchet2014,PhysRevD.93.084054},
-and analysis pipelines use matched filtering to search for those signals buried
-in the detector noise. More on how we implement this technique and further
-comparisons with our model will be described later in this letter.
+the effective-one-body formalism~\cite{PhysRevD.59.084006}, and numerical
+relativity simulations~\cite{PhysRevLett.95.121101}.
 
 %
 % introduce deep learning
 %
 Deep learning is a subset of machine learning which has gained in popularity in
 recent years~\cite{NIPS2012_4824, 1406.2661, 1409.1556, 1412.7062, 1311.2901,
-1409.4842} with the rapid development of \ac{GPU} technology. Some successful
-implementations of deep learning have been used in the colorization of black
-and white images \cite{1603.08511}, automatic image caption generation
-\cite{1412.2306}, object classification and detection in photographs
-\cite{NIPS2012_4824}, machine learning for medical diagnosis \cite{KONONENKO200189}, and microarray gene expression classification \cite{Pirooznia2008}. There has also been some recent success in the field of gravitational wave astronomy in the form of glitch classification \cite{PhysRevD.95.104059, 0264-9381-34-6-064003,1706.07446} and signal identification \cite{1701.00008}. One
-advantage of deep learning is its ability to perform analyses very rapidly
-since the method's computationally intensive stage is pre-computed during the
-training step prior to the analysis of actual data. This results in low-latency
-searches that are several orders of magnitude faster than other
-comparable classification methods. 
+1409.4842} with the rapid development of graphics-processing-unit technology.
+Some successful implementations of deep learning have been used in the
+colorization of black and white images~\cite{1603.08511}, automatic image
+caption generation~\cite{1412.2306}, object classification and detection in
+photographs~\cite{NIPS2012_4824}, machine learning for medical
+diagnosis~\cite{KONONENKO200189}, and microarray gene expression
+classification~\cite{Pirooznia2008} to name only a few. There has also been
+some recent success in the field of gravitational-wave astronomy in the form of
+glitch classification \cite{PhysRevD.95.104059,
+0264-9381-34-6-064003,1706.07446} and notably for signal
+identification~\cite{1701.00008} where it was first shown that deep learning
+could be a detection tool. One advantage of deep learning is its ability to
+perform analyses very rapidly since the method's computationally intensive
+stage is pre-computed during the training prior to the analysis of actual data.
+This results in low-latency searches that can be several orders of magnitude
+faster than other comparable classification methods. 
 
 %
 % more detail on deep learning
@@ -244,18 +261,12 @@ class.
 %
 In this letter we investigate the simplest case of establishing whether a
 signal is present in the data or if the data contains only detector noise. We
-propose a deep learning procedure requiring only the raw data time
-series as input with minimum signal pre-processing. We show how this approach
-can be pre-trained using simulated data-sets and applied in low-latency 
-to {\color{red}achieve the same sensitivity as established matched-filtering techniques.} 
-
-%
-% the structure of the paper
-% 
-In the following sections we will discuss our choice of network architecture
-and tuning of its hyperparameters, compare the results of our network with the
-widely used matched-filtering gravitational-wave signal classification
-technique, and comment on future improvements and applications of this work.      
+propose a deep learning procedure requiring only the raw data time series as
+input with minimum signal pre-processing. We compare the results of our network
+with the widely used matched-filtering technique and show how a deep learning
+approach can be pre-trained using simulated data-sets and applied in
+low-latency to {\color{red}achieve the same sensitivity as established
+matched-filtering techniques.} 
 
 %
 % Try to be clear, e.g. use heuristic explanations. But making a strong case
@@ -267,17 +278,17 @@ technique, and comment on future improvements and applications of this work.
 % describe the simulations
 %
 In order to make a clean comparison between a deep learning approach and
-matched filtering, we distinguish between only two cases, \ac{BBH} merger signals
-in additive Gaussian noise (signal+noise) and Gaussian noise alone
+matched-filtering, we distinguish between only two cases, \ac{BBH} merger
+signals in additive Gaussian noise (signal+noise) and Gaussian noise alone
 (noise-only). We choose to only focus on \ac{BBH} signals rather than including
-\ac{BNS} systems for the reason that \ac{BBH} systems are higher mass systems
-and have shorter duration signals once the inspiralling systems have entered
-the Advanced LIGO frequency band. They typically then merge on the timescale of
-$\mathcal{O}(1)$ sec allowing us to use relatively small datasets for this
-study. The input datasets consist of simulated gravitational wave timeseries
-data that has been whitened in the frequency domain. This process rescales the
-noise contribution at each frequency to have equal power resulting in ``white"
-noise. Signal+noise data has its constituent frequency components
+binary neutron star systems for the reason that \ac{BBH} systems are higher
+mass systems and have shorter duration signals once the inspiralling systems
+have entered the Advanced LIGO frequency band. They typically then merge on the
+timescale of $\mathcal{O}(1)$ sec allowing us to use relatively small datasets
+for this study. The input datasets consist of simulated gravitational-wave
+timeseries data that has been whitened in the frequency domain. This process
+rescales the noise contribution at each frequency to have equal power resulting
+in ``white" noise. Signal+noise data has its constituent frequency components
 reweighted according to the \ac{PSD} used.    
 
 %
@@ -291,10 +302,10 @@ to obtain time domain realisations representing idealized LIGO detector noise.
 %
 % describe the signal generation 
 %
-Signals are simulated using a library of gravitational wave data analysis
+Signals are simulated using a library of gravitational-wave data analysis
 routines called \texttt{LALSuite}. We use the IMRPhenomD type
 waveform~\cite{PhysRevD.93.044006, PhysRevD.93.044007} which models the
-inspiral, merger and ringdown components of \ac{BBH} gravitational wave
+inspiral, merger and ringdown components of \ac{BBH} gravitational-wave
 signals. We simulate systems with component black hole masses in the range from
 5\(M_\odot\) to 95\(M_\odot\), $m_{1} > m_{2}$, and all with zero spin. The
 specific distribution of masses within these ranges is discussed later on. Each
@@ -327,11 +338,11 @@ defined as
 \end{equation}
 %
 where $\tilde{h(f)}$ is the frequency domain representation of the
-gravitational wave strain, $S_{\mathrm{n}}(f)$ is the detector noise \ac{PSD},
+gravitational-wave strain, $S_{\mathrm{n}}(f)$ is the detector noise \ac{PSD},
 and $f_{\mathrm{min}}$ is the frequency at which we start to accumulate
 \ac{SNR}. The simulated time series were chosen to be 1~sec in duration sampled
 at 8,192 Hz. Therefore we consider $f_{\mathrm{min}}$ as the
-frequency of the gravitational wave signal at the start of the sample
+frequency of the gravitational-wave signal at the start of the sample
 timeseries. An example timeseries can be seen in Figure~\ref{fig:waveform}. 
 
 %
@@ -348,7 +359,7 @@ predefined optimal \ac{SNR} of values $ \rho_{\mathrm{opt}} = 2, 4, 6, 8, 10, 12
 % How many sampes did we make
 %
 Our training datasets contain 50,000 independent timeseries with 50\% containing
-signal+noise and 50\% noise-only. For each simulated gravitational wave signal
+signal+noise and 50\% noise-only. For each simulated gravitational-wave signal
 (drawn from the signal parameter space) we generate 25 independent noise
 realizations from which 25 signal+noise samples are produced. This procedure is
 standard within machine learning classification and allows the network to learn
@@ -356,8 +367,8 @@ how to identify individual signals under different noise scenarios. Each
 noise-only sample consists of an independent noise realization and in total we
 use 1,000 unique waveforms in the $m_{1},m_{2}$ mass space. Each data sample
 timeseries is then represented in the form of a $1 \times 8,192$ pixel image
-with the gray-scale intensity of each pixel proportional to the gravitational
-wave amplitude.
+with the gray-scale intensity of each pixel proportional to the
+gravitational-wave amplitude.
 
 %
 % explain the distinction on how the masses are distributed 
@@ -365,7 +376,7 @@ wave amplitude.
 We will only use the training set to teach the deep neural network about the
 signals that we wish to classify. For this reason we have chosen to distribute
 the masses of the training set according to the density of templates one would
-use in a matched filtering approach dervied from \cite{0264-9381-23-18-002}. 
+use in a matched-filtering approach dervied from \cite{0264-9381-23-18-002}. 
 The idealized density of templates is expected to be somewhat different \cite{PhysRevD.91.124042}. 
 It is logical to place waveforms closer in
 regions where the waveforms change rapidly and hence we distribute the masses
@@ -382,7 +393,7 @@ astrophysically motivated distributions where we assume $m_{1,2}\sim
 \caption{A whitened noise-free time series of a \ac{BBH}
 signal with component masses $m_{1}=41.86\mathrm{M}_{\odot}$ and
 $m_{2}=6.65\mathrm{M}_{\odot}$ with optimal \ac{SNR} $\optsnr=8$. The dark blue
-timeseries shows the same gravitational wave signal with additive whitened
+timeseries shows the same gravitational-wave signal with additive whitened
 Gaussian noise of unit variance. This latter timeseries is representative of
 the datasets we use to train, validate, and test our deep neural network.\label{fig:waveform}}
 \end{figure}
@@ -532,11 +543,11 @@ as to give a probability value for each class.\label{table:network}}
 \end{table}
 
 %
-% define the matched filter analysis
+% define the matched-filter analysis
 %
-\textit{Applying matched filtering.}---
+\textit{Applying matched-filtering.}---
 %
-% introduce matched filtering
+% introduce matched-filtering
 %
 In order to establish the power of the deep learning approach we must compare
 our results to the standard matched-filtering process used in the detection of
@@ -547,7 +558,7 @@ arrival time, phase and distance. By first defining the noise weighted inner
 product as a function of a time shift $\Delta t$ between the arrival time of
 the signal and the template,
 %
-% define the matched filtering SNR
+% define the matched-filtering SNR
 %
 \begin{equation}
 (a\mid b)[\Delta t] =
@@ -562,7 +573,7 @@ we can construct the matched-filter \ac{SNR} as
 \end{equation}
 %
 where $s$ is the data containing noise and a potential signal, and $h$ is the
-noise-free gravitational wave template. For a given template this quantity is
+noise-free gravitational-wave template. For a given template this quantity is
 efficiently computed using the \ac{FFT} and the \ac{SNR} timeseries maximised
 over $\Delta t$. The subsequent step is to further numerically maximize this
 quantity over a collection of component mass combinations. In this analysis a
@@ -581,7 +592,7 @@ the data samples from the testing dataset and compute the time, phase and
 amplitude maximized ranking statistic $\rho$ for each template in the bank. We
 then record the value of $\rho$ maximized over each template. With values of
 statistics now assigned to each test data sample from both the
-matched filtering and \ac{CNN} approaches, and having knowledge of the
+matched-filtering and \ac{CNN} approaches, and having knowledge of the
 true class associated with that sample, we may now construct \ac{ROC} curves.  
 
 %
@@ -636,14 +647,14 @@ transfer-learning is marginal.
 % describe ROC curves
 %
 In Figure~\ref{fig:ROC_curves} we compare our \ac{CNN} results to that of
-matched filtering. Given the ranking statistic from a particular analysis and
+matched-filtering. Given the ranking statistic from a particular analysis and
 defining a parametric threshold value on that statistic we are able to plot the
 fraction of noise samples incorrectly identified as signals (false alarm
 probability) versus the fraction of signal samples correctly identified (true
 alarm probability). These curves are defined as \ac{ROC} curves and a ranking
 statistic is deemed superior to another if at a given false alarm probability
 it achieves a higher detection probability. Our results show that the \ac{CNN}
-approach broadly matches the sensitivity of matched filtering for all test
+approach broadly matches the sensitivity of matched-filtering for all test
 datasets across the range of false alarm probabilities explored in this
 analysis\footnote{We are limited to a minimal false alarm probability of $\sim
 10^{-4}$ due to the limited number of testing samples used.}.
@@ -715,14 +726,14 @@ probability that data contains a signal. Matched-filtering analyses are often
 described as the optimal approach for signal detection in Gaussian noise. By
 building a neural network that is capable of {\color{red}reproducing this
 optimality} we answer a fundamental question regarding the applicability of
-neural networks for gravitational wave data analysis. 
+neural networks for gravitational-wave data analysis. 
 
 %
 % Non Gaussian noise
 %
-In practice, searches for transient signals in gravitational wave data are
+In practice, searches for transient signals in gravitational-wave data are
 strongly affected by non-Gaussian noise artefacts. To account for this,
-standard matched filtering approaches are modified to include carefully chosen
+standard matched-filtering approaches are modified to include carefully chosen
 changes to the ranking statistic~\cite{PhysRevD.71.062001,0004-637X-849-2-118}
 together with the excision of poor quality data~\cite{1710.02185,
 0264-9381-33-13-134001}. Our analysis represents a starting point from which a
@@ -735,10 +746,10 @@ existing matched-filtering approaches.
 % Other sources and final statement
 %
 In this work we have presented results for \ac{BBH} mergers, however, this
-method could be applied to other merger types, such as \ac{BNS} and neutron
-star-black hole signals. This supervised learning approach can also be extended
-to other well modelled gravitational-wave targets such as the continuous
-emission from rapidly rotating non-axisymmetric neutron
+method could be applied to other merger types, such as binary neutron star and
+neutron star-black hole signals. This supervised learning approach can also be
+extended to other well modelled gravitational-wave targets such as the
+continuous emission from rapidly rotating non-axisymmetric neutron
 stars~\cite{1707.02669}. Moreover, unsupervised approaches have the potential
 to be powerful detection tools in searches for unmodelled burst-like
 gravitational-wave signals. Finally we mention the possibilities for parameter
