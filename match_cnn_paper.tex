@@ -420,46 +420,48 @@ train, validate, and test the deep neural network.\label{fig:waveform}}
 %
 In our model, we use a variant of a deep learning algorithm called a
 \ac{CNN}~\cite{726791}. The layers of such a network are composed of five
-primary variants: input, convolutional, activation, pooling, and
-hidden. The input layer holds the raw pixel values of the sample
-image which, in our case, is a 1-dimensional timeseries vector. As the data is 
-1-dimensional, the weight and bias parameters of the network are also in 1-dimensional 
-vector form. Each neuron in the convolutional layer computes the convolution between 
-the neuron's weight vector and the outputs from the layer below it, and then the 
-result is summed with the bias vector. Neuron weight vectors are updated through an 
-optimisation algorithm called back-propogation \cite{LeCun1998}. 
-Activation layers apply an element-wise non-linear activation function rescaling
-their inputs onto the range $[-1,1]$ and leaving the size of the previous
-layer's output unchanged. The activation function can be shifted to better fit network 
-predictions by adjusting the bias vector. Pooling layers perform a downsampling 
-operation along the spatial dimensions of their input, essentially acting as a data 
-reduction process speeding up the training of the network for minimal loss of
-information. Finally we have a hidden layer that is connected to a final output layer 
-which computes the class scores using an error function, cross-entropy, defined as
+types: input, convolutional, activation, pooling, and hidden. The input layer
+holds the raw pixel values of the sample image which, in our case, is a
+1-dimensional timeseries vector. As the data is 1-dimensional, the weight and
+bias parameters of the network are also in 1-dimensional vector form. Each
+neuron in the convolutional layer computes the convolution between the neuron's
+weight vector and the outputs from the layer below it, and then the result is
+summed with the bias vector. Neuron weight vectors are updated through an
+optimisation algorithm called back-propogation~\cite{LeCun1998}. Activation
+layers apply an element-wise non-linear activation function rescaling their
+inputs onto the range $[-1,1]$ and leaving the size of the previous layer's
+output unchanged. Pooling layers perform a downsampling operation along the
+spatial dimensions of their input, essentially acting as a data reduction
+process speeding up the training of the network for minimal loss of
+information. Finally we have a hidden layer connected to an output
+layer which computes the inferred class probabilities. These values are input
+to a loss function, chosen as the cross-entropy, defined as
 %
 % define the loss function
 %
-\begin{equation} \label{eq:loss}
-f_{\theta^{'}}(\theta) = -\sum_{i} \theta_{i}^{'} \mathrm{log}(\theta_{i}),
+\begin{equation} \label{eq:loss} 
+f_{\theta^{'}}(\theta) = -\sum_{i}\theta_{i}^{'} \mathrm{log}(\theta_{i}), 
 \end{equation}
 %
-where $\theta_{i}$ is the predicted probability distribution of class $i$ and
-$\theta_{i}^{'}$ is the true probability for that class
-\cite{tensorflow2015-whitepaper}. The error function computes the inefficiency of
-the network predictions with respect to the true value. 
+where $\theta_{i}$ is the predicted probability of class $i$ and
+$\theta_{i}^{'}$ is the true probability for that
+class~\cite{tensorflow2015-whitepaper}. The loss function is minimised when
+input data samples are assigned the correct class with the highest confidence. 
 
 %
 % describe the network choices that we have
 %
-In order to optimise our network, multiple sets of hyper-parameters are
-tuned. We define hyper-parameters as those parameters that we are free to
-choose. Such parameters include the choice of the number and type of network
-layers, the number of neurons within each layer, the size of the neuron weight vectors, the max-pooling
-parameters, the type of activation functions, preprocessing of input data,
- learning rate, and the application (or otherwise) of specific deep learning techniques. We begin
-the entire process with the simplest network that provides a discernible level
-of effective classification. In most cases this consists of an input,
-convolutional, hidden, and logistic output layer.
+In order to optimise a network, multiple hyper-parameters must be tuned.  We
+define hyper-parameters as those parameters that we are free to choose. Such
+parameters include the choice of the number and type of network layers, the
+number of neurons within each layer, the size of the neuron weight vectors, the
+max-pooling parameters, the type of activation functions, preprocessing of
+input data, learning rate, and the application (or otherwise) of specific deep
+learning techniques. We begin the process with the simplest network that
+provides a discernible level of effective classification. In most cases this
+consists of an input, convolutional, hidden, and logistic output layer.
+From this point the optimal network structure was determined through multiple
+tests and tunings of hyperparameters by means of trial and error.
 
 %
 % go into more detail about what we tried in network design
@@ -467,27 +469,29 @@ convolutional, hidden, and logistic output layer.
 Within our optimization process we experimented with rescaling the input data
 which we found to have minimal effect on the network performance. The reason
 for this is that our input data is whitened and our signals are buried beneath
-the noise. Therefore our data is essentially prescaled on a range
+the noise. Therefore our data is effectively prescaled on a range
 $\pm\mathcal{O}(1)$ due to the natural variation of Gaussian noise. We also
-attempted applying transfer learning \cite{5288526}
-where we used networks pre-trained on high \ac{SNR} datasets as starting points
-for application to successively lower \ac{SNR} datasets. We found that there
-were no performance benefits in using this approach compared to training the network 
+experimented with using transfer learning~\cite{5288526} where networks
+pre-trained on high \ac{SNR} datasets are used as starting points for
+application to successively lower \ac{SNR} datasets. We found that there were
+no performance benefits in using this approach compared to training the network
 solely on each \ac{SNR} dataset seperately. The network depth was adjusted
-between 2 and 10 convolutional layers. The
-inclusion of dropout was used within the fully-connected layers as a form of
-regularization.
+between 2 and 10 convolutional layers. The inclusion of dropout was used within
+the final 2 hidden layers as a form of regularization to avoid overfitting.
 
 %
 % describe how the training itself works to optimise the weights and biases
 %
-For updating our weights and bias parameters (in
-order to minimize our loss function, $f(\theta)$, \eqref{eq:loss}) we settled
-on adaptive moment estimation with incorporated Nesterov momentum (Nadam) \cite{dozat2016incorporating}. The optimization function (back-propagation) works by
-computing the gradient of the loss function, then attempting to minimize 
-that loss function. The errors are then propagated back through the network while at the same time 
-updating the weight and bias terms accordingly.  Back propagation is done over
-multiple iterations called \textit{epochs}. 
+During the training stage an optimization function (back-propagation) works by
+computing the gradient of the loss function (Eq.~\ref{eq:loss}), then
+attempting to minimize that loss function. The errors are then propagated back
+through the network while at the same time updating the weight and bias terms
+accordingly.  Back propagation is done over multiple iterations called epochs.
+For this analysis we use adaptive moment estimation with incorporated Nesterov
+momentum~\cite{dozat2016incorporating} with a learning rate of $0.002$,
+$\beta_{1}=0.9$, $\beta_{2}=0.999$, $\epsilon = 10^{-8}$ and a momentum
+schedule of $0.004$. We outline the structure of the final neural network
+architecture in Table~\ref{table:network}.
 
 %\begin{equation} \label{eq:nesterov1}
 %v_{i+1} = \mu v_{i} - \epsilon \nabla f(\theta_{i} + \mu v_{i}),
@@ -497,15 +501,14 @@ multiple iterations called \textit{epochs}.
 %\theta_{i+1} = \theta_{i} + v_{i+1},
 %\end{equation} \\
 
-We used the learning parameters recommended for Nadam in \cite{dozat2016incorporating}, that is a learning rate of $0.002$, $\beta_{1}=0.9$, $beta_{2}=0.999$, $\epsilon = 10^{-8}$ and a momentum schedule of $0.004$. \michael{I know we don't explicitly explain what they are, but we should include there parameters} Further detailed description of the
-neural network architecture used can be found in
-Table~\ref{table:network}. 
-
-The ranking statistic that we extract from the \ac{CNN} analysis is taken from
-the final output layer, composed of 2 neurons, where each neuron will output a
-probability value between zero and 1. One neuron gives the probability that the
-input data does not contains a signal and the second gives the probability that
-the input contains a signal.
+%
+% the CNN ranking statistic
+%
+The final ranking statistic that we extract from the \ac{CNN} analysis is taken
+from the final output layer, composed of 2 neurons, where each neuron will
+output a probability value between 0 and 1 with their sum being unity. Each
+neuron gives the inferred probability that the input data belongs to the noise
+or signal+noise class respectively.
 
 % 
 % I am commenting this figure out for now
@@ -545,14 +548,13 @@ Drop out  & 0 & 0 & 0 & 0 & 0 & 0 & 0.5 & 0.5 & 0 \\
 Act. Func. & Elu & Elu & Elu & Elu & Elu & Elu & Elu & Elu & SMax \\
 \hline
 \end{tabular}
-\caption{The optimal network structure was determined through multiple tests
-and tunings of hyperparameters by means of trial and error. The network
-consists of 6 convolutional layers (C), followed by 3 hidden layers (H).
-Max-pooling is performed on the first, fifth, and eighth layer,
-whereas dropout is only performed on the two hidden layers. Each layer
-uses an Elu activation function while the last layer uses a Softmax (SMax) activation
-function in order to normalize the output values to be between zero and one so
-as to give a probability value for each class.\label{table:network}}
+\caption{The optimised network consisting of 6 convolutional layers (C),
+followed by 3 hidden layers (H).  Max-pooling is performed on the first, fifth,
+and eighth layer, whereas dropout is only performed on the two hidden layers.
+Each layer uses an exponential linear unit (Elu) activation function while the
+last layer uses a Softmax (SMax) activation function in order to normalize the
+output values to be between zero and one so as to give a probability value for
+each class.\label{table:network}}
 \end{table}
 
 %
@@ -573,7 +575,7 @@ the signal and the template,
 %
 % define the matched-filtering SNR
 %
-\begin{equation}
+\begin{equation}\label{eq:inner}
 (a\mid b)[\Delta t] =
 4\int_{f_{\mathrm{min}}}^{\infty}\frac{\tilde{a}(f)\tilde{b}^{*}(f)}{S_{\mathrm{n}}(f)}e^{2\pi i
 f\Delta t}\,df,
@@ -595,18 +597,19 @@ covering our predefined range of masses. We use a maximum mismatch of $3\%$ and
 a lower frequency cutoff of $18~\mathrm{Hz}$ using the PyCBC geometric
 non-spinning template bank generation
 tool~\cite{pycbc-software,0264-9381-33-21-215004}. This template bank contained
-$8,700$ individual templates. 
+$8700$ individual templates. 
 
 %
 % describe the process of what we apply this to
 %
-For the practical computation of the matched-filtering analysis we take each of
-the data samples from the testing dataset and compute the time, phase and
-amplitude maximized ranking statistic $\rho$ for each template in the bank. We
-then record the value of $\rho$ maximized over each template. With values of
-statistics now assigned to each test data sample from both the
-matched-filtering and \ac{CNN} approaches, and having knowledge of the
-true class associated with that sample, we may now construct \ac{ROC} curves.  
+When generating an \ac{SNR} timeseries for an input dataset we select
+$f_{\mathrm{min}}$ according to the conservative case (lowest
+$f_{\mathrm{min}}$) in which the signal merger occurs at the 0.95 fraction of
+1~sec timeseries. We also therefore select only maximised \ac{SNR} timeseries
+values recovered from within the $[0.75,0.95]$ fractional range since this is
+the parameter space on which the \ac{CNN} has been trained. For the practical
+computation of the matched-filtering analysis we take each of the data samples
+from the testing dataset to compute the matched-filter ranking statistic.
 
 %
 % Describe the main results of the study
@@ -624,20 +627,18 @@ true class associated with that sample, we may now construct \ac{ROC} curves.
 %\cnnsnreight\% at $\rho_{\mathrm{opt}}=8$.
 
 %
-% a description of the transfer learning approach (do we need this?)
+% a description of the main results
 %
 \textit{Results.}---
 %
-After tuning the multiple hyper-parameters (Table
-\ref{table:network}) and training the neural network, we present the results of
-our classifier on a noise versus signal+noise sample set. Our training
-uses a transfer-learning approach whereby the network is initially trained on
-a sample set of 1000 noise and 1000 injection signals (each with 25 different
-noise realizations) with \ac{SNR}$=12$. The \ac{SNR} value is then decreased by
-1 and using the same trained weights from our previous network we trained our
-classifier again. This is repeated until the network trains on data of a
-desired value of \ac{SNR}. We find that the performance benefit of
-transfer-learning is marginal.
+% main introduction to results
+%
+After tuning the multiple hyper-parameters (Table~\ref{table:network}) and
+training the neural network, we present the results of our \ac{CNN} classifier
+on a noise versus signal+noise sample set. With values of statistics now
+assigned to each test data sample from both the \ac{CNN} and matched-filtering
+approaches, and having knowledge of the true class associated with each sample,
+we may now construct \ac{ROC} curves. 
 
 %
 % confusion matrix plot
@@ -667,10 +668,10 @@ probability) versus the fraction of signal samples correctly identified (true
 alarm probability). These curves are defined as \ac{ROC} curves and a ranking
 statistic is deemed superior to another if at a given false alarm probability
 it achieves a higher detection probability. Our results show that the \ac{CNN}
-approach broadly matches the sensitivity of matched-filtering for all test
+approach {\color{red}broadly matches the sensitivity of matched-filtering for all test
 datasets across the range of false alarm probabilities explored in this
 analysis\footnote{We are limited to a minimal false alarm probability of $\sim
-10^{-4}$ due to the limited number of testing samples used.}.
+10^{-4}$ due to the limited number of testing samples used.}}.
 
 %
 % show ROC curves
@@ -689,12 +690,12 @@ distribution.} \label{fig:ROC_curves}
 % finally discuss the efficiency plot
 %
 We can make an additional direct comparison between approaches by fixing a
-false alarm probability and plotting the corresponding detection probability
+false alarm probability and plotting the corresponding true alarm probability
 versus the optimal \ac{SNR} of the signals in each test dataset. We show these
 efficiency curves in Fig.~\ref{fig:efficiency_curve} at false alarm
 probabilities $10^{-1},10^{-2},10^{-3}$ for both the \ac{CNN} and
 matched-filtering approaches. We again see closely matching results from both
-approches and ...\chris{We need to look at the final results before we write
+approches and ...{\color{red}We need to look at the final results before we write
 the rest of this paragraph.} 
 
 %We compare the results of
@@ -718,7 +719,8 @@ matched-filtering approaches for false alarm probabilities $10^{-1}$ (solid),
 $10^{-2}$ (dashed), $10^{-3}$ (dot-dashed). The true alarm probability is
 plotted as a function of the optimal \ac{SNR} for the \ac{CNN} (purple) and the
 matched-filtering (cyan) analyses. Solid dots indicate at which \ac{SNR} values
-analyses were performed.\label{fig:efficiency_curve}} 
+analyses were performed and line thicknesses are indicative of the
+statistical uncertainties in the curves.\label{fig:efficiency_curve}} 
 \end{figure}
 
 %
@@ -733,7 +735,7 @@ analyses were performed.\label{fig:efficiency_curve}}
 We have demonstrated that deep learning, when applied to a raw
 gravitational-wave timeseries data, {\color{red}is able to reproduce the
 results of a matched-filtering analysis in Gaussian noise}. We employ a deep
-convolutional neural network with carefully chosen hyperparameters and produce
+convolutional neural network with rigorously tuned hyperparameters and produce
 an output that returns a ranking statistic equivalent to the inferred
 probability that data contains a signal. Matched-filtering analyses are often
 described as the optimal approach for signal detection in Gaussian noise. By
@@ -751,9 +753,9 @@ changes to the ranking statistic~\cite{PhysRevD.71.062001,0004-637X-849-2-118}
 together with the excision of poor quality data~\cite{1710.02185,
 0264-9381-33-13-134001}. Our analysis represents a starting point from which a
 deep network can be trained on realistic non-Gaussian data. Since the claim of
-matched-filtering optimality is applicable only in the Gaussian noise case
+matched-filtering optimality is applicable only in the Gaussian noise case,
 there exists the potential for deep networks to exceed the sensitivity of
-existing matched-filtering approaches.
+existing matched-filtering approaches in real data.
 
 %
 % Other sources and final statement
@@ -775,9 +777,11 @@ astronomy.
 %
 % acknowledge peopkle and funding agencies
 %
-\emph{Acknowledgements.}---We would like to acknowledge valuable input from the
-LIGO-Virgo Collaboration specifically from T.~Dent, M.~Cavalgia, and the
-machine-learning working group. The authors also gratefully acknowledge the
+\emph{Acknowledgements.}---
+%
+We would like to acknowledge valuable input from the LIGO-Virgo Collaboration
+specifically from T.~Dent, M.~Cavalgia, and the compact binary coalescence and
+machine-learning working groups. The authors also gratefully acknowledge the
 Science and Technology Facilities Council of the United Kingdom. CM is
 supported by the Science and Technology Research Council (grant
 No.~ST/~L000946/1).
