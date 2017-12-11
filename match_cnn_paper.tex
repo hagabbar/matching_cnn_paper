@@ -277,7 +277,7 @@ matched-filtering techniques.}
 %
 % describe the simulations
 %
-In order to make a clean comparison between a deep learning approach and
+In order to make a clean comparison between deep learning approach and
 matched-filtering, we distinguish between only two cases, \ac{BBH} merger
 signals in additive Gaussian noise (signal+noise) and Gaussian noise alone
 (noise-only). We choose to only focus on \ac{BBH} signals rather than including
@@ -285,19 +285,16 @@ binary neutron star systems for the reason that \ac{BBH} systems are higher
 mass systems and have shorter duration signals once the inspiralling systems
 have entered the Advanced LIGO frequency band. They typically then merge on the
 timescale of $\mathcal{O}(1)$ sec allowing us to use relatively small datasets
-for this study. The input datasets consist of simulated gravitational-wave
-timeseries data that has been whitened in the frequency domain. This process
-rescales the noise contribution at each frequency to have equal power resulting
-in ``white" noise. Signal+noise data has its constituent frequency components
-reweighted according to the \ac{PSD} used.    
+for this study. 
 
 %
 % describe the noise (Gaussian)
 %
-Our noise is generated from a \ac{PSD} equivelent to the Advanced
-LIGO design sensitivity. The \ac{PSD} is used to draw random complex Gaussian
-amplitudes to construct frequency series to which we apply an inverse \ac{FFT}
-to obtain time domain realisations representing idealized LIGO detector noise.
+The input datasets consist of "whitened" simulated gravitational-wave
+timeseries where the whitening process uses the detector noise \ac{PSD} to  
+rescale the noise contribution at each frequency to have equal power. 
+Our noise is initially generated from a \ac{PSD} equivelent to the Advanced
+LIGO design sensitivity~\cite{2016LRR....19....1A}. 
 
 %
 % describe the signal generation 
@@ -307,15 +304,17 @@ routines called \texttt{LALSuite}. We use the IMRPhenomD type
 waveform~\cite{PhysRevD.93.044006, PhysRevD.93.044007} which models the
 inspiral, merger and ringdown components of \ac{BBH} gravitational-wave
 signals. We simulate systems with component black hole masses in the range from
-5\(M_\odot\) to 95\(M_\odot\), $m_{1} > m_{2}$, and all with zero spin. The
-specific distribution of masses within these ranges is discussed later on. Each
-injection is given a random right ascension and declination assuming an
-isotropic prior on the sky, the polarization angle and phase are drawn from a
-uniform prior on the range $[0,2\pi]$, and the inclination angle is drawn such
-that the cosine of inclination is uniform on the range $[-1,1]$. The waveforms
-are then randomly placed within the time series, see figure \ref{fig:waveform},
-such that the peak amplitude of each waveform is randomly positioned within the
-fractional range $[0.75,0.95]$ of the 1\,sec timeseries. 
+5\(M_\odot\) to 95\(M_\odot\), $m_{1} > m_{2}$, and all with zero spin.
+Training, validation and testing datasets all contain signals drawn from an
+astrophysically motivated distribution where we assume
+$m_{1,2}\sim\log{m_{1,2}}$~\cite{PhysRevX.6.041015}. Each signal is given a
+random right ascension and declination assuming an isotropic prior on the sky,
+the polarization angle and phase are drawn from a uniform prior on the range
+$[0,2\pi]$, and the inclination angle is drawn such that the cosine of
+inclination is uniform on the range $[-1,1]$. The waveforms are then randomly
+placed within the time series such that the peak amplitude of each waveform is
+randomly positioned within the fractional range $[0.75,0.95]$ of the
+timeseries. 
 
 %\fergus{Instead ``The simulated time series were chosen to be 2s in duration.
 %The waveforms were then placed within the timeseries such that the peak of each
@@ -326,6 +325,9 @@ fractional range $[0.75,0.95]$ of the 1\,sec timeseries.
 %network only receiving the middle 1s, and the timeseries being cut with the
 %tukey window, straddling the middle 1s for the matched filter}. 
 
+%
+% Define the optimal SNR
+%
 The waveform amplitude is scaled to achieve a predefined optimal \ac{SNR}
 defined as
 %
@@ -338,64 +340,75 @@ defined as
 \end{equation}
 %
 where $\tilde{h(f)}$ is the frequency domain representation of the
-gravitational-wave strain, $S_{\mathrm{n}}(f)$ is the detector noise \ac{PSD},
-and $f_{\mathrm{min}}$ is the frequency at which we start to accumulate
-\ac{SNR}. The simulated time series were chosen to be 1~sec in duration sampled
-at 8,192 Hz. Therefore we consider $f_{\mathrm{min}}$ as the
-frequency of the gravitational-wave signal at the start of the sample
-timeseries. An example timeseries can be seen in Figure~\ref{fig:waveform}. 
+gravitational-wave strain and $S_{\mathrm{n}}(f)$ is the detector noise
+\ac{PSD}. The simulated time series were chosen to be 1~sec in duration sampled
+at 8192 Hz. Therefore we consider $f_{\mathrm{min}}$ as the frequency of the
+gravitational-wave signal at the start of the sample timeseries. An example
+timeseries can be seen in Fig.~\ref{fig:waveform}. 
+
+%
+% Caveats due to matched-filter requirements
+%
+Due to the requirements of the matched-filtering comparison it was necessary to
+add padding to each timeseries so as to avoid edge effects. Therefore
+each 1~sec timeseries has an additional 0.5~sec of data prior to and after the signal.
+The signal itself has a Tukey window ($\alpha=1/8$) applied to truncate the
+signal content to the central 1~sec. The \ac{CNN} approach only has access to
+this central 1~sec of data. Similarly, the optimal \ac{SNR} is computed considering
+only the central 1~sec.
 
 %
 % How we split training, validation, and testing
 %
-Supervised deep learning requires datasets to be sub-divided into training, validation, and testing sets. Training sets are the data samples that the network learns from, the validation
-set allows the developer to verify that the network is learning correctly, and
-the test set is used to quantify the performance of the trained network.
-Of the dataset generated we use $60\%$ of these samples for training,
-$20\%$ for validation, and $20\%$ for testing. A dataset was generated for each 
-predefined optimal \ac{SNR} of values $ \rho_{\mathrm{opt}} = 2, 4, 6, 8, 10, 12 $.
+Supervised deep learning requires datasets to be sub-divided into training,
+validation, and testing sets. Training sets are the data samples that the
+network learns from, the validation set allows the developer to verify that the
+network is learning correctly, and the test set is used to quantify the
+performance of the trained network.  Of the dataset generated we use $60\%$ of
+these samples for training, $20\%$ for validation, and $20\%$ for testing. A
+dataset was generated for each predefined optimal \ac{SNR} value ranging
+from $1$--$10$ in integer steps. 
 
 %
-% How many sampes did we make
+% How many samples did we make
 %
-Our training datasets contain 50,000 independent timeseries with 50\% containing
-signal+noise and 50\% noise-only. For each simulated gravitational-wave signal
-(drawn from the signal parameter space) we generate 25 independent noise
-realizations from which 25 signal+noise samples are produced. This procedure is
-standard within machine learning classification and allows the network to learn
-how to identify individual signals under different noise scenarios. Each
-noise-only sample consists of an independent noise realization and in total we
-use 1,000 unique waveforms in the $m_{1},m_{2}$ mass space. Each data sample
-timeseries is then represented in the form of a $1 \times 8,192$ pixel image
-with the gray-scale intensity of each pixel proportional to the
-gravitational-wave amplitude.
+Our training datasets contain $5\times 10^{4}$ independent timeseries with 50\%
+containing signal+noise and 50\% noise-only. For each simulated
+gravitational-wave signal (drawn from the signal parameter space) we generate
+25 independent noise realizations from which 25 signal+noise samples are
+produced. This procedure is standard within machine learning classification and
+allows the network to learn how to identify individual signals under different
+noise scenarios. Each noise-only sample consists of an independent noise
+realization and in total we therefore use 1000 unique waveforms in the
+$m_{1},m_{2}$ mass space. Each data sample timeseries is then represented in
+the form of a $1 \times 8192$ pixel image with the gray-scale intensity of each
+pixel proportional to the gravitational-wave amplitude.
 
 %
 % explain the distinction on how the masses are distributed 
 %
-We will only use the training set to teach the deep neural network about the
-signals that we wish to classify. For this reason we have chosen to distribute
-the masses of the training set according to the density of templates one would
-use in a matched-filtering approach dervied from \cite{0264-9381-23-18-002}. 
-The idealized density of templates is expected to be somewhat different \cite{PhysRevD.91.124042}. 
-It is logical to place waveforms closer in
-regions where the waveforms change rapidly and hence we distribute the masses
-according to the total mass $M\sim M^{10/3}$ and the symmetric mass ratio
-$\eta\sim \eta^{-3}$ where $M=m_{1}+m_{2}$ and $\eta=m_{1}m_{2}/M^{2}$. The
-validation, and crucially the testing set must be drawn from distributions that
-one would expect to see in nature and we therefore draw those masses from
-astrophysically motivated distributions where we assume $m_{1,2}\sim
-\log{m_{1,2}}$.   
+%We will only use the training set to teach the deep neural network about the
+%signals that we wish to classify. For this reason we have chosen to distribute
+%the masses of the training set according to the density of templates one would
+%use in a matched-filtering approach derived from~\cite{0264-9381-23-18-002}.
+%The idealized density of templates is expected to be somewhat different
+%\cite{PhysRevD.91.124042}.  It is logical to place waveforms closer in regions
+%where the waveforms change rapidly and hence we distribute the masses according
+%to the total mass $M\sim M^{10/3}$ and the symmetric mass ratio $\eta\sim
+%\eta^{-3}$ where $M=m_{1}+m_{2}$ and $\eta=m_{1}m_{2}/M^{2}$. The validation,
+%and crucially the testing set must be drawn from distributions that one would
+%expect to see in nature and we therefore draw those masses from astrophysically
+%motivated distributions where we assume $m_{1,2}\sim \log{m_{1,2}}$.   
 
 
 \begin{figure} 
 \includegraphics[width=\columnwidth]{figures/waveform.pdf}
-\caption{A whitened noise-free time series of a \ac{BBH}
-signal with component masses $m_{1}=41.86\mathrm{M}_{\odot}$ and
-$m_{2}=6.65\mathrm{M}_{\odot}$ with optimal \ac{SNR} $\optsnr=8$. The dark blue
-timeseries shows the same gravitational-wave signal with additive whitened
-Gaussian noise of unit variance. This latter timeseries is representative of
-the datasets we use to train, validate, and test our deep neural network.\label{fig:waveform}}
+\caption{A whitened noise-free timeseries of a \ac{BBH} signal with component
+masses $m_{1}=41.86\mathrm{M}_{\odot}$ and $m_{2}=6.65\mathrm{M}_{\odot}$ with
+optimal \ac{SNR} $\optsnr=8$ (cyan). The dark blue timeseries shows the same
+gravitational-wave signal with additive whitened Gaussian noise of unit
+variance. This latter timeseries is representative of the datasets used to
+train, validate, and test the deep neural network.\label{fig:waveform}}
 \end{figure}
 
 %
@@ -646,7 +659,7 @@ transfer-learning is marginal.
 %
 % describe ROC curves
 %
-In Figure~\ref{fig:ROC_curves} we compare our \ac{CNN} results to that of
+In Fig.~\ref{fig:ROC_curves} we compare our \ac{CNN} results to that of
 matched-filtering. Given the ranking statistic from a particular analysis and
 defining a parametric threshold value on that statistic we are able to plot the
 fraction of noise samples incorrectly identified as signals (false alarm
