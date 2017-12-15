@@ -428,8 +428,8 @@ neuron in the convolutional layer computes the convolution between the neuron's
 weight vector and the outputs from the layer below it, and then the result is
 summed with the bias vector. Neuron weight vectors are updated through an
 optimisation algorithm called back-propogation~\cite{LeCun1998}. Activation
-layers apply an element-wise non-linear activation function rescaling their
-inputs onto the range $[-1,1]$ and leaving the size of the previous layer's
+functions apply an element-wise non-linear operation rescaling their
+inputs onto a specific range and leaving the size of the previous layer's
 output unchanged. Pooling layers perform a downsampling operation along the
 spatial dimensions of their input, essentially acting as a data reduction
 process speeding up the training of the network for minimal loss of
@@ -549,12 +549,12 @@ Act. Func. & Elu & Elu & Elu & Elu & Elu & Elu & Elu & Elu & SMax \\
 \hline
 \end{tabular}
 \caption{The optimised network consisting of 6 convolutional layers (C),
-followed by 3 hidden layers (H).  Max-pooling is performed on the first, fifth,
+followed by 3 hidden layers (H). Max-pooling is performed on the first, fifth,
 and eighth layer, whereas dropout is only performed on the two hidden layers.
-Each layer uses an exponential linear unit (Elu) activation function while the
-last layer uses a Softmax (SMax) activation function in order to normalize the
-output values to be between zero and one so as to give a probability value for
-each class.\label{table:network}}
+Each layer uses an exponential linear unit (Elu) activation function (with
+range $[-1,\infty]$) while the last layer uses a Softmax (SMax) activation
+function in order to normalize the output values to be between zero and one so
+as to give a probability value for each class.\label{table:network}}
 \end{table}
 
 %
