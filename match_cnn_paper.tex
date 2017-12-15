@@ -131,10 +131,10 @@ for signal identification in which the majority of calculations are performed
 prior to data taking during a training process. We use only whitened time
 series of measured gravitational-wave strain as an input, and we train and test
 on simulated binary black hole signals in synthetic Gaussian noise
-representative of Advanced LIGO sensitivity.  We show that our network can
-classify signal from non-signal with a performance {\color{red}comparable to
-that of match filtering} applied to the same datasets when considering the
-sensitivity defined by Reciever-Operator characteristics.
+representative of Advanced LIGO sensitivity. We show that our network can
+classify signal from noise with a performance that emulates that of match
+filtering applied to the same datasets when considering the sensitivity defined
+by Reciever-Operator characteristics.
 %
 \end{abstract}
 
@@ -694,9 +694,13 @@ false alarm probability and plotting the corresponding true alarm probability
 versus the optimal \ac{SNR} of the signals in each test dataset. We show these
 efficiency curves in Fig.~\ref{fig:efficiency_curve} at false alarm
 probabilities $10^{-1},10^{-2},10^{-3}$ for both the \ac{CNN} and
-matched-filtering approaches. We again see closely matching results from both
-approches and ...{\color{red}We need to look at the final results before we write
-the rest of this paragraph.} 
+matched-filtering approaches. We again see very good agreement between the
+approaches at all false alarm probabilities with the \ac{CNN} sensitivity
+exceeding that of the matched-filter approach at low \ac{SNR} and high false
+alarm probability. Conversely we see the matched-filter sensitivity marginally
+exceeds the \ac{CNN} at high \ac{SNR} and low false alarm probability. This
+latter discrepancy can be mitigated by increasing the number of training
+samples.
 
 %We compare the results of
 %%all three methods at various injection SNR values in figure
@@ -732,15 +736,15 @@ statistical uncertainties in the curves.\label{fig:efficiency_curve}}
 %
 % summary of what we did
 %
-We have demonstrated that deep learning, when applied to a raw
-gravitational-wave timeseries data, {\color{red}is able to reproduce the
-results of a matched-filtering analysis in Gaussian noise}. We employ a deep
+We have demonstrated that deep learning, when applied to
+gravitational-wave timeseries data, is able to closely reproduce the
+results of a matched-filtering analysis in Gaussian noise. We employ a deep
 convolutional neural network with rigorously tuned hyperparameters and produce
 an output that returns a ranking statistic equivalent to the inferred
 probability that data contains a signal. Matched-filtering analyses are often
 described as the optimal approach for signal detection in Gaussian noise. By
-building a neural network that is capable of {\color{red}reproducing this
-optimality} we answer a fundamental question regarding the applicability of
+building a neural network that is capable of reproducing this
+optimality we answer a fundamental question regarding the applicability of
 neural networks for gravitational-wave data analysis. 
 
 %
