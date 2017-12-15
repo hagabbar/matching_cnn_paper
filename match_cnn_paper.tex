@@ -46,14 +46,14 @@ floatfix,
 \usepackage{graphicx}% Include figure files
 \usepackage{dcolumn}% Align table columns on decimal point
 \usepackage{bm}% bold math
-\usepackage{lineno}
+%\usepackage{lineno}
 \usepackage{color}
 \usepackage{acronym}
 \usepackage{multirow}
 \usepackage{tabularx}
 \usepackage{hyperref}
 %\addbibresource{references.bib}
-\linenumbers % Commence numbering lines
+%\linenumbers % Commence numbering lines
 %\usepackage{hyperref}% add hypertext capabilities
 %\usepackage[mathlines]{lineno}% Enable numbering of text and display math
 %\linenumbers\relax % Commence numbering lines
@@ -96,7 +96,7 @@ floatfix,
 %
 % Be clear and specific. Do not claim too much or too little.
 %
-\title{Matching Matched Filtering with Deep Networks for Gravitational Wave Astronomy}
+\title{Matching matched filtering with deep networks for gravitational-wave astronomy}
 
 \author{Hunter Gabbard}
  \email{Corresponding author: h.gabbard.1@research.gla.ac.uk}
@@ -290,7 +290,7 @@ for this study.
 %
 % describe the noise (Gaussian)
 %
-The input datasets consist of "whitened" simulated gravitational-wave
+The input datasets consist of ``whitened'' simulated gravitational-wave
 timeseries where the whitening process uses the detector noise \ac{PSD} to  
 rescale the noise contribution at each frequency to have equal power. 
 Our noise is initially generated from a \ac{PSD} equivelent to the Advanced
@@ -364,15 +364,15 @@ Supervised deep learning requires datasets to be sub-divided into training,
 validation, and testing sets. Training sets are the data samples that the
 network learns from, the validation set allows the developer to verify that the
 network is learning correctly, and the test set is used to quantify the
-performance of the trained network.  Of the dataset generated we use $60\%$ of
-these samples for training, $20\%$ for validation, and $20\%$ for testing. A
+performance of the trained network.  Of the dataset generated we use $90\%$ of
+these samples for training, $5\%$ for validation, and $5\%$ for testing. A
 dataset was generated for each predefined optimal \ac{SNR} value ranging
 from $1$--$10$ in integer steps. 
 
 %
 % How many samples did we make
 %
-Our training datasets contain $5\times 10^{4}$ independent timeseries with 50\%
+Our training datasets contain $4\times 10^{5}$ independent timeseries with 50\%
 containing signal+noise and 50\% noise-only. For each simulated
 gravitational-wave signal (drawn from the signal parameter space) we generate
 25 independent noise realizations from which 25 signal+noise samples are
@@ -419,34 +419,35 @@ train, validate, and test the deep neural network.\label{fig:waveform}}
 % introduce convolutional neural networks
 %
 In our model, we use a variant of a deep learning algorithm called a
-\ac{CNN}~\cite{726791}. The layers of such a network are composed of five
-types: input, convolutional, activation, pooling, and hidden. The input layer
-holds the raw pixel values of the sample image which, in our case, is a
-1-dimensional timeseries vector. As the data is 1-dimensional, the weight and
-bias parameters of the network are also in 1-dimensional vector form. Each
-neuron in the convolutional layer computes the convolution between the neuron's
-weight vector and the outputs from the layer below it, and then the result is
-summed with the bias vector. Neuron weight vectors are updated through an
-optimisation algorithm called back-propogation~\cite{LeCun1998}. Activation
-functions apply an element-wise non-linear operation rescaling their
+\ac{CNN}~\cite{726791}. The layers of such a network are composed of different
+types. The input layer holds the raw pixel values of the sample image which, in
+our case, is a 1-dimensional timeseries vector. As the data is 1-dimensional,
+the weight and bias parameters of the network are also in 1-dimensional vector
+form. Each neuron in the convolutional layer computes the convolution between
+the neuron's weight vector and the outputs from the layer below it, and then
+the result is summed with the bias vector. Neuron weight vectors are updated
+through an optimisation algorithm called back-propogation~\cite{LeCun1998}.
+Activation functions apply an element-wise non-linear operation rescaling their
 inputs onto a specific range and leaving the size of the previous layer's
 output unchanged. Pooling layers perform a downsampling operation along the
 spatial dimensions of their input, essentially acting as a data reduction
 process speeding up the training of the network for minimal loss of
-information. Finally we have a hidden layer connected to an output
-layer which computes the inferred class probabilities. These values are input
-to a loss function, chosen as the cross-entropy, defined as
+information. Finally we have a hidden layer connected to an output layer which
+computes the inferred class probabilities. These values are input to a loss
+function, chosen as the binary cross-entropy~\cite{tensorflow2015-whitepaper},
+defined as
 %
 % define the loss function
 %
 \begin{equation} \label{eq:loss} 
-f_{\theta^{'}}(\theta) = -\sum_{i}\theta_{i}^{'} \mathrm{log}(\theta_{i}), 
+f(\theta) =
+-\sum_{i\in\text{S}}\mathrm{log}(\theta^{\text{S}}_{i})-\sum_{i\in\text{N}}\mathrm{log}(\theta^{\text{N}}_{i}), 
 \end{equation}
 %
-where $\theta_{i}$ is the predicted probability of class $i$ and
-$\theta_{i}^{'}$ is the true probability for that
-class~\cite{tensorflow2015-whitepaper}. The loss function is minimised when
-input data samples are assigned the correct class with the highest confidence. 
+where $\theta^{\text{S/N}}_{i}$ is the predicted probability of class
+signal+noise (S) or noise-only (N) for the $i$'th training sample. The
+loss function is minimised when input data samples are assigned the correct
+class with the highest confidence. 
 
 %
 % describe the network choices that we have
@@ -594,10 +595,10 @@ over $\Delta t$. The subsequent step is to further numerically maximize this
 quantity over a collection of component mass combinations. In this analysis a
 comprehensive template bank is generated in the $m_{1},m_{2}$ mass space
 covering our predefined range of masses. We use a maximum mismatch of $3\%$ and
-a lower frequency cutoff of $18~\mathrm{Hz}$ using the PyCBC geometric
+a lower frequency cutoff of $20~\mathrm{Hz}$ using the PyCBC geometric
 non-spinning template bank generation
 tool~\cite{pycbc-software,0264-9381-33-21-215004}. This template bank contained
-$8700$ individual templates. 
+$8056$ individual templates. 
 
 %
 % describe the process of what we apply this to
