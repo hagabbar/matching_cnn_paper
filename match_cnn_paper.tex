@@ -185,8 +185,7 @@ Gravitational wave Observatory (aLIGO) detectors, as well as the recent joint
 detections of GW170814 and GW170817 with Advanced Virgo
 \cite{PhysRevLett.119.141101,PhysRevLett.119.161101}. Over the coming years
 many more such observations, including \ac{BBH}, binary neutron stars, as well
-as other more exotic sources such as intermediate black holes, and neutron star
-black hole mergers, are likely to be observed on a more frequent basis. As
+as other more exotic sources are likely to be observed on a more frequent basis. As
 such, the need for more efficient search methods will be more pertinent as the
 detectors increase in sensitivity.
 
@@ -224,27 +223,24 @@ relativity simulations~\cite{PhysRevLett.95.121101}.
 Deep learning is a subset of machine learning which has gained in popularity in
 recent years~\cite{NIPS2012_4824, 1406.2661, 1409.1556, 1412.7062, 1311.2901,
 1409.4842} with the rapid development of graphics-processing-unit technology.
-Some successful implementations of deep learning have been used in the
-colorization of black and white images~\cite{1603.08511}, automatic image
-caption generation~\cite{1412.2306}, object classification and detection in
-photographs~\cite{NIPS2012_4824}, machine learning for medical
+Some successful implementations of deep learning include image processing~\cite{1603.08511,1412.2306,NIPS2012_4824}, medical
 diagnosis~\cite{KONONENKO200189}, and microarray gene expression
-classification~\cite{Pirooznia2008} to name only a few. There has also been
+classification~\cite{Pirooznia2008}. There has also been
 some recent success in the field of gravitational-wave astronomy in the form of
 glitch classification \cite{PhysRevD.95.104059,
 0264-9381-34-6-064003,1706.07446} and notably for signal
 identification~\cite{1701.00008} where it was first shown that deep learning
-could be a detection tool. One advantage of deep learning is its ability to
-perform analyses very rapidly since the method's computationally intensive
+could be a detection tool. Deep learning is able to
+perform analyses rapidly since the method's computationally intensive
 stage is pre-computed during the training prior to the analysis of actual data.
-This results in low-latency searches that can be several orders of magnitude
+This results in low-latency searches that can be orders of magnitude
 faster than other comparable classification methods. 
 
 %
 % more detail on deep learning
 %
 A deep learning algorithm is composed of stacked arrays of processing units,
-called neurons, which can be anywhere from one to several layers deep. A neuron
+called neurons, which can be from one to several layers deep. A neuron
 acts as a filter, whereby it performs a transformation on an array of inputs.
 This transformation is a linear operation between the input array and the
 weight and bias parameters assosicated to the neuron. The resulting array is
@@ -253,7 +249,7 @@ neuron output to be within a set range. Deep learning algorithms typically
 consist of an input layer, followed by one to several hidden layers and then
 one to multiple output neurons. The scalars produced from the output neurons
 can be used to solve classification problems, where each output neuron
-corresponds to the probability that a particular input sample is of a certain
+corresponds to the probability that an input sample is of a certain
 class.
 
 %
@@ -278,9 +274,9 @@ techniques.
 % describe the simulations
 %
 In order to make a clean comparison between deep learning approach and
-matched-filtering, we distinguish between only two cases, \ac{BBH} merger
+matched-filtering, we distinguish between two cases, \ac{BBH} merger
 signals in additive Gaussian noise (signal+noise) and Gaussian noise alone
-(noise-only). We choose to only focus on \ac{BBH} signals rather than including
+(noise-only). We choose to focus on \ac{BBH} signals rather than including
 binary neutron star systems for the reason that \ac{BBH} systems are higher
 mass systems and have shorter duration signals once the inspiralling systems
 have entered the Advanced LIGO frequency band. They typically then merge on the
@@ -304,8 +300,8 @@ routines called \texttt{LALSuite}. We use the IMRPhenomD type
 waveform~\cite{PhysRevD.93.044006, PhysRevD.93.044007} which models the
 inspiral, merger and ringdown components of \ac{BBH} gravitational-wave
 signals. We simulate systems with component black hole masses in the range from
-5\(M_\odot\) to 95\(M_\odot\), $m_{1} > m_{2}$, and all with zero spin.
-Training, validation and testing datasets all contain signals drawn from an
+5\(M_\odot\) to 95\(M_\odot\), $m_{1} > m_{2}$, with zero spin.
+Training, validation and testing datasets contain signals drawn from an
 astrophysically motivated distribution where we assume
 $m_{1,2}\sim\log{m_{1,2}}$~\cite{PhysRevX.6.041015}. Each signal is given a
 random right ascension and declination assuming an isotropic prior on the sky,
@@ -402,7 +398,7 @@ pixel proportional to the gravitational-wave amplitude.
 
 
 \begin{figure} 
-\includegraphics[width=\columnwidth]{figures/waveform.pdf}
+\includegraphics[width=\columnwidth]{waveform.pdf}
 \caption{A whitened noise-free timeseries of a \ac{BBH} signal with component
 masses $m_{1}=41.86\mathrm{M}_{\odot}$ and $m_{2}=6.65\mathrm{M}_{\odot}$ with
 optimal \ac{SNR} $\optsnr=8$ (cyan). The dark blue timeseries shows the same
@@ -419,10 +415,10 @@ train, validate, and test the deep neural network.\label{fig:waveform}}
 % introduce convolutional neural networks
 %
 In our model, we use a variant of a deep learning algorithm called a
-\ac{CNN}~\cite{726791}. The layers of such a network are composed of different
-types. The input layer holds the raw pixel values of the sample image which, in
-our case, is a 1-dimensional timeseries vector. As the data is 1-dimensional,
-the weight and bias parameters of the network are also in 1-dimensional vector
+\ac{CNN}~\cite{726791} composed of multiple layers. The input layer holds 
+the raw pixel values of the sample image which, in
+our case, is a 1-dimensional timeseries vector. The weight and bias parameters 
+of the network are also in 1-dimensional vector
 form. Each neuron in the convolutional layer computes the convolution between
 the neuron's weight vector and the outputs from the layer below it, and then
 the result is summed with the bias vector. Neuron weight vectors are updated
@@ -430,9 +426,7 @@ through an optimisation algorithm called back-propogation~\cite{LeCun1998}.
 Activation functions apply an element-wise non-linear operation rescaling their
 inputs onto a specific range and leaving the size of the previous layer's
 output unchanged. Pooling layers perform a downsampling operation along the
-spatial dimensions of their input, essentially acting as a data reduction
-process speeding up the training of the network for minimal loss of
-information. Finally we have a hidden layer connected to an output layer which
+spatial dimensions of their input. Finally we have a hidden layer connected to an output layer which
 computes the inferred class probabilities. These values are input to a loss
 function, chosen as the binary cross-entropy~\cite{tensorflow2015-whitepaper},
 defined as
@@ -453,32 +447,32 @@ class with the highest confidence.
 % describe the network choices that we have
 %
 In order to optimise a network, multiple hyper-parameters must be tuned.  We
-define hyper-parameters as those parameters that we are free to choose. Such
-parameters include the choice of the number and type of network layers, the
-number of neurons within each layer, the size of the neuron weight vectors, the
-max-pooling parameters, the type of activation functions, preprocessing of
+define hyper-parameters as parameters we are free to choose. Such
+parameters include the number and type of network layers, the
+number of neurons within each layer, size of the neuron weight vectors, 
+max-pooling parameters, type of activation functions, preprocessing of
 input data, learning rate, and the application (or otherwise) of specific deep
 learning techniques. We begin the process with the simplest network that
 provides a discernible level of effective classification. In most cases this
 consists of an input, convolutional, hidden, and logistic output layer.
-From this point the optimal network structure was determined through multiple
+The optimal network structure was determined through multiple
 tests and tunings of hyperparameters by means of trial and error.
 
 %
 % go into more detail about what we tried in network design
 %
-Within our optimization process we experimented with rescaling the input data
-which we found to have minimal effect on the network performance. The reason
-for this is that our input data is whitened and our signals are buried beneath
-the noise. Therefore our data is effectively prescaled on a range
-$\pm\mathcal{O}(1)$ due to the natural variation of Gaussian noise. We also
-experimented with using transfer learning~\cite{5288526} where networks
-pre-trained on high \ac{SNR} datasets are used as starting points for
-application to successively lower \ac{SNR} datasets. We found that there were
-no performance benefits in using this approach compared to training the network
-solely on each \ac{SNR} dataset seperately. The network depth was adjusted
-between 2 and 10 convolutional layers. The inclusion of dropout was used within
-the final 2 hidden layers as a form of regularization to avoid overfitting.
+%Within our optimization process we experimented with rescaling the input data
+%which we found to have minimal effect on the network performance. The reason
+%for this is that our input data is whitened and our signals are buried beneath
+%the noise. Therefore our data is effectively prescaled on a range
+%$\pm\mathcal{O}(1)$ due to the natural variation of Gaussian noise. We also
+%experimented with using transfer learning~\cite{5288526} where networks
+%pre-trained on high \ac{SNR} datasets are used as starting points for
+%application to successively lower \ac{SNR} datasets. We found that there were
+%no performance benefits in using this approach compared to training the network
+%solely on each \ac{SNR} dataset seperately. The network depth was adjusted
+%between 2 and 10 convolutional layers. The inclusion of dropout was used within
+%the final 2 hidden layers as a form of regularization to avoid overfitting.
 
 %
 % describe how the training itself works to optimise the weights and biases
@@ -486,9 +480,9 @@ the final 2 hidden layers as a form of regularization to avoid overfitting.
 During the training stage an optimization function (back-propagation) works by
 computing the gradient of the loss function (Eq.~\ref{eq:loss}), then
 attempting to minimize that loss function. The errors are then propagated back
-through the network while at the same time updating the weight and bias terms
+through the network while also updating the weight and bias terms
 accordingly.  Back propagation is done over multiple iterations called epochs.
-For this analysis we use adaptive moment estimation with incorporated Nesterov
+We use adaptive moment estimation with incorporated Nesterov
 momentum~\cite{dozat2016incorporating} with a learning rate of $0.002$,
 $\beta_{1}=0.9$, $\beta_{2}=0.999$, $\epsilon = 10^{-8}$ and a momentum
 schedule of $0.004$. We outline the structure of the final neural network
@@ -506,8 +500,8 @@ architecture in Table~\ref{table:network}.
 % the CNN ranking statistic
 %
 The final ranking statistic that we extract from the \ac{CNN} analysis is taken
-from the final output layer, composed of 2 neurons, where each neuron will
-output a probability value between 0 and 1 with their sum being unity. Each
+from the output layer, composed of 2 neurons, where each neuron will
+produce a probability value between 0 and 1 with their sum being unity. Each
 neuron gives the inferred probability that the input data belongs to the noise
 or signal+noise class respectively.
 
@@ -606,7 +600,7 @@ $8056$ individual templates.
 When generating an \ac{SNR} timeseries for an input dataset we select
 $f_{\mathrm{min}}$ according to the conservative case (lowest
 $f_{\mathrm{min}}$) in which the signal merger occurs at the 0.95 fraction of
-1~sec timeseries. We also therefore select only maximised \ac{SNR} timeseries
+1~sec timeseries. We therefore select only maximised \ac{SNR} timeseries
 values recovered from within the $[0.75,0.95]$ fractional range since this is
 the parameter space on which the \ac{CNN} has been trained. For the practical
 computation of the matched-filtering analysis we take each of the data samples
@@ -678,7 +672,7 @@ analysis\footnote{We are limited to a minimal false alarm probability of $\sim
 % show ROC curves
 %
 \begin{figure}[]
-\includegraphics[width=\columnwidth] {figures/ROC_curves.pdf}
+\includegraphics[width=\columnwidth] {ROC_curves.pdf}
 \caption{The \ac{ROC} curves for test datasets containing signals with optimal
 \ac{SNR}, $\rho_{\mathrm{opt}}=2,4,6$. We plot the true alarm probability
 versus the false alarm probability estimated from the output of the \ac{CNN}
@@ -718,7 +712,7 @@ samples.
 % show efficiency curve
 %
 \begin{figure}[]
-\includegraphics[width=\columnwidth] {figures/efficiency.pdf}
+\includegraphics[width=\columnwidth] {efficiency.pdf}
 \caption{Efficiency curves comparing the performance of the \ac{CNN} and
 matched-filtering approaches for false alarm probabilities $10^{-1}$ (solid),
 $10^{-2}$ (dashed), $10^{-3}$ (dot-dashed). The true alarm probability is
@@ -770,9 +764,10 @@ method could be applied to other merger types, such as binary neutron star and
 neutron star-black hole signals. This supervised learning approach can also be
 extended to other well modelled gravitational-wave targets such as the
 continuous emission from rapidly rotating non-axisymmetric neutron
-stars~\cite{1707.02669}. Moreover, unsupervised approaches have the potential
-to be powerful detection tools in searches for unmodelled burst-like
-gravitational-wave signals. Finally we mention the possibilities for parameter
+stars~\cite{1707.02669}. %Moreover, unsupervised approaches have the potential
+%to be powerful detection tools in searches for unmodelled burst-like
+%gravitational-wave signals. 
+Finally we mention the possibilities for parameter
 estimation~\cite{1701.00008} where in the simplest cases an output regression
 layer can return point estimates of parameter values. As was exemplified in the
 case of GW170817, rapid detection confidence coupled with robust and equally
