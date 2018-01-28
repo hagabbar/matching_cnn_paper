@@ -337,7 +337,7 @@ defined as
 %
 where $\tilde{h(f)}$ is the frequency domain representation of the
 gravitational-wave strain and $S_{\mathrm{n}}(f)$ is the detector noise
-\ac{PSD}. The simulated time series were chosen to be 1~sec in duration sampled
+\ac{PSD}. The simulated time series were chosen to be 1~s in duration sampled
 at 8192 Hz. Therefore we consider $f_{\mathrm{min}}$ as the frequency of the
 gravitational-wave signal at the start of the sample timeseries. An example
 timeseries can be seen in Fig.~\ref{fig:waveform}. 
@@ -347,11 +347,11 @@ timeseries can be seen in Fig.~\ref{fig:waveform}.
 %
 Due to the requirements of the matched-filtering comparison it was necessary to
 add padding to each timeseries so as to avoid edge effects. Therefore
-each 1~sec timeseries has an additional 0.5~sec of data prior to and after the signal.
+each 1~s timeseries has an additional 0.5~s of data prior to and after the signal.
 The signal itself has a Tukey window ($\alpha=1/8$) applied to truncate the
-signal content to the central 1~sec. The \ac{CNN} approach only has access to
-this central 1~sec of data. Similarly, the optimal \ac{SNR} is computed considering
-only the central 1~sec.
+signal content to the central 1~s. The \ac{CNN} approach only has access to
+this central 1~s of data. Similarly, the optimal \ac{SNR} is computed considering
+only the central 1~s.
 
 %
 % How we split training, validation, and testing
@@ -600,7 +600,7 @@ $8056$ individual templates.
 When generating an \ac{SNR} timeseries for an input dataset we select
 $f_{\mathrm{min}}$ according to the conservative case (lowest
 $f_{\mathrm{min}}$) in which the signal merger occurs at the 0.95 fraction of
-1~sec timeseries. We therefore select only maximised \ac{SNR} timeseries
+1~s timeseries. We therefore select only maximised \ac{SNR} timeseries
 values recovered from within the $[0.75,0.95]$ fractional range since this is
 the parameter space on which the \ac{CNN} has been trained. For the practical
 computation of the matched-filtering analysis we take each of the data samples
