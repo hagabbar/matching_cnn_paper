@@ -123,12 +123,14 @@ floatfix,
 We report on the construction of a deep convolutional neural network that can
 reproduce the sensitivity of a matched-filtering search for binary black hole
 gravitational-wave signals. The standard method for the detection of well
-modeled transient gravitational-wave signals is matched filtering. However, the
-computational cost of such searches in low latency will grow dramatically as
-the low frequency sensitivity of gravitational-wave detectors improves.
-Convolutional neural networks provide a highly computationally efficient method
-for signal identification in which the majority of calculations are performed
-prior to data taking during a training process. We use only whitened time
+modeled transient gravitational-wave signals is matched filtering. 
+%However, the
+%computational cost of such searches in low latency will grow dramatically as
+%the low frequency sensitivity of gravitational-wave detectors improves.
+%Convolutional neural networks provide a highly computationally efficient method
+%for signal identification in which the majority of calculations are performed
+%prior to data taking during a training process. 
+We use only whitened time
 series of measured gravitational-wave strain as an input, and we train and test
 on simulated binary black hole signals in synthetic Gaussian noise
 representative of Advanced LIGO sensitivity. We show that our network can
@@ -200,7 +202,7 @@ using advanced signal processing techniques. The computational cost to run the
 search analysis is due to the large parameter space and the increasing cost of
 analysing longer duration waveforms as the low frequency sensitivity of the
 detectors improves. Distinguishing noise from signal in these search pipelines
-is acheived using a technique known as template based matched-filtering. 
+is acheived, in part, using a technique known as template based matched-filtering. 
 
 %
 % introduce matched-filtering
@@ -230,11 +232,12 @@ some recent success in the field of gravitational-wave astronomy in the form of
 glitch classification \cite{PhysRevD.95.104059,
 0264-9381-34-6-064003,1706.07446} and notably for signal
 identification~\cite{1701.00008} where it was first shown that deep learning
-could be a detection tool. Deep learning is able to
-perform analyses rapidly since the method's computationally intensive
-stage is pre-computed during the training prior to the analysis of actual data.
-This results in low-latency searches that can be orders of magnitude
-faster than other comparable classification methods. 
+could be a detection tool. 
+%Deep learning is able to
+%perform analyses rapidly since the method's computationally intensive
+%stage is pre-computed during the training prior to the analysis of actual data.
+%This results in low-latency searches that can be orders of magnitude
+%faster than other comparable classification methods. 
 
 %
 % more detail on deep learning
@@ -289,7 +292,7 @@ for this study.
 The input datasets consist of ``whitened'' simulated gravitational-wave
 timeseries where the whitening process uses the detector noise \ac{PSD} to  
 rescale the noise contribution at each frequency to have equal power. 
-Our noise is initially generated from a \ac{PSD} equivelent to the Advanced
+Our noise is initially generated from a \ac{PSD} equivalent to the Advanced
 LIGO design sensitivity~\cite{2016LRR....19....1A}. 
 
 %

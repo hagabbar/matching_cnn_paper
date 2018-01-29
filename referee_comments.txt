@@ -269,5 +269,5 @@ noise, so it can't be that, right? Is it the template bank? But 3%
 mismatch seems quite low, would that be sufficient to explain the
 improvement?.
 
-5* --- We would also like to do this. However, we honestly don’t know the definitive answer yet. The CBC group and Tom Dent seem to think that this is due to the difference in density of templates vs the prior in the mass space. Higher numbers of *independent* templates give higher false alarms. There might be some optimal balance (e.g. Christian Roever’s paper) for template placement that resolves this. Further work is required. Again, the main constraint is the word count.
+5* --- (Chris) We would also like to do this. However, we honestly don’t know the definitive answer yet. The CBC group and Tom Dent seem to think that this is due to the difference in density of templates vs the prior in the mass space. Higher numbers of *independent* templates give higher false alarms. There might be some optimal balance (e.g. Christian Roever’s paper) for template placement that resolves this. Further work is required. Again, the main constraint is the word count.
 
