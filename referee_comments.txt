@@ -1,0 +1,273 @@
+##################
+Referee A Comments
+##################
+
+1. It is claimed in a number of places in the text that the
+computational cost of searches for compact object mergers is tied to
+improvements in the low-frequency sensitivity of gravitational-wave
+detectors. For example, in the abstract there is the statement
+
+"However, the computational cost of such searches in low latency will
+grow dramatically as the low frequency sensitivity of
+gravitational-wave detectors improves."
+
+and in the second paragraph of the Introduction
+
+"The computational cost to run the search analysis is due to the large
+parameter space and the increasing cost of analyzing longer duration
+waveforms as the low frequency sensitivity of the detectors improves."
+
+These claims are not true. They would be true for a naive,
+brute-force, template bank + matched-filter approach, as was used in
+the early days of LIGO, but they are not true for modern detection
+systems. The low frequency parts of the signals have two properties
+relevant here: firstly, they're low frequency meaning the filtering of
+these parts of the waveforms can be computed at a lower sample rate;
+secondly the rate of frequency evolution at low frequencies is small
+due to the slow rate of energy loss from the system, making the
+structure of the waveforms more and more simple at low frequencies.
+Modern detection systems, for example the Multi-Band Template Analysis
+(MBTA) and GstLAL-based detection systems, take advantage of both of
+these properties to remove redundancy from the calculations and reduce
+the computational cost. The result is that the cost is nearly
+independent of the starting frequency; the computational cost is
+entirely dominated by the high frequency parts of the waveform where
+high data sample rates are required and complex frequency and
+amplitude evolution are observed.
+
+I cannot find anywhere in this document an accounting of the
+computational cost of the convolutional neural network nor of the
+matched filtering approach, and I feel that without that information a
+discussion of the computational cost of either of the approaches, or
+in particular their scalings, is out of place. I will raise this issue
+again below, but I think perhaps removing any sort of claims of speed,
+cost, whatever, is warranted, unless a comparative study is presented
+to support them.
+
+1)* --- (Hunter) If we decide to keep in the bit where we describe the source of computational cost in a matched filtering analysis, then we should also say that the majority of the expense comes from the high frequency portion of the waveform. What are folks thoughts about keeping these statements in? I was of the opinion that it is important to keep them, given that the advantage of using a neural network is that it can run faster than a matched template filtering analysis, however it would entail quite a bit of work to make the appropriate comparisons. Referee A's response in comment 5 is what changed my mind. 
+
+
+2. Introduction, second paragraph, "... in these search pipelines is
+achieved using a technique known as ..." --> ... in these search
+pipelines is achieved, in part, using a technique known as ..." In
+fact the process also makes of use various \chi^2-like statistics, and
+various measures of signal consistency across the multiple detectors
+world-wide.
+
+2)* --- (Hunter) Shouldn't be difficult to mention chi^2 here.
+
+3. Introduction, third paragraph, "... each with different component
+mass components and/or ..." --> "... each with different component
+mass and/or ..."
+
+3.)* --- (Hunter) Fixed.
+
+
+4. Introduction, fourth paragraph, the claim "This results in
+low-latency searches that can be orders of magnitude faster than other
+comparable classification methods." requires a reference. There are
+weasel words in there, "can be", "comparable" (what are "comparable"
+methods? only the ones for which this statement is true?), and because
+of that strictly speaking no specific claim is being made here, but a
+claim is being implied and I am certain that claim is false. I am
+reminded of similar claims made about GPU-based FFT algorithms: orders
+of magnitude faster, 100x faster, and so on. It is true that the GPU
+can perform a subset of the tasks required to identify
+gravitational-wave signals at an enormously higher speed than a CPU,
+but it can't do all of the tasks at that speed. If 50% of the tasks
+can be done so quickly that they are reduced to 0 time, you have only
+increased the speed by a factor of 2, not 100s or 1000s, because there
+remains the other 50% of the tasks that still take just as long.
+Meanwhile, if you merely wait 18 months Moore's Law will give you that
+factor of 2, anyway, without having to spend time porting your
+algorithm to GPUs. This is the Achilles' heal of GPUs: they're a lot
+of work, and there are things they're not good at, which is why the
+use of GPUs for matched filtering based GW detection systems has never
+gained traction. Anyway, if a reference to support this claim cannot
+be found it should be removed.
+
+
+5. I am also puzzled by the claim that has been made in the abstract
+and again here that "the majority of calculations are performed prior
+to data taking during a training process." The fact that there is a
+set-up phase that requires more calculations than are required to
+analyze the data does not imply a reduction in computational cost, as
+I feel the authors intend. It implies an enormous explosion in
+computational cost: not only is there still the cost to analyze the
+data, but now on top of that there is a huge start-up cost as well.
+Again, I don't find a comparison of computational cost presented in
+this manuscript. If the work presented here is a net reduction in
+computational cost compared to normal matched filtering, then this
+should be quantified somehow. By the way, as I mentioned above, modern
+detection systems do not make use of matched filtering implemented in
+the "convolve data with all waveforms at full sample rate" form,
+however the ratio of the cost of doing that to the true cost of modern
+systems is well documented elsewhere, so it's not necessary to compare
+your system to real-world, as-implemented, filtering costs. It's
+sufficient to compare the cost of your system to the full
+matched-filtering approach, as that forms a common benchmark for
+comparison.
+
+An alternative is to simply not discuss the computational cost; remove
+claims or suggestions of an improvement with respect to something
+else. I think the technical achievement of demonstrating the
+suitability of convolutional neural networks for GW signal detection
+is sufficient to warrant publication. For example, some neural
+networks can be efficiently implemented on FPGAs, which are not
+necessarily suitable for traditional matched-filtering. Even if the
+approach described here is more computationally costly than modern
+matched-filtering on a traditional CPU, it's possible that there are
+avenues available for hardware optimization that are not available to
+matched-filtering. Therefore, how practical or not this approach is is
+potentially a complex problem, and exploring that is likely beyond the
+scope of this work.
+
+If the authors have data on the relative performance of their system,
+then by all means I encourage them to add that to this manuscript. I
+merely mean to say that if they do not, then I would not require them
+to spend the time obtaining it to proceed with publication. But in
+that case they must remove claims regarding the performance of the
+system.
+
+
+6. Page 2, second paragraph, "They typically then merge on the
+timescale of O(1) sec ..." --> "They typically then merge on the
+timescale of O(1 s) ...". Two violations of SI style conventions:
+separating a number from its unit, and using a non-standard
+abbreviation (https://physics.nist.gov/cuu/Units/rules.html).
+
+
+6)* --- (Hunter) Apologies, I should have caught this. It's been fixed.
+
+
+7. Equation (1) needs a reference. Otherwise you need define
+normalization conventions for, e.g., Sn(f), and Fourier transforms.
+
+7)* --- (Hunter) I forget now, but what paper did we pull this from? Babak et al.?
+
+
+8. Below equation (1), I'm puzzled by the extremely short interval of
+data that has been used. 1 s is much less than the impulse length of
+the filter required to whiten Advanced LIGO data (typically 10 s or
+longer in length). Attempting to whiten so short a piece of data will
+lead to undesirable, non-physical, boundary artifacts. This deserves
+some explanation: how have they whitened it? Did they start with a
+much larger piece, first, and extract the 1 s after? By what measure
+is the result considered acceptable for the purposes of this analysis?
+I realize there is a description of padding the data by 1/2 s on each
+side, but that is still an order of magnitude too small under normal
+circumstances. It's possible that because Gaussian noise is being used
+the spectrum is sufficiently smooth, i.e., it lacks the narrow
+spectral features of real data, for whitening so short an interval to
+not be a problem. But, still, that should be explained because it
+stands out as a surprising configuration choice.
+
+
+9. Throughout this section, SI units are not being used correctly. "1
+sec" --> "1 s", or "one second".
+https://physics.nist.gov/cuu/Units/checklist.html
+
+9)* --- (Hunter) Fixed.
+
+10. Equations (3) and (4) need references.
+
+10)* --- (Hunter) Were these also taken from Babak et al.?
+
+
+11. One of the things that I notice in Fig 2. is that the CNN does not
+appear to offer any sensitivity improvement at higher or very low
+SNRs, but it appears to offer one in the marginal SNR regime, e.g.,
+SNR=4. By chance this corresponds to the SNR at which matched-filter +
+trigger systems give up. For example the GstLAL detection system
+operates at a trigger threshold of 4. Because of the very high
+false-alarm rate, and the data management burden that creates, it is
+not practical to collect triggers at a lower SNR threshold. It is
+known, however, that doing so would improve the sensitivity of the
+search. If a system was a available for producing triggers in the
+range, say, 3 <= SNR <= 4 and this system had a lower false-alarm rate
+than matched filtering in that regime, then that would allow detection
+systems to operate at a lower threshold. It's possible some sort of
+hybrid system would be best, where a CNN is responsible for
+identifying the very low SNR triggers and a traditional
+matched-filtering system is used for higher SNR things. I don't have
+any specific comment or request to make in this regard, only that if
+the issue of the performance at higher and lower SNRs is raised, then
+pointing out the utility in the marginal SNR regime, would be apropos.
+
+
+
+##################
+Referee B Comments
+##################
+
+
+1.) Does the method scale up to searches over the full gravitational
+waveform parameter space, including the parts that would be covered
+(in a matched-filter search) by very closely spaced and very long
+waveforms? (The test case used this part of parameter space that is in
+the opposite extreme, namely short and well spaced signals.)
+
+
+2.) Can the authors make any kind of quantitative statement about the
+comparison in computational costs between the neural network method
+and the matched filter technique? And if so, does that scale in a
+benign way as the neural network is expanded to the full parameter
+space?
+
+2)* --- (Hunter) Perhaps it would be best to remove claims made about computational cost.
+
+
+#################
+Reinhard Comments
+#################
+
+1.) I'm a bit surprised you're not citing the 2nd George&Huerta paper
+(using real aLIGO data) https://arxiv.org/abs/1711.03121, and also that
+there isn't more discussion about the relation between your results and
+https://arxiv.org/abs/1701.00008, ie what's better/worse/different in
+your approach etc ...
+
+1* --- (Chris) In the rush and general confusion when the 3 separate teams submitted their papers we simply forgot to add G&H’s second paper. We really should add it. It will look strange since we do very similar things. However, that’s just how it is. Regarding a comparison to their first paper. This would have been embarrassing to G&H since their 1st paper results are incorrect and very poorly communicated. We made the conscious decision to avoid saying anything since everything we attempted writing was likely to provoke a negative response from G&H.
+
+
+2.) I was a bit confused about the numbers when you talk about the
+training set of 4e5 timeseries, 50% contain signal+noise ie 2e5, but
+then you say there's 1000 unique signals, and for each you use 25 noise
+realizations, but that's 2.5e4 signal timeseries, so how does that make
+2e5. I probably mis-understood something.
+
+2* --- (Chris) That is a historical typo and was true at some point. The 1000 number should be changed.
+
+
+3.) Your loss function Eq.(2): I'm not quite understanding that equation
+(without going back to remind myself from the literature): on the lhs
+there is f(theta), but then on the rhs there's theta_i^{S/N} so I'm
+confused about the notation: is 'theta' a vector consisting of
+theta_i^{S/N}?
+Also, shouldn't there be some relationship between 'correct answer' and
+'actual answer' in there, and right now the text seems to suggest that
+the theta_i^{S/N} are the outputs from the network, ie the 'actual
+answer', but how does the 'loss vs correct answer' come in here?
+
+3* --- (Chris) You’re right that this is a confusing equation. Theta is a set of estimated probabilities. Typically this is done in batches but just imagine a set of output probabilities of which ~half were for signals and half were for just noise realisations. You would hope that for all of the signals the probability is high and for all the noises it’s low. The bad notation here is that theta_S is the probability that the data contains a signal and theta_N is the probability that the data is just noise. So for a 2-class system we have 1 = theta_S + theta_N. The loss function is just the sum of the signal log-probs *for the signals* plus the sum of the noise log-probs *for the noises*. This is minimised when all theta_S = 1 and all theta_N = 1. Make sense?
+
+4.) if I were the referee of this paper, I would be slightly concerned
+about the offhand claim that "This latter discrepancy can be mitigated
+by increasing the number of training samples", when discussing Fig.3,
+which sounds like a strong claim without any actual evidence?
+
+4* --- (Chris) Me too. This was a last minute addition to try to describe the efforts we made in the last week of the analysis. We found that we needed to really push on the training data to get the ML efficiencies to compete with matched filtering in the low false alarm regime. Time constraints and word limits are the main reason. I hope to be able to expand upon this based on referees comments.
+
+
+5.) And also I might wonder if there could be more discussion/justification
+for why it is possible/plausible that the network beats
+matched-filtering, which is often believed to be close to optimal. I can
+believe your results, but I just wonder if one could comment more on
+*why* the current matched-filtering seems to have room for improving on
+it. Gaussian noise is mentioned, but your results *are* on Gaussian
+noise, so it can't be that, right? Is it the template bank? But 3%
+mismatch seems quite low, would that be sufficient to explain the
+improvement?.
+
+5* --- (Chris) We would also like to do this. However, we honestly don’t know the definitive answer yet. The CBC group and Tom Dent seem to think that this is due to the difference in density of templates vs the prior in the mass space. Higher numbers of *independent* templates give higher false alarms. There might be some optimal balance (e.g. Christian Roever’s paper) for template placement that resolves this. Further work is required. Again, the main constraint is the word count.
+
