@@ -46,6 +46,8 @@ to support them.
 
 1)* --- (Hunter) If we decide to keep in the bit where we describe the source of computational cost in a matched filtering analysis, then we should also say that the majority of the expense comes from the high frequency portion of the waveform. What are folks thoughts about keeping these statements in? I was of the opinion that it is important to keep them, given that the advantage of using a neural network is that it can run faster than a matched template filtering analysis, however it would entail quite a bit of work to make the appropriate comparisons. Referee A's response in comment 5 is what changed my mind. 
 
+(Hunter) I've gone ahead and commented out the references to computational cost.
+
 
 2. Introduction, second paragraph, "... in these search pipelines is
 achieved using a technique known as ..." --> ... in these search
@@ -54,7 +56,7 @@ fact the process also makes of use various \chi^2-like statistics, and
 various measures of signal consistency across the multiple detectors
 world-wide.
 
-2)* --- (Hunter) Shouldn't be difficult to mention chi^2 here.
+2)* --- (Hunter) Fixed.
 
 3. Introduction, third paragraph, "... each with different component
 mass components and/or ..." --> "... each with different component
@@ -85,6 +87,8 @@ of work, and there are things they're not good at, which is why the
 use of GPUs for matched filtering based GW detection systems has never
 gained traction. Anyway, if a reference to support this claim cannot
 be found it should be removed.
+
+4)* --- (Hunter) I removed the above statement from the manuscript.
 
 
 5. I am also puzzled by the claim that has been made in the abstract
@@ -129,6 +133,8 @@ to spend the time obtaining it to proceed with publication. But in
 that case they must remove claims regarding the performance of the
 system.
 
+
+5)* --- (Hunter) This statement has been removed.
 
 6. Page 2, second paragraph, "They typically then merge on the
 timescale of O(1) sec ..." --> "They typically then merge on the
@@ -194,6 +200,10 @@ any specific comment or request to make in this regard, only that if
 the issue of the performance at higher and lower SNRs is raised, then
 pointing out the utility in the marginal SNR regime, would be apropos.
 
+11)* --- (Hunter) I tend to agree with their assesment that this would be
+best as some sort of hybrid system. Perhaps in more practical terms it 
+would be most useful as a complimentary detection statistic to chi^2?
+
 
 
 ##################
@@ -201,21 +211,32 @@ Referee B Comments
 ##################
 
 
-1.) Does the method scale up to searches over the full gravitational
+1. Does the method scale up to searches over the full gravitational
 waveform parameter space, including the parts that would be covered
 (in a matched-filter search) by very closely spaced and very long
 waveforms? (The test case used this part of parameter space that is in
 the opposite extreme, namely short and well spaced signals.)
 
+1)* --- (Hunter) This could in principle also be applied to other searches for
+that such as BNS, NSBH, CW and LISA sources. However, the main caveate
+ here is related to the amount of memory required to train such a network.
+We currently train on a Tesla P-100 GPU which has ~16GB of memory 
+and use just about all of it up when training on only 400,000 1 s
+long samples. BNS signals are about 6 times longer and LISA signals
+would be orders of magnitude longer. If one could get around that
+issue, then in principle a similar (if not the same) network 
+archetecture could then be applied.
 
-2.) Can the authors make any kind of quantitative statement about the
+
+2. Can the authors make any kind of quantitative statement about the
 comparison in computational costs between the neural network method
 and the matched filter technique? And if so, does that scale in a
 benign way as the neural network is expanded to the full parameter
 space?
 
-2)* --- (Hunter) Perhaps it would be best to remove claims made about computational cost.
-
+2)* --- (Hunter) Perhaps it would be best to remove claims made about 
+computational cost. If this has been done, do we still have to 
+respond to this comment?
 
 #################
 Reinhard Comments
