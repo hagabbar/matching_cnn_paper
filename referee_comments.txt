@@ -134,7 +134,10 @@ that case they must remove claims regarding the performance of the
 system.
 
 
-5)* --- (Hunter) This statement has been removed.
+5)* --- (Hunter) This statement has been removed. 
+
+(Michael) Once trained, the neural network can be used without
+any additional computational expense. 
 
 6. Page 2, second paragraph, "They typically then merge on the
 timescale of O(1) sec ..." --> "They typically then merge on the
@@ -259,6 +262,8 @@ realizations, but that's 2.5e4 signal timeseries, so how does that make
 
 2* --- (Chris) That is a historical typo and was true at some point. The 1000 number should be changed.
 
+(Hunter/Michael) 5e5 timeseries and 10,000 unqiue signals.
+
 
 3.) Your loss function Eq.(2): I'm not quite understanding that equation
 (without going back to remind myself from the literature): on the lhs
@@ -278,6 +283,8 @@ by increasing the number of training samples", when discussing Fig.3,
 which sounds like a strong claim without any actual evidence?
 
 4* --- (Chris) Me too. This was a last minute addition to try to describe the efforts we made in the last week of the analysis. We found that we needed to really push on the training data to get the ML efficiencies to compete with matched filtering in the low false alarm regime. Time constraints and word limits are the main reason. I hope to be able to expand upon this based on referees comments.
+
+(Hunter/Michael) Perhaps a better statement would be "could be mitigated" rather than "can". Something more ambiguous.
 
 
 5.) And also I might wonder if there could be more discussion/justification
