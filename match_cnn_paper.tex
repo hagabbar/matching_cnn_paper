@@ -231,13 +231,13 @@ classification~\cite{Pirooznia2008}. There has also been
 some recent success in the field of gravitational-wave astronomy in the form of
 glitch classification \cite{PhysRevD.95.104059,
 0264-9381-34-6-064003,1706.07446} and notably for signal
-identification~\cite{1701.00008} where it was first shown that deep learning
+identification~\cite{GEORGE201864} where it was first shown that deep learning
 could be a detection tool. Deep learning is able to % This needs to be looked at again
 perform analyses rapidly since the method's computationally intensive
 stage is pre-computed during the training prior to the analysis of actual 
 data~\cite{Goodfellow-et-al-2016}.
-This results in low-latency searches that have the potential to be orders of magnitude
-faster than other comparable classification methods. 
+This could result in low-latency searches that have the potential to be orders of magnitude
+faster than other comparable classification methods. % statement here has been scaled back
 
 %
 % more detail on deep learning
@@ -300,7 +300,7 @@ LIGO design sensitivity~\cite{2016LRR....19....1A}.
 %
 Signals are simulated using a library of gravitational-wave data analysis
 routines called \texttt{LALSuite}. We use the IMRPhenomD type
-waveform~\cite{PhysRevD.93.044006, PhysRevD.93.044007} which models the
+waveform~\cite{PhysRevD.93.04006, PhysRevD.93.044007} which models the
 inspiral, merger and ringdown components of \ac{BBH} gravitational-wave
 signals. We simulate systems with component black hole masses in the range from
 5\(M_\odot\) to 95\(M_\odot\), $m_{1} > m_{2}$, with zero spin.
@@ -371,14 +371,14 @@ from $1$--$10$ in integer steps.
 %
 % How many samples did we make
 %
-Our training datasets contain $4\times 10^{5}$ independent timeseries with 50\%
+Our training datasets contain $5\times 10^{5}$ independent timeseries with 50\%
 containing signal+noise and 50\% noise-only. For each simulated
 gravitational-wave signal (drawn from the signal parameter space) we generate
 25 independent noise realizations from which 25 signal+noise samples are
 produced. This procedure is standard within machine learning classification and
 allows the network to learn how to identify individual signals under different
 noise scenarios. Each noise-only sample consists of an independent noise
-realization and in total we therefore use 1000 unique waveforms in the
+realization and in total we therefore use 10000 unique waveforms in the
 $m_{1},m_{2}$ mass space. Each data sample timeseries is then represented in
 the form of a $1 \times 8192$ pixel image with the gray-scale intensity of each
 pixel proportional to the gravitational-wave amplitude.
@@ -697,7 +697,7 @@ approaches at all false alarm probabilities with the \ac{CNN} sensitivity
 exceeding that of the matched-filter approach at low \ac{SNR} and high false
 alarm probability. Conversely we see the matched-filter sensitivity marginally
 exceeds the \ac{CNN} at high \ac{SNR} and low false alarm probability. This
-latter discrepancy can be mitigated by increasing the number of training
+latter discrepancy could be mitigated by increasing the number of training
 samples.
 
 %We compare the results of

@@ -213,6 +213,12 @@ stands out as a surprising configuration choice.
 (Chris) Yes, it is indeed because Gaussian noise is being used.
 Paraphrase their words here in the paper.
 
+(Team response) Whitening is done using the detector noise power
+spectral density (PSD). After both the hplus and hcross waveforms are
+generated and stored in the frequency domain using lalsimulation 
+[need reference] we divide the waveforms by the square root of
+1/2 of the psd multiplied by the sample rate.  
+
 
 9. Throughout this section, SI units are not being used correctly. "1
 sec" --> "1 s", or "one second".
@@ -255,6 +261,8 @@ would be most useful as a complimentary detection statistic to chi^2?
 
 (Chris) Think bigger. Could use this opportunity to say we can replace
 everything with a CNN.
+
+(Team response) 
 
 
 
@@ -305,6 +313,8 @@ your approach etc ...
 
 1* --- (Chris) In the rush and general confusion when the 3 separate teams submitted their papers we simply forgot to add G&H’s second paper. We really should add it. It will look strange since we do very similar things. However, that’s just how it is. Regarding a comparison to their first paper. This would have been embarrassing to G&H since their 1st paper results are incorrect and very poorly communicated. We made the conscious decision to avoid saying anything since everything we attempted writing was likely to provoke a negative response from G&H.
 
+(Hunter) I ended up electing to cite their most recent publication in
+Physics Letters B.
 
 2.) I was a bit confused about the numbers when you talk about the
 training set of 4e5 timeseries, 50% contain signal+noise ie 2e5, but
@@ -316,6 +326,8 @@ realizations, but that's 2.5e4 signal timeseries, so how does that make
 
 (Hunter/Michael) 5e5 timeseries and 10,000 unqiue signals. Still need 
 to add this into the paper.
+
+(Hunter) This has been fixed.
 
 
 3.) Your loss function Eq.(2): I'm not quite understanding that equation
@@ -338,6 +350,8 @@ which sounds like a strong claim without any actual evidence?
 4* --- (Chris) Me too. This was a last minute addition to try to describe the efforts we made in the last week of the analysis. We found that we needed to really push on the training data to get the ML efficiencies to compete with matched filtering in the low false alarm regime. Time constraints and word limits are the main reason. I hope to be able to expand upon this based on referees comments.
 
 (Hunter/Michael) Perhaps a better statement would be "could be mitigated" rather than "can". Something more ambiguous.
+
+(Hunter) Michael's suggestion has been implemented.
 
 
 5.) And also I might wonder if there could be more discussion/justification
