@@ -44,7 +44,14 @@ again below, but I think perhaps removing any sort of claims of speed,
 cost, whatever, is warranted, unless a comparative study is presented
 to support them.
 
-1)* --- (Hunter) If we decide to keep in the bit where we describe the source of computational cost in a matched filtering analysis, then we should also say that the majority of the expense comes from the high frequency portion of the waveform. What are folks thoughts about keeping these statements in? I was of the opinion that it is important to keep them, given that the advantage of using a neural network is that it can run faster than a matched template filtering analysis, however it would entail quite a bit of work to make the appropriate comparisons. Referee A's response in comment 5 is what changed my mind. 
+1)* --- (Hunter) If we decide to keep in the bit where we describe the
+ source of computational cost in a matched filtering analysis, then we
+ should also say that the majority of the expense comes from the high 
+frequency portion of the waveform. What are folks thoughts about keeping 
+these statements in? I was of the opinion that it is important to keep 
+them, given that the advantage of using a neural network is that it 
+can run faster than a matched template filtering analysis, however it 
+would entail quite a bit of work to make the appropriate comparisons. Referee A's response in comment 5 is what changed my mind. 
 
 (Hunter) I've gone ahead and commented out the references to computational cost.
 
@@ -214,10 +221,14 @@ stands out as a surprising configuration choice.
 Paraphrase their words here in the paper.
 
 (Team response) Whitening is done using the detector noise power
-spectral density (PSD). After both the hplus and hcross waveforms are
-generated and stored in the frequency domain using lalsimulation 
-[need reference] we divide the waveforms by the square root of
-1/2 of the psd multiplied by the sample rate.  
+spectral density (PSD). Both the hplus and hcross waveforms are
+generated and stored in the frequency domain using LALSuite. A 
+lower frequency cutoff is chosen for each signal such that the duration
+of the signal is 1 s and is dependent upon the chirp mass of the signal. 
+We divide the waveforms by the square root of 1/2 of the psd multiplied 
+by the sample rate in order to whiten the signal. Because we are 
+operating in Gaussian noise, the spectrum of the signal is smooth 
+enough to where there are no narrow spectral features. 
 
 
 9. Throughout this section, SI units are not being used correctly. "1
