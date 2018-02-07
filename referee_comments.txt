@@ -167,6 +167,11 @@ any additional computational expense.
 (Chris) Sn(f) is the signal sided detector noise PSD. This should
 be added to the text. Must define the FFT much better.
 
+(team response) It is true that training a neural network requires
+that some significant computational expense be spent. However,
+training is a one-off cost and does not need to be done for
+every new search analysis (see ref deep learning book). 
+
 6. Page 2, second paragraph, "They typically then merge on the
 timescale of O(1) sec ..." --> "They typically then merge on the
 timescale of O(1 s) ...". Two violations of SI style conventions:
@@ -176,6 +181,8 @@ abbreviation (https://physics.nist.gov/cuu/Units/rules.html).
 
 6)* --- (Hunter) Apologies, I should have caught this. It's been fixed.
 
+(team response) This SI style violation has been fixed. 
+
 
 7. Equation (1) needs a reference. Otherwise you need define
 normalization conventions for, e.g., Sn(f), and Fourier transforms.
@@ -183,6 +190,8 @@ normalization conventions for, e.g., Sn(f), and Fourier transforms.
 7)* --- (Hunter) I forget now, but what paper did we pull this from? Babak et al.?
 
 (Hunter) Pulled from Babak et al. 
+
+(Team response) Reference to Babak et al. has been added.
 
 
 8. Below equation (1), I'm puzzled by the extremely short interval of
@@ -211,9 +220,13 @@ https://physics.nist.gov/cuu/Units/checklist.html
 
 9)* --- (Hunter) Fixed.
 
+(Team response) These SI unit violations have been fixed.
+
 10. Equations (3) and (4) need references.
 
 10)* --- (Hunter) Were these also taken from Babak et al.?
+
+(Team response) References to Babak et al. have been added.
 
 
 11. One of the things that I notice in Fig 2. is that the CNN does not
