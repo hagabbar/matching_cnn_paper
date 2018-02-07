@@ -58,11 +58,15 @@ world-wide.
 
 2)* --- (Hunter) Fixed.
 
+(team response) This sentence has been changed accordingly.
+
 3. Introduction, third paragraph, "... each with different component
 mass components and/or ..." --> "... each with different component
 mass and/or ..."
 
 3.)* --- (Hunter) Fixed.
+
+(team response) This typo has been fixed.
 
 
 4. Introduction, fourth paragraph, the claim "This results in
@@ -89,7 +93,17 @@ gained traction. Anyway, if a reference to support this claim cannot
 be found it should be removed.
 
 4)* --- (Hunter) I removed the above statement from the manuscript.
-(Hunter) Need to come up with a more concerete respose.
+(Hunter) Need to come up with a more concrete respose.
+
+(team response) A large advantage of using a machine learning algorithm
+to do CBC searches resides in the low-latency nature of doing such a
+search. It is true that not all tasks of a search analysis can be 
+tabulated on a GPU, but that is besides the point. For the purpose
+of simply classifying CBC signals, the vast majority of computational 
+expense is spent in the training process, whereas running after training
+on new data is done in a matter of seconds regardless of the size of the
+testing set. Retraining is not necessarily required for every new
+search analysis run, so network runtime would be inconsequential. 
 
 
 5. I am also puzzled by the claim that has been made in the abstract
