@@ -223,12 +223,13 @@ Paraphrase their words here in the paper.
 (Team response) Whitening is done using the detector noise power
 spectral density (PSD). Both the hplus and hcross waveforms are
 generated and stored in the frequency domain using LALSuite. A 
-lower frequency cutoff is chosen for each signal such that the duration
+lower frequency cutoff is chosen for each waveform such that the duration
 of the signal is 1 s and is dependent upon the chirp mass of the signal. 
 We divide the waveforms by the square root of 1/2 of the psd multiplied 
 by the sample rate in order to whiten the signal. Because we are 
 operating in Gaussian noise, the spectrum of the signal is smooth 
-enough to where there are no narrow spectral features. 
+enough to where there are no narrow spectral features which could 
+produce noticeable edge effects from the whitening process. 
 
 
 9. Throughout this section, SI units are not being used correctly. "1
