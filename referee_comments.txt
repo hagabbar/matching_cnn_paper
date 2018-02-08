@@ -177,7 +177,8 @@ be added to the text. Must define the FFT much better.
 (team response) It is true that training a neural network requires
 that some significant computational expense be spent. However,
 training is a one-off cost and does not need to be done for
-every new search analysis (see ref deep learning book). 
+every new search analysis can be run in a matter of seconds. 
+(see ref Deep Learning Book). 
 
 6. Page 2, second paragraph, "They typically then merge on the
 timescale of O(1) sec ..." --> "They typically then merge on the
