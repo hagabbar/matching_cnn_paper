@@ -199,9 +199,12 @@ detections~\cite{0264-9381-33-21-215004, 0004-637X-748-2-136,
 PhysRevD.90.082004} are, in general, computationally expensive. The methods
 used are complex, sophisticated processes computed over a large parameter space
 using advanced signal processing techniques. The computational cost to run the
-search analysis is due to the large parameter space and the increasing cost of
-analysing longer duration waveforms as the low frequency sensitivity of the
-detectors improves. Distinguishing noise from signal in these search pipelines
+search analysis is due to the large parameter space, as well as analysis of the high frequency components 
+of the waveform where high data sample rates are required. 
+%the increasing cost of
+%analysing longer duration waveforms as the low frequency sensitivity of the
+%detectors improves. 
+Distinguishing noise from signal in these search pipelines
 is acheived, in part, using a technique known as template based matched-filtering. 
 
 %
@@ -231,8 +234,8 @@ classification~\cite{Pirooznia2008}. There has also been
 some recent success in the field of gravitational-wave astronomy in the form of
 glitch classification \cite{PhysRevD.95.104059,
 0264-9381-34-6-064003,1706.07446} and notably for signal
-identification~\cite{GEORGE201864} where it was first shown that deep learning
-could be a detection tool. Deep learning is able to % This needs to be looked at again
+identification~\cite{GEORGE201864,GebKilParHarSch} where it was first shown that deep learning
+could be a detection tool~\cite{GEORGE201864}. Deep learning is able to % This needs to be looked at again
 perform analyses rapidly since the method's computationally intensive
 stage is pre-computed during the training prior to the analysis of actual 
 data~\cite{Goodfellow-et-al-2016}.
@@ -339,8 +342,8 @@ defined as
 \end{equation}
 %
 where $\tilde{h(f)}$ is the frequency domain representation of the
-gravitational-wave strain and $S_{\mathrm{n}}(f)$ is the detector noise
-\ac{PSD}~\cite{0264-9381-23-18-002}. The simulated time series were chosen to be 1~s in duration sampled
+gravitational-wave strain and $S_{\mathrm{n}}(f)$ is the single-sided detector noise
+\ac{PSD}~\cite{PhysRevD.85.122006}. The simulated time series were chosen to be 1~s in duration sampled
 at 8192 Hz. Therefore we consider $f_{\mathrm{min}}$ as the frequency of the
 gravitational-wave signal at the start of the sample timeseries. An example
 timeseries can be seen in Fig.~\ref{fig:waveform}. 
@@ -349,9 +352,11 @@ timeseries can be seen in Fig.~\ref{fig:waveform}.
 % Caveats due to matched-filter requirements
 %
 Due to the requirements of the matched-filtering comparison it was necessary to
-add padding to each timeseries so as to avoid edge effects. Therefore
-each 1~s timeseries has an additional 0.5~s of data prior to and after the signal.
-The signal itself has a Tukey window ($\alpha=1/8$) applied to truncate the
+add padding to each timeseries so as to avoid non-physical
+boundary artefacts from the whitening procedure. The Gaussianity of the noise
+and smoothness of the simulated advanced LIGO \ac{PSD} allows the use of relatively
+short padding. Therefore each 1 s timeseries has an additional 0.5 s of
+data prior to and after the signal. The signal itself has a Tukey window ($\alpha=1/8$) applied to truncate the
 signal content to the central 1~s. The \ac{CNN} approach only has access to
 this central 1~s of data. Similarly, the optimal \ac{SNR} is computed considering
 only the central 1~s.
@@ -363,7 +368,12 @@ Supervised deep learning requires datasets to be sub-divided into training,
 validation, and testing sets. Training sets are the data samples that the
 network learns from, the validation set allows the developer to verify that the
 network is learning correctly, and the test set is used to quantify the
-performance of the trained network.  Of the dataset generated we use $90\%$ of
+performance of the trained network.  In a practical
+scenario the training and validation sets are used to train the network prior
+to data taking. This constitutes the vast majority of computational effort and
+is a procedure that needs to be computed only once. The trained network can
+then be applied to test data at a vastly reduced cost in comparison to the
+training stage~\cite{Goodfellow-et-al-2016}. Of the dataset generated we use $90\%$ of
 these samples for training, $5\%$ for validation, and $5\%$ for testing. A
 dataset was generated for each predefined optimal \ac{SNR} value ranging
 from $1$--$10$ in integer steps. 
@@ -506,7 +516,11 @@ The final ranking statistic that we extract from the \ac{CNN} analysis is taken
 from the output layer, composed of 2 neurons, where each neuron will
 produce a probability value between 0 and 1 with their sum being unity. Each
 neuron gives the inferred probability that the input data belongs to the noise
-or signal+noise class respectively.
+or signal+noise class respectively. The computational time spent on training the network for each SNR is $\mathcal{O}(1)$ hour
+on a single GPU. This one-time cost can be compared to the $\mathcal{O}(1 s)$ spent
+applying the trained network to all $25,000$ 1 s test data samples also using a
+single GPU. Therefore at the point of data taking this particular analysis can
+be run at ~$10^{4}$ times faster than real-time.
 
 % 
 % I am commenting this figure out for now

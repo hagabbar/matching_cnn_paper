@@ -1,4 +1,4 @@
-Dear XXXXXX,
+Dear Dr. Abhishek Agarwal,
 
 Thank you for sending us the referees reports, who we thank for
 reading our manuscript and for providing very useful input. We are delighted by
@@ -55,18 +55,6 @@ again below, but I think perhaps removing any sort of claims of speed,
 cost, whatever, is warranted, unless a comparative study is presented
 to support them.
 
-# 1)* --- (Hunter) If we decide to keep in the bit where we describe the source
-# of computational cost in a matched filtering analysis, then we should also
-# say that the majority of the expense comes from the high frequency portion of
-# the waveform. What are folks thoughts about keeping these statements in? I
-# was of the opinion that it is important to keep them, given that the
-# advantage of using a neural network is that it can run faster than a matched
-# template filtering analysis, however it would entail quite a bit of work to
-# make the appropriate comparisons. Referee A's response in comment 5 is what
-# changed my mind. 
-
-# (Hunter) I've gone ahead and commented out the references to computational cost.
-
 (team response) We believe that the referee is entirely correct in asking for
 these claims to be removed from the paper. We have therefore removed statements
 that make explicit claims of speed improvements over current advanced matched
@@ -85,15 +73,11 @@ fact the process also makes of use various \chi^2-like statistics, and
 various measures of signal consistency across the multiple detectors
 world-wide.
 
-# 2)* --- (Hunter) Fixed.
-
 (team response) This sentence has been changed accordingly.
 
 3. Introduction, third paragraph, "... each with different component
 mass components and/or ..." --> "... each with different component
 mass and/or ..."
-
-# 3.)* --- (Hunter) Fixed.
 
 (team response) This typo has been fixed.
 
@@ -121,20 +105,7 @@ use of GPUs for matched filtering based GW detection systems has never
 gained traction. Anyway, if a reference to support this claim cannot
 be found it should be removed.
 
-# 4)* --- (Hunter) I removed the above statement from the manuscript.
-# (Hunter) Need to come up with a more concrete respose.
-
-# (team response) A large advantage of using a machine learning algorithm
-# to do CBC searches resides in the low-latency nature of doing such a
-# search. It is true that not all tasks of a search analysis can be 
-# tabulated on a GPU, but that is besides the point. For the purpose
-# of simply classifying CBC signals, the vast majority of computational 
-# expense is spent in the training process, whereas running after training
-# on new data is done in a matter of seconds regardless of the size of the
-# testing set. Retraining is not necessarily required for every new
-# search analysis run, so network runtime would be inconsequential. 
-
-4)* --- (Chris) This point is related to the first comment and we are happy to
+(team response) This point is related to the first comment and we are happy to
 remove statements that refer to definitive speed improvements over traditional
 methods. We do this for the clear scientific reason given by the referee, that
 we have no concrete evidence of this at the present time.
@@ -192,32 +163,7 @@ then by all means I encourage them to add that to this manuscript. I
 merely mean to say that if they do not, then I would not require them
 to spend the time obtaining it to proceed with publication. But in
 that case they must remove claims regarding the performance of the
-system.
-
-
-# 5)* --- (Hunter) This statement has been removed. 
-
-# (Hunter) We should show a reference where the computational cost
-# of retraining a pre-trained network is minimal.
-
-# (Hunter) Write in statement where we say "this is only a one-off
-# cost. The cost of a template bank is repeated every single instance
-# you apply it to the data.
-
-# (Fergus) Perhaps we shouldn't mention the computational cost of
-# training.
-
-# (Michael) Once trained, the neural network can be used without
-# any additional computational expense. 
-
-# (Chris) Sn(f) is the signal sided detector noise PSD. This should
-# be added to the text. Must define the FFT much better.
-
-# (team response) It is true that training a neural network requires
-# that some significant computational expense be spent. However,
-# training is a one-off cost and does not need to be done for
-# every new search analysis can be run in a matter of seconds. 
-# (see ref Deep Learning Book). 
+system. 
 
 (team response) This comment is related to previous comments by the referee on
 the alledged speed of the CNN approach. However, the specific statement in
@@ -244,7 +190,7 @@ approach" section
 
 "The computational time spent on training the network for each SNR is O(1) hour
 on a single GPU. This one-time cost can be compared to the O(1) sec spent
-applying the trained network to all 25,000 1 sec test data samples also using a
+applying the trained network to all 25,000 1 s test data samples also using a
 single GPU. Therefore at the point of data taking this particular analysis can
 be run at ~10^4 times faster than real-time."
 
@@ -255,17 +201,11 @@ timescale of O(1 s) ...". Two violations of SI style conventions:
 separating a number from its unit, and using a non-standard
 abbreviation (https://physics.nist.gov/cuu/Units/rules.html).
 
-# 6)* --- (Hunter) Apologies, I should have caught this. It's been fixed.
-
 (team response) This SI style violation has been fixed. 
 
 
 7. Equation (1) needs a reference. Otherwise you need define
 normalization conventions for, e.g., Sn(f), and Fourier transforms.
-
-# 7)* --- (Hunter) I forget now, but what paper did we pull this from? Babak et al.?
-
-# (Hunter) Pulled from Babak et al. 
 
 (Team response) A reference to Allen et al. (2012) has been added. We have also
 clarified that the PSD is single-sided. It now reads
@@ -292,23 +232,9 @@ circumstances. It's possible that because Gaussian noise is being used
 the spectrum is sufficiently smooth, i.e., it lacks the narrow
 spectral features of real data, for whitening so short an interval to
 not be a problem. But, still, that should be explained because it
-stands out as a surprising configuration choice.
+stands out as a surprising configuration choice. 
 
-# (Chris) Yes, it is indeed because Gaussian noise is being used.
-# Paraphrase their words here in the paper.
-
-# (Team response) Whitening is done using the detector noise power
-# spectral density (PSD). Both the hplus and hcross waveforms are
-# generated and stored in the frequency domain using LALSuite. A 
-# lower frequency cutoff is chosen for each waveform such that the duration
-# of the signal is 1 s and is dependent upon the chirp mass of the signal. 
-# We divide the waveforms by the square root of 1/2 of the psd multiplied 
-# by the sample rate in order to whiten the signal. Because we are 
-# operating in Gaussian noise, the spectrum of the signal is smooth 
-# enough to where there are no narrow spectral features which could 
-# produce noticeable edge effects from the whitening process. 
-
-8)* --- (Chris) The referee is correct, the Gaussianity of the noise and lack
+(team response) The referee is correct, the Gaussianity of the noise and lack
 of narrow spectral features has allowed us to use relatively short intervals of
 data. The padding of 1/2 sec stretches of noise either side of the central
 signal were all that was required to avoid the unphysical boundary effects.
@@ -320,21 +246,17 @@ the manuscript
 necessary to add padding to each time-series so as to avoid non-physical
 boundary artefacts from the whitening procedure. The Gaussianity of the noise
 and smoothness of the simulated advanced LIGO PSD allows the use of relatively
-short padding. Therefore each 1 s timeseries has an additional 0.5 sec of
+short padding. Therefore each 1 s timeseries has an additional 0.5 s of
 data prior to and after the signal."
 
 9. Throughout this section, SI units are not being used correctly. "1
 sec" --> "1 s", or "one second".
 https://physics.nist.gov/cuu/Units/checklist.html
 
-# 9)* --- (Hunter) Fixed.
-
 (Team response) These SI unit violations have been fixed.
 
 
 10. Equations (3) and (4) need references.
-
-10)* --- (Hunter) Were these also taken from Babak et al.?
 
 (Team response) References to Babak et al. have been added.
 
@@ -359,16 +281,7 @@ any specific comment or request to make in this regard, only that if
 the issue of the performance at higher and lower SNRs is raised, then
 pointing out the utility in the marginal SNR regime, would be apropos.
 
-# 11)* --- (Hunter) I tend to agree with their assesment that this would be
-# best as some sort of hybrid system. Perhaps in more practical terms it 
-# would be most useful as a complimentary detection statistic to chi^2?
-
-# (Chris) Think bigger. Could use this opportunity to say we can replace
-# everything with a CNN.
-
-# (Team response) 
-
-11)* --- (Chris) We agree with the referee that this is an interesting result
+(team response) We agree with the referee that this is an interesting result
 that deserves further study and that the idea of a hybrid matched-filter-CNN
 approach would be possible. However, we prefer not to make a statement on the
 possibility of hybridising the approaches for two reasons. Firstly we would
@@ -393,7 +306,7 @@ waveform parameter space, including the parts that would be covered
 waveforms? (The test case used this part of parameter space that is in
 the opposite extreme, namely short and well spaced signals.)
 
-1)* --- (Hunter) The CNN aproach could in principle also be applied to other
+(team response) The CNN aproach could in principle also be applied to other
 CBC searches such as BNS, NSBH, and LISA sources. Regarding the increased
 duration of such waveforms, the main limitation here is related to the amount of
 memory required to train such a network. We currently train on a Tesla P-100
@@ -417,11 +330,7 @@ and the matched filter technique? And if so, does that scale in a
 benign way as the neural network is expanded to the full parameter
 space?
 
-# 2)* --- (Hunter) Perhaps it would be best to remove claims made about 
-# computational cost. If this has been done, do we still have to 
-# respond to this comment?
-
-2)* --- (Chris) The issue of speed comparison has been the main focus of
+(team response) The issue of speed comparison has been the main focus of
 referee A. Based on referee A's commments we have decided to remove all vague
 claims of speed improvement over matched-filtering approaches. We feel that
 this is a very important question to answer but at present we are not able to
@@ -431,78 +340,7 @@ computational running times for the CNN analysis in this BBH-specific case.
 
 We thank referee B for their very helpful comments.
 
-#################
-Reinhard Comments
-#################
-
-1.) I'm a bit surprised you're not citing the 2nd George&Huerta paper
-(using real aLIGO data) https://arxiv.org/abs/1711.03121, and also that
-there isn't more discussion about the relation between your results and
-https://arxiv.org/abs/1701.00008, ie what's better/worse/different in
-your approach etc ...
-
-1* --- (Chris) In the rush and general confusion when the 3 separate teams submitted their papers we simply forgot to add G&H’s second paper. We really should add it. It will look strange since we do very similar things. However, that’s just how it is. Regarding a comparison to their first paper. This would have been embarrassing to G&H since their 1st paper results are incorrect and very poorly communicated. We made the conscious decision to avoid saying anything since everything we attempted writing was likely to provoke a negative response from G&H.
-
-(Hunter) I ended up electing to cite their most recent publication in
-Physics Letters B.
-
-Also add Gebhard et al
-
-@conference{GebKilParHarSch,
-  title = {ConvWave: Searching for Gravitational Waves with Fully Convolutional Neural Nets},
-  author = {Gebhard, T. and Kilbertus, N. and Parascandolo, G. and Harry, I. and Sch{\"o}lkopf, B.},
-  booktitle = {Workshop on Deep Learning for Physical Sciences (DLPS) at the 31st Conference on Neural Information Processing Systems (NIPS)},
-  year = {2017},
-  url = {https://dl4physicalsciences.github.io/files/nips_dlps_2017_13.pdf}
-}
-
-2.) I was a bit confused about the numbers when you talk about the
-training set of 4e5 timeseries, 50% contain signal+noise ie 2e5, but
-then you say there's 1000 unique signals, and for each you use 25 noise
-realizations, but that's 2.5e4 signal timeseries, so how does that make
-2e5. I probably mis-understood something.
-
-2* --- (Chris) That is a historical typo and was true at some point. The 1000 number should be changed.
-
-(Hunter/Michael) 5e5 timeseries and 10,000 unqiue signals. Still need 
-to add this into the paper.
-
-(Hunter) This has been fixed.
 
 
-3.) Your loss function Eq.(2): I'm not quite understanding that equation
-(without going back to remind myself from the literature): on the lhs
-there is f(theta), but then on the rhs there's theta_i^{S/N} so I'm
-confused about the notation: is 'theta' a vector consisting of
-theta_i^{S/N}?
-Also, shouldn't there be some relationship between 'correct answer' and
-'actual answer' in there, and right now the text seems to suggest that
-the theta_i^{S/N} are the outputs from the network, ie the 'actual
-answer', but how does the 'loss vs correct answer' come in here?
 
-3* --- (Chris) You’re right that this is a confusing equation. Theta is a set of estimated probabilities. Typically this is done in batches but just imagine a set of output probabilities of which ~half were for signals and half were for just noise realisations. You would hope that for all of the signals the probability is high and for all the noises it’s low. The bad notation here is that theta_S is the probability that the data contains a signal and theta_N is the probability that the data is just noise. So for a 2-class system we have 1 = theta_S + theta_N. The loss function is just the sum of the signal log-probs *for the signals* plus the sum of the noise log-probs *for the noises*. This is minimised when all theta_S = 1 and all theta_N = 1. Make sense?
-
-4.) if I were the referee of this paper, I would be slightly concerned
-about the offhand claim that "This latter discrepancy can be mitigated
-by increasing the number of training samples", when discussing Fig.3,
-which sounds like a strong claim without any actual evidence?
-
-4* --- (Chris) Me too. This was a last minute addition to try to describe the efforts we made in the last week of the analysis. We found that we needed to really push on the training data to get the ML efficiencies to compete with matched filtering in the low false alarm regime. Time constraints and word limits are the main reason. I hope to be able to expand upon this based on referees comments.
-
-(Hunter/Michael) Perhaps a better statement would be "could be mitigated" rather than "can". Something more ambiguous.
-
-(Hunter) Michael's suggestion has been implemented.
-
-
-5.) And also I might wonder if there could be more discussion/justification
-for why it is possible/plausible that the network beats
-matched-filtering, which is often believed to be close to optimal. I can
-believe your results, but I just wonder if one could comment more on
-*why* the current matched-filtering seems to have room for improving on
-it. Gaussian noise is mentioned, but your results *are* on Gaussian
-noise, so it can't be that, right? Is it the template bank? But 3%
-mismatch seems quite low, would that be sufficient to explain the
-improvement?.
-
-5* --- (Chris) We would also like to do this. However, we honestly don’t know the definitive answer yet. The CBC group and Tom Dent seem to think that this is due to the difference in density of templates vs the prior in the mass space. Higher numbers of *independent* templates give higher false alarms. There might be some optimal balance (e.g. Christian Roever’s paper) for template placement that resolves this. Further work is required. Again, the main constraint is the word count.
 
