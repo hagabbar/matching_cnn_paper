@@ -114,14 +114,14 @@ However, we would like to clarify some key points to the referee in light of
 their statement that they are certain our speed claims are false. This sounds
 equally like a statement without evidence to support it. Historical claims
 regarding the speed improvement using GPUs are not relevant here. Yes, GPUs are
-key to the sucess of neural network applications in recent years but the more
+key to the success of neural network applications in recent years but the more
 important (potential) speed gains are due to the algorithm itself together with
 the division of computational effort into training and testing. It is possible that
 the "total" computational cost of CNNs exceeds that of traditional techniques,
 but only in the training stage prior to the analysis. The testing stage is
 incredibly fast but as highlighted by the referee, we do not have any scaling
 relations to refer to for CNNs at present. For the referees information, the
-analysis of 25K 1sec segments of data runs on a single GPU in ~few sec.
+analysis of 25K 1 s segments of data runs on a single GPU in ~few sec.
 
 5. I am also puzzled by the claim that has been made in the abstract
 and again here that "the majority of calculations are performed prior
@@ -163,13 +163,13 @@ then by all means I encourage them to add that to this manuscript. I
 merely mean to say that if they do not, then I would not require them
 to spend the time obtaining it to proceed with publication. But in
 that case they must remove claims regarding the performance of the
-system. 
+system.
 
 (team response) This comment is related to previous comments by the referee on
-the alledged speed of the CNN approach. However, the specific statement in
+the alleged speed of the CNN approach. However, the specific statement in
 question here is a true statement which we feel must be included in the
 manuscript - the training stage constitutes the vast majority of the
-computational cost. Since the statement is related to the contraversial issue
+computational cost. Since the statement is related to the controversial issue
 of speed we are happy to move the statement out of the abstract. We realise
 that there is clearly some confusion over the issues of computational cost and
 have therefore expanded the statement and placed it in the "simulation details"
@@ -201,7 +201,7 @@ timescale of O(1 s) ...". Two violations of SI style conventions:
 separating a number from its unit, and using a non-standard
 abbreviation (https://physics.nist.gov/cuu/Units/rules.html).
 
-(team response) This SI style violation has been fixed. 
+(team response) This SI style violation has been fixed.
 
 
 7. Equation (1) needs a reference. Otherwise you need define
@@ -213,9 +213,9 @@ clarified that the PSD is single-sided. It now reads
 "...of the gravitational-wave strain and Sn(f) is the single-sided detector
 noise PSD"
 
-(Chris) Please change this referece to the Findchirp paper instead. We also
+(Chris) Please change this reference to the Findchirp paper instead. We also
 need to add that this is a single-sided PSD. So the text should say "and Sn(f)
-is the single-sided detector noise PSD." 
+is the single-sided detector noise PSD."
 
 
 8. Below equation (1), I'm puzzled by the extremely short interval of
@@ -232,7 +232,7 @@ circumstances. It's possible that because Gaussian noise is being used
 the spectrum is sufficiently smooth, i.e., it lacks the narrow
 spectral features of real data, for whitening so short an interval to
 not be a problem. But, still, that should be explained because it
-stands out as a surprising configuration choice. 
+stands out as a surprising configuration choice.
 
 (team response) The referee is correct, the Gaussianity of the noise and lack
 of narrow spectral features has allowed us to use relatively short intervals of
@@ -306,12 +306,12 @@ waveform parameter space, including the parts that would be covered
 waveforms? (The test case used this part of parameter space that is in
 the opposite extreme, namely short and well spaced signals.)
 
-(team response) The CNN aproach could in principle also be applied to other
+(team response) The CNN approach could in principle also be applied to other
 CBC searches such as BNS, NSBH, and LISA sources. Regarding the increased
 duration of such waveforms, the main limitation here is related to the amount of
 memory required to train such a network. We currently train on a Tesla P-100
 GPU which has ~16GB of memory and use most of this when training on only
-500,000 1sec long samples. BNS signals are ~100 times longer and LISA signals
+500,000 1 s long samples. BNS signals are ~100 times longer and LISA signals
 longer still. This is a technical issue that may require improvements in both
 hardware and software.
 
@@ -331,7 +331,7 @@ benign way as the neural network is expanded to the full parameter
 space?
 
 (team response) The issue of speed comparison has been the main focus of
-referee A. Based on referee A's commments we have decided to remove all vague
+referee A. Based on referee A's comments we have decided to remove all vague
 claims of speed improvement over matched-filtering approaches. We feel that
 this is a very important question to answer but at present we are not able to
 provide quantitative evidence for relative speed improvements. However, we have
@@ -339,6 +339,7 @@ now added text (see response to Ref A comment 5) stating the approximate
 computational running times for the CNN analysis in this BBH-specific case.  
 
 We thank referee B for their very helpful comments.
+
 
 
 
